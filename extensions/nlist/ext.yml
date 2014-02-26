@@ -1,7 +1,0 @@
-entry: Init_NList_extension	
-javaentry: com.nlist.NList
-libraries: ["NList"]
-android:
-  exttype: rakefile
-  source_list: ext/nlist/platform/android/ext_build.files
-  adds: ext/nlist/platform/android/additional_files
