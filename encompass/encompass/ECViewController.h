@@ -30,5 +30,6 @@
 - (NSString *)getCurrentDateString;
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 - (IBAction)currentLocationPressed:(UIButton *)sender;
+- (IBAction)openInMapsPressed:(UIButton *)sender;
 
 @end

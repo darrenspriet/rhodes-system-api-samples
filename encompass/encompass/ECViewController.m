@@ -137,6 +137,7 @@
     }
 }
 
+// This method is called everytime a polyline needs to be drawn
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
@@ -190,6 +191,11 @@
     MKUserLocation *userLocation = _mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (userLocation.location.coordinate, 2000, 2000);
     [_mapView setRegion:region animated:NO];
+}
+
+- (IBAction)openInMapsPressed:(UIButton *)sender
+{
+    [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
 }
 
 @end
