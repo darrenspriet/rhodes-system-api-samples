@@ -26,7 +26,7 @@
 - (void)searchLocationsUsingString:(NSString *)query;
 - (void)generateAnnotationForMapItem:(MKMapItem *)item;
 - (void)calculateBestRoute;
-- (void)drawPolylineOnMap:(MKDirectionsResponse *)response
+- (void)drawPolylineOnMap:(MKDirectionsResponse *)response;
 - (NSString *)getCurrentDateString;
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 - (IBAction)currentLocationPressed:(UIButton *)sender;
