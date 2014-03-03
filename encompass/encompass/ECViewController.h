@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface ECViewController : UIViewController <MKMapViewDelegate>
+@interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     NSArray *_addresses;
     NSMutableArray *_mapItems;

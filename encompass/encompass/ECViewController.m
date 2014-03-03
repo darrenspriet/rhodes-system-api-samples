@@ -16,11 +16,12 @@
     _mapView.delegate = self;
     _dateLabel.text = [self getCurrentDateString];
     // Store the dummy addresses in the addresses array
-    _addresses = [[NSArray alloc] initWithObjects:@"6075 Mavis Road",
-                                                @"2975 Argentia Road",
-                                                @"2460 Winston Churchill Blvd.",
+    _addresses = [[NSArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
+                                                @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
+                                                @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
+                                                @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON, \nL5A 2G4",
                                                 nil];
-    _mapItems = [[NSMutableArray alloc] initWithCapacity:3];
+    _mapItems = [[NSMutableArray alloc] initWithCapacity:4];
     _mapItemIndex = 0;
     _optimalRouteView = YES;
     _currentLocationView = NO;
@@ -58,7 +59,8 @@
             [_mapItems addObject:item];
             [self generateAnnotationForMapItem:item];
         }
-        // If our search yields multiple results
+        // If our search yields multiple results (this shouldn't happen
+        // in this application because we are only searching addresses)
         else
         {
             for (MKMapItem *item in response.mapItems)
@@ -69,7 +71,7 @@
         }
         // Once we have stored all the MKMapItems, determine the optimal route
         // and draw the polylines for this route.
-        if (_mapItems.count == 3)
+        if (_mapItems.count == _addresses.count)
         {
             [self calculateBestRoute];
         }
@@ -104,7 +106,7 @@
          {
              [self drawPolylineOnMap:response];
              _mapItemIndex++;
-             if (_mapItemIndex < 2)
+             if (_mapItemIndex < _addresses.count-1)
              {
                  [self calculateBestRoute];
              }
@@ -168,7 +170,7 @@
     [_mapView setRegion:region animated:NO];
     // You have to generate the annotations again but only if we already
     // have all the map items (not the case when this method is called from viewDidLoad()
-    if (_mapItems.count == 3)
+    if (_mapItems.count == _addresses.count)
     {
         for (MKMapItem *item in _mapItems)
         {
@@ -196,6 +198,38 @@
 - (IBAction)openInMapsPressed:(UIButton *)sender
 {
     [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _addresses.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Height of the table cell background image
+    return 140;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyIdentifier"];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MyIdentifier"];
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+    cell.textLabel.text = [_addresses objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:15];
+    cell.textLabel.numberOfLines = 4;
+    [cell.textLabel sizeToFit];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]];
+    return cell;
+}
+    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6407CD2318C40F4C009653FC /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = 6407CD2218C40F4C009653FC /* tablecell.png */; };
 		642B269718C1B25F004DA3EB /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 642B269618C1B25F004DA3EB /* background.jpg */; };
 		6472E03918C26ADE006E6FE8 /* Graybtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6472E03818C26ADE006E6FE8 /* Graybtn.png */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6407CD2218C40F4C009653FC /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
 		642B269618C1B25F004DA3EB /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		6472E03818C26ADE006E6FE8 /* Graybtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Graybtn.png; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +142,7 @@
 			children = (
 				E0C14F4B18BEB1970016990C /* encompass-Info.plist */,
 				6472E03818C26ADE006E6FE8 /* Graybtn.png */,
+				6407CD2218C40F4C009653FC /* tablecell.png */,
 				642B269618C1B25F004DA3EB /* background.jpg */,
 				E0C14F4C18BEB1970016990C /* InfoPlist.strings */,
 				E0C14F4F18BEB1970016990C /* main.m */,
@@ -259,6 +262,7 @@
 				642B269718C1B25F004DA3EB /* background.jpg in Resources */,
 				E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */,
 				E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */,
+				6407CD2318C40F4C009653FC /* tablecell.png in Resources */,
 				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
 				6472E03918C26ADE006E6FE8 /* Graybtn.png in Resources */,
 			);
@@ -410,7 +414,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dilip Muthukrishnan (LCPYQVU4KB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "encompass/encompass-Prefix.pch";
@@ -427,7 +431,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dilip Muthukrishnan (LCPYQVU4KB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "encompass/encompass-Prefix.pch";
