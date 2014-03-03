@@ -162,6 +162,8 @@
     _currentLocationView = NO;
     _optimalRouteView = YES;
     _customRouteView = NO;
+    // Allow address listing to not be editable
+    [_tableView setEditing:NO animated:YES];
     // Clear all annotations from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     // Set 3359 Mississauga Rd as the default location
@@ -187,6 +189,8 @@
     _currentLocationView = YES;
     _optimalRouteView = NO;
     _customRouteView = NO;
+    // Allow address listing to not be editable
+    [_tableView setEditing:NO animated:YES];
     // Clear all annotations from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     // Display the current location of the user
@@ -198,6 +202,15 @@
 - (IBAction)openInMapsPressed:(UIButton *)sender
 {
     [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
+}
+
+- (IBAction)customRoutePressed:(UIButton *)sender
+{
+    _currentLocationView = NO;
+    _optimalRouteView = NO;
+    _customRouteView = YES;
+    // Allow address listing to be editable
+    [_tableView setEditing:YES animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -224,12 +237,23 @@
     cell.textLabel.numberOfLines = 4;
     [cell.textLabel sizeToFit];
     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]];
+    cell.showsReorderControl = YES;
     return cell;
 }
     
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    // What do we want to show if the user selects a location?
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+    // We need to recalculate the route for the custom ordering
 }
 
 @end

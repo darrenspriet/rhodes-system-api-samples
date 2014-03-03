@@ -21,7 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (void)searchLocationsUsingString:(NSString *)query;
 - (void)generateAnnotationForMapItem:(MKMapItem *)item;
@@ -31,5 +31,6 @@
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 - (IBAction)currentLocationPressed:(UIButton *)sender;
 - (IBAction)openInMapsPressed:(UIButton *)sender;
+- (IBAction)customRoutePressed:(UIButton *)sender;
 
 @end

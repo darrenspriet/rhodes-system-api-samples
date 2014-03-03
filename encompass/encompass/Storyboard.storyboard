@@ -49,6 +49,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="customRoutePressed:" destination="gpL-LS-UDj" eventType="touchUpInside" id="pwX-rl-qGK"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="am5-Uv-kOu">
                                 <rect key="frame" x="830" y="672" width="134" height="30"/>
@@ -82,7 +85,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKN-33-mue">
-                                <rect key="frame" x="141" y="156" width="101" height="21"/>
+                                <rect key="frame" x="128" y="156" width="101" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Locations">
@@ -103,6 +106,7 @@
                     <connections>
                         <outlet property="dateLabel" destination="faB-FO-wYP" id="5zB-rX-31l"/>
                         <outlet property="mapView" destination="Dd1-IO-9me" id="exY-GV-GpW"/>
+                        <outlet property="tableView" destination="K5i-no-Rba" id="S10-Rh-zZb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gij-ad-L1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
