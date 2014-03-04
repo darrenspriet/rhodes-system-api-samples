@@ -16,19 +16,27 @@
     _mapView.delegate = self;
     _dateLabel.text = [self getCurrentDateString];
     // Store the dummy addresses in the addresses array
-    _addresses = [[NSArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
+    _addresses = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
                                                 @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
                                                 @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
-                                                @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON, \nL5A 2G4",
+                                                @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
+                                                @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
                                                 nil];
-    _mapItems = [[NSMutableArray alloc] initWithCapacity:4];
+    _mapItems = [[NSMutableArray alloc] initWithCapacity:_addresses.count];
+    // Need to do this to allow non-sequential inertion during location search
+    // because NSMutableArray objects never contain free spaces (except at the end)
+    for (int i = 0; i < _addresses.count; i++)
+    {
+        [_mapItems addObject:[NSNull null]];
+    }
     _mapItemIndex = 0;
     _optimalRouteView = YES;
     _currentLocationView = NO;
     _customRouteView = NO;
     [self optimizedRoutePressed:nil];
-    // Clear all annotations from the map (there shouldn't be any at this point!)
+    // Clear all markers and routes from the map (there shouldn't be any at this point!)
     [_mapView removeAnnotations:[_mapView annotations]];
+    [_mapView removeOverlays:[_mapView overlays]];
     // Get the MKMapItems for each address, store them in the array, and
     // generate annotations for each item on the map.
     for (NSString *address in _addresses)
@@ -47,6 +55,7 @@
     
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
     {
+        // Search yielded no results
         if (response.mapItems.count == 0)
         {
             NSLog(@"No Matches");
@@ -55,8 +64,8 @@
         else if (response.mapItems.count == 1)
         {
             MKMapItem *item = [response.mapItems objectAtIndex:0];
-            NSLog(@"name = %@", item.name);
-            [_mapItems addObject:item];
+            // _mapItems should have the same ordering as _addresses
+            [_mapItems replaceObjectAtIndex:[_addresses indexOfObject:query] withObject:item];
             [self generateAnnotationForMapItem:item];
         }
         // If our search yields multiple results (this shouldn't happen
@@ -66,13 +75,16 @@
             for (MKMapItem *item in response.mapItems)
             {
                 NSLog(@"name = %@", item.name);
-                NSLog(@"Phone = %@", item.phoneNumber);
             }
         }
-        // Once we have stored all the MKMapItems, determine the optimal route
-        // and draw the polylines for this route.
-        if (_mapItems.count == _addresses.count)
+        // Once we have obtained all of the map items, we can
+        // determine the optimal route and draw the polylines for this route.
+        if ([self mapItemsDidFinishLoading])
         {
+            for (MKMapItem *item in _mapItems)
+            {
+                NSLog(@"Location Name = %@", item.name);
+            }
             [self calculateBestRoute];
         }
     }];
@@ -164,15 +176,16 @@
     _customRouteView = NO;
     // Allow address listing to not be editable
     [_tableView setEditing:NO animated:YES];
-    // Clear all annotations from the map
+    // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
+    [_mapView removeOverlays:[_mapView overlays]];
     // Set 3359 Mississauga Rd as the default location
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(43.549139,-79.663281);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (coordinate, 20000, 20000);
     [_mapView setRegion:region animated:NO];
     // You have to generate the annotations again but only if we already
-    // have all the map items (not the case when this method is called from viewDidLoad()
-    if (_mapItems.count == _addresses.count)
+    // have all the map items (not the case when this method is called from viewDidLoad())
+    if ([self mapItemsDidFinishLoading])
     {
         for (MKMapItem *item in _mapItems)
         {
@@ -191,17 +204,22 @@
     _customRouteView = NO;
     // Allow address listing to not be editable
     [_tableView setEditing:NO animated:YES];
-    // Clear all annotations from the map
+    // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
+    [_mapView removeOverlays:[_mapView overlays]];
     // Display the current location of the user
     MKUserLocation *userLocation = _mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (userLocation.location.coordinate, 2000, 2000);
     [_mapView setRegion:region animated:NO];
 }
 
+// Launch the native Maps application with all the locations
 - (IBAction)openInMapsPressed:(UIButton *)sender
 {
-    [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
+    if ([self mapItemsDidFinishLoading])
+    {
+        [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
+    }
 }
 
 - (IBAction)customRoutePressed:(UIButton *)sender
@@ -253,7 +271,40 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    // We need to recalculate the route for the custom ordering
+    if (fromIndexPath != toIndexPath)
+    {
+        // Clear all markers and routes from the map
+        [_mapView removeAnnotations:[_mapView annotations]];
+        [_mapView removeOverlays:[_mapView overlays]];
+        // Update the _addresses array for the relocated row
+        NSString *address = (NSString *)[_addresses objectAtIndex:fromIndexPath.row];
+        [_addresses removeObjectAtIndex:fromIndexPath.row];
+        [_addresses insertObject:address atIndex:toIndexPath.row];
+        // Update the _mapItems array for the relocated row
+        MKMapItem *item = (MKMapItem *)[_mapItems objectAtIndex:fromIndexPath.row];
+        [_mapItems removeObjectAtIndex:fromIndexPath.row];
+        [_mapItems insertObject:item atIndex:toIndexPath.row];
+        // The optimal route will use this ordering as well (going to change this soon!)
+        [self optimizedRoutePressed:nil];
+        // This ensures that edit controls have been removed from all visible cells
+        [_tableView reloadData];
+    }
+}
+
+// Custom method for checking that we have fully populated
+// the _mapItems array
+- (BOOL)mapItemsDidFinishLoading
+{
+    BOOL didFinishLoading = YES;
+    for (id item in _mapItems)
+    {
+        if ([item isKindOfClass:[NSNull class]])
+        {
+            didFinishLoading = NO;
+            break;
+        }
+    }
+    return didFinishLoading;
 }
 
 @end

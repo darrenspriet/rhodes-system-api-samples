@@ -11,7 +11,7 @@
 
 @interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    NSArray *_addresses;
+    NSMutableArray *_addresses;
     NSMutableArray *_mapItems;
     BOOL _currentLocationView;
     BOOL _optimalRouteView;
