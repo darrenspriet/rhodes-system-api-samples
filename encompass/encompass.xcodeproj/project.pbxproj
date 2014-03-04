@@ -17,7 +17,6 @@
 		E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F4C18BEB1970016990C /* InfoPlist.strings */; };
 		E0C14F5018BEB1970016990C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F4F18BEB1970016990C /* main.m */; };
 		E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F5318BEB1970016990C /* ECAppDelegate.m */; };
-		E0C14F5718BEB1970016990C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F5518BEB1970016990C /* Main.storyboard */; };
 		E0C14F5A18BEB1970016990C /* ECViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F5918BEB1970016990C /* ECViewController.m */; };
 		E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F5B18BEB1970016990C /* Images.xcassets */; };
 		E0C14F6318BEB1970016990C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F6218BEB1970016990C /* XCTest.framework */; };
@@ -27,6 +26,7 @@
 		E0C14F6F18BEB1970016990C /* encompassTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F6E18BEB1970016990C /* encompassTests.m */; };
 		E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F7818BEB1EA0016990C /* Storyboard.storyboard */; };
 		E0C14F7C18BEB28B0016990C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F7B18BEB28B0016990C /* MapKit.framework */; };
+		E0D0EEA618C62E29005871D7 /* Graybtn.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D0EEA518C62E29005871D7 /* Graybtn.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,6 @@
 		E0C14F5118BEB1970016990C /* encompass-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "encompass-Prefix.pch"; sourceTree = "<group>"; };
 		E0C14F5218BEB1970016990C /* ECAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECAppDelegate.h; sourceTree = "<group>"; };
 		E0C14F5318BEB1970016990C /* ECAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECAppDelegate.m; sourceTree = "<group>"; };
-		E0C14F5618BEB1970016990C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E0C14F5818BEB1970016990C /* ECViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECViewController.h; sourceTree = "<group>"; };
 		E0C14F5918BEB1970016990C /* ECViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECViewController.m; sourceTree = "<group>"; };
 		E0C14F5B18BEB1970016990C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		E0C14F7818BEB1EA0016990C /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		E0C14F7A18BEB2830016990C /* encompass.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = encompass.entitlements; sourceTree = "<group>"; };
 		E0C14F7B18BEB28B0016990C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		E0D0EEA518C62E29005871D7 /* Graybtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Graybtn.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +132,6 @@
 				E0C14F7A18BEB2830016990C /* encompass.entitlements */,
 				E0C14F5218BEB1970016990C /* ECAppDelegate.h */,
 				E0C14F5318BEB1970016990C /* ECAppDelegate.m */,
-				E0C14F5518BEB1970016990C /* Main.storyboard */,
 				E0C14F5818BEB1970016990C /* ECViewController.h */,
 				E0C14F5918BEB1970016990C /* ECViewController.m */,
 				E091AFC918C5730D00AF4224 /* ECTableViewCell.h */,
@@ -149,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				E0C14F4B18BEB1970016990C /* encompass-Info.plist */,
+				E0D0EEA518C62E29005871D7 /* Graybtn.png */,
 				E091AFC518C556A200AF4224 /* background.jpg */,
 				E091AFC718C5721B00AF4224 /* tablecell.png */,
 				E0C14F4C18BEB1970016990C /* InfoPlist.strings */,
@@ -270,7 +270,7 @@
 				E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */,
 				E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */,
 				E091AFC818C5721B00AF4224 /* tablecell.png in Resources */,
-				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
+				E0D0EEA618C62E29005871D7 /* Graybtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,14 +322,6 @@
 				E0C14F4D18BEB1970016990C /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E0C14F5518BEB1970016990C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E0C14F5618BEB1970016990C /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		E0C14F6B18BEB1970016990C /* InfoPlist.strings */ = {

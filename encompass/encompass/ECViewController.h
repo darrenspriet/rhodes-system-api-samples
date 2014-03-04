@@ -22,5 +22,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) IBOutlet ECTableViewCell *tableViewCell;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *menuView;
 
+- (IBAction)OpenInMapsPressed:(UIButton *)sender;
+- (IBAction)menuShow:(UIButton *)sender;
+- (IBAction)MenuItemSelected:(UIButton *)sender;
 @end
