@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E091AFC618C556A200AF4224 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC518C556A200AF4224 /* background.jpg */; };
+		E091AFC818C5721B00AF4224 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC718C5721B00AF4224 /* tablecell.png */; };
+		E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */; };
+		E091AFCE18C5765100AF4224 /* ECActualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCD18C5765100AF4224 /* ECActualTableViewCell.m */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
 		E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4518BEB1970016990C /* CoreGraphics.framework */; };
 		E0C14F4818BEB1970016990C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4718BEB1970016990C /* UIKit.framework */; };
@@ -36,6 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E091AFC518C556A200AF4224 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		E091AFC718C5721B00AF4224 /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
+		E091AFC918C5730D00AF4224 /* ECTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECTableViewCell.h; sourceTree = "<group>"; };
+		E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECTableViewCell.m; sourceTree = "<group>"; };
+		E091AFCC18C5765100AF4224 /* ECActualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECActualTableViewCell.h; sourceTree = "<group>"; };
+		E091AFCD18C5765100AF4224 /* ECActualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECActualTableViewCell.m; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C14F4318BEB1970016990C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E0C14F4518BEB1970016990C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -125,6 +135,10 @@
 				E0C14F5518BEB1970016990C /* Main.storyboard */,
 				E0C14F5818BEB1970016990C /* ECViewController.h */,
 				E0C14F5918BEB1970016990C /* ECViewController.m */,
+				E091AFC918C5730D00AF4224 /* ECTableViewCell.h */,
+				E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */,
+				E091AFCC18C5765100AF4224 /* ECActualTableViewCell.h */,
+				E091AFCD18C5765100AF4224 /* ECActualTableViewCell.m */,
 				E0C14F5B18BEB1970016990C /* Images.xcassets */,
 				E0C14F4A18BEB1970016990C /* Supporting Files */,
 			);
@@ -135,6 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				E0C14F4B18BEB1970016990C /* encompass-Info.plist */,
+				E091AFC518C556A200AF4224 /* background.jpg */,
+				E091AFC718C5721B00AF4224 /* tablecell.png */,
 				E0C14F4C18BEB1970016990C /* InfoPlist.strings */,
 				E0C14F4F18BEB1970016990C /* main.m */,
 				E0C14F5118BEB1970016990C /* encompass-Prefix.pch */,
@@ -250,8 +266,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */,
+				E091AFC618C556A200AF4224 /* background.jpg in Resources */,
 				E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */,
 				E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */,
+				E091AFC818C5721B00AF4224 /* tablecell.png in Resources */,
 				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,7 +291,9 @@
 			files = (
 				E0C14F5A18BEB1970016990C /* ECViewController.m in Sources */,
 				E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */,
+				E091AFCE18C5765100AF4224 /* ECActualTableViewCell.m in Sources */,
 				E0C14F5018BEB1970016990C /* main.m in Sources */,
+				E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,7 +428,7 @@
 				GCC_PREFIX_HEADER = "encompass/encompass-Prefix.pch";
 				INFOPLIST_FILE = "encompass/encompass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "09D244B1-7319-4354-9049-E5CB8F250400";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -425,7 +445,7 @@
 				GCC_PREFIX_HEADER = "encompass/encompass-Prefix.pch";
 				INFOPLIST_FILE = "encompass/encompass-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "09D244B1-7319-4354-9049-E5CB8F250400";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -492,6 +512,7 @@
 				E0C14F7418BEB1970016990C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E0C14F7518BEB1970016990C /* Build configuration list for PBXNativeTarget "encompassTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +521,7 @@
 				E0C14F7718BEB1970016990C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

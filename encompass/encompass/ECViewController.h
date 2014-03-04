@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "ECTableViewCell.h"
+@interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+{
+    NSMutableArray *_addresses;
+    NSMutableArray *_mapItems;
+    BOOL _currentLocationView;
+    BOOL _optimalRouteView;
+    BOOL _customRouteView;
+    int _mapItemIndex;
+}
 
-@interface ECViewController : UIViewController
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet ECTableViewCell *tableViewCell;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 
 @end
