@@ -39,6 +39,7 @@
     BOOL _optimalRouteView;
     BOOL _customRouteView;
     int _locationIndex;
+    int _locationCount;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

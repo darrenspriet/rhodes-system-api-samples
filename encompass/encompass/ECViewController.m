@@ -22,6 +22,7 @@
                                                 @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
                                                 @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
                                                 nil];
+    _locationCount = (int)_addressesOptimal.count;
     _addressesCustom = [[NSMutableArray alloc] init];
     // Copy the optimal addresses array into the custom addresses array
     for (NSString *address in _addressesOptimal)
@@ -32,7 +33,7 @@
     _mapItemsCustom = [[NSMutableArray alloc] init];
     // Need to do this to allow non-sequential inertion during location search
     // because NSMutableArray objects never contain free spaces (except at the end)
-    for (int i = 0; i < _addressesOptimal.count; i++)
+    for (int i = 0; i < _locationCount; i++)
     {
         [_mapItemsOptimal addObject:[NSNull null]];
         [_mapItemsCustom addObject:[NSNull null]];
@@ -65,7 +66,7 @@
             _locationIndex = 0;
             // Remove all annotations from the map and clear the map item arrays
             [_mapView removeAnnotations:[_mapView annotations]];
-            for (int i = 0; i < _addressesOptimal.count; i++)
+            for (int i = 0; i < _locationCount; i++)
             {
                 [_mapItemsOptimal addObject:[NSNull null]];
                 [_mapItemsCustom addObject:[NSNull null]];
@@ -98,7 +99,7 @@
             }
             // Search for another address, if there is one
             _locationIndex++;
-            if (_locationIndex < _addressesOptimal.count)
+            if (_locationIndex < _locationCount)
             {
                 [self searchLocationsWithQueries:queries];
             }
@@ -145,7 +146,7 @@
          {
              [self drawPolylineOnMap:response];
              _locationIndex++;
-             if (_locationIndex < _addressesOptimal.count-1)
+             if (_locationIndex < _locationCount-1)
              {
                  [self calculateBestRoute:mapItems];
              }
@@ -287,7 +288,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _addressesOptimal.count;
+    return _locationCount;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
