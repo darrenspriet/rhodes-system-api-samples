@@ -105,6 +105,7 @@
             else
             {
                 _locationIndex = 0;
+                [self calculateBestRoute:_mapItemsOptimal];
             }
         }
     }];
