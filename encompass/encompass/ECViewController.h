@@ -50,6 +50,7 @@
 - (void)calculateBestRoute:(NSArray *)mapItems;
 - (void)drawPolylineOnMap:(MKDirectionsResponse *)response;
 - (NSString *)getCurrentDateString;
+- (void)setDefaultMapRegion;
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 - (IBAction)currentLocationPressed:(UIButton *)sender;
 - (IBAction)openInMapsPressed:(UIButton *)sender;

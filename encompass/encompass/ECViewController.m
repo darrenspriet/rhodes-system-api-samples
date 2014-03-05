@@ -179,6 +179,14 @@
     return dateString;
 }
 
+// Set 3359 Mississauga Rd as the default location
+- (void)setDefaultMapRegion
+{
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(43.549139,-79.663281);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (coordinate, 20000, 20000);
+    [_mapView setRegion:region animated:NO];
+}
+
 - (IBAction)optimizedRoutePressed:(UIButton *)sender
 {
     _currentLocationView = NO;
@@ -191,10 +199,7 @@
     // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
-    // Set 3359 Mississauga Rd as the default location
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(43.549139,-79.663281);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (coordinate, 20000, 20000);
-    [_mapView setRegion:region animated:NO];
+    [self setDefaultMapRegion];
     // You have to generate the annotations again but only if we already
     // have all the map items (not the case when this method is called from viewDidLoad())
     if ([self mapItemsDidFinishLoading])
@@ -249,6 +254,7 @@
     // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
+    [self setDefaultMapRegion];
     // You have to generate the annotations again (we should have all the
     // map items at this point so no need to check that)
     for (MKMapItem *item in _mapItemsCustom)
