@@ -35,66 +35,77 @@
     for (int i = 0; i < _addressesOptimal.count; i++)
     {
         [_mapItemsOptimal addObject:[NSNull null]];
-    }
-    // Initialize the custom map items array as well with the null items
-    for (int i = 0; i < _addressesOptimal.count; i++)
-    {
         [_mapItemsCustom addObject:[NSNull null]];
     }
-    _mapItemIndex = 0;
+    _locationIndex = 0;
     // We need to call this to set the map region
     [self optimizedRoutePressed:nil];
     // Get the MKMapItems for each address, store them in the array, and
     // generate annotations for each item on the map.
-    for (NSString *address in _addressesOptimal)
-    {
-        [self searchLocationsUsingString:address];
-    }
+    [self searchLocationsWithQueries:_addressesOptimal];
 }
 
-- (void)searchLocationsUsingString:(NSString *)query
+// Called recursively to obtain all the map items for the given addresses
+- (void)searchLocationsWithQueries:(NSArray *)queries
 {
     MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    request.naturalLanguageQuery = query;
+    request.naturalLanguageQuery = (NSString *)[queries objectAtIndex:_locationIndex];
     MKCoordinateRegion searchRegion = MKCoordinateRegionMakeWithDistance (_mapView.region.center, 20000, 20000);
     request.region = searchRegion;
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     // This search will be asynchronous!
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
     {
-        // Search yielded no results
-        if (response.mapItems.count == 0)
+        // No internet connection, perhaps?
+        if (error)
         {
-            NSLog(@"No Matches");
+            NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            _locationIndex = 0;
+            // Remove all annotations from the map and clear the map item arrays
+            [_mapView removeAnnotations:[_mapView annotations]];
+            for (int i = 0; i < _addressesOptimal.count; i++)
+            {
+                [_mapItemsOptimal addObject:[NSNull null]];
+                [_mapItemsCustom addObject:[NSNull null]];
+            }
         }
-        // If we are searching for an address
-        else if (response.mapItems.count == 1)
-        {
-            MKMapItem *item = [response.mapItems objectAtIndex:0];
-            // _mapItems arrays should have the same ordering as _addresses arrays.
-            // Also, this ensures that both optimal and custom arrays are populated simultaenously.
-            [_mapItemsOptimal replaceObjectAtIndex:[_addressesOptimal indexOfObject:query] withObject:item];
-            [_mapItemsCustom replaceObjectAtIndex:[_addressesCustom indexOfObject:query] withObject:item];
-            [self generateAnnotationForMapItem:item];
-        }
-        // If our search yields multiple results (this shouldn't happen
-        // in this application because we are only searching addresses)
         else
         {
-            for (MKMapItem *item in response.mapItems)
+            // Search yielded no results
+            if (response.mapItems.count == 0)
             {
-                NSLog(@"name = %@", item.name);
+                NSLog(@"No Matches");
             }
-        }
-        // Once we have obtained all of the map items, we can
-        // determine the optimal route and draw the polylines for this route.
-        if ([self mapItemsDidFinishLoading])
-        {
-            for (MKMapItem *item in _mapItemsOptimal)
+            // If we are searching for an address
+            else if (response.mapItems.count == 1)
             {
-                NSLog(@"Location Name = %@", item.name);
+                MKMapItem *item = [response.mapItems objectAtIndex:0];
+                // This ensures that both optimal and custom arrays are populated simultaenously.
+                [_mapItemsOptimal replaceObjectAtIndex:_locationIndex withObject:item];
+                [_mapItemsCustom replaceObjectAtIndex:_locationIndex withObject:item];
+                [self generateAnnotationForMapItem:item];
             }
-            [self calculateBestRoute:_mapItemsOptimal];
+            // If our search yields multiple results (this shouldn't happen
+            // in this application because we are only searching addresses)
+            else
+            {
+                for (MKMapItem *item in response.mapItems)
+                {
+                    NSLog(@"name = %@", item.name);
+                }
+            }
+            // Search for another address, if there is one
+            _locationIndex++;
+            if (_locationIndex < _addressesOptimal.count)
+            {
+                [self searchLocationsWithQueries:queries];
+            }
+            else
+            {
+                _locationIndex = 0;
+            }
         }
     }];
 }
@@ -113,8 +124,8 @@
 - (void)calculateBestRoute:(NSArray *)mapItems
 {
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-    request.source = (MKMapItem *)[mapItems objectAtIndex:_mapItemIndex];
-    request.destination = (MKMapItem *)[mapItems objectAtIndex:_mapItemIndex+1];
+    request.source = (MKMapItem *)[mapItems objectAtIndex:_locationIndex];
+    request.destination = (MKMapItem *)[mapItems objectAtIndex:_locationIndex+1];
     request.requestsAlternateRoutes = NO;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
     // This search will be asynchronous!
@@ -122,19 +133,24 @@
      {
          if (error)
          {
-             // Handle Error
+             NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             [alert show];
+             _locationIndex = 0;
+             // Erase any routes that we may have already found
+             [_mapView removeOverlays:[_mapView overlays]];
          }
          else
          {
              [self drawPolylineOnMap:response];
-             _mapItemIndex++;
-             if (_mapItemIndex < _addressesOptimal.count-1)
+             _locationIndex++;
+             if (_locationIndex < _addressesOptimal.count-1)
              {
                  [self calculateBestRoute:mapItems];
              }
              else
              {
-                 _mapItemIndex = 0;
+                 _locationIndex = 0;
              }
          }
      }];
@@ -255,14 +271,17 @@
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
     [self setDefaultMapRegion];
-    // You have to generate the annotations again (we should have all the
-    // map items at this point so no need to check that)
-    for (MKMapItem *item in _mapItemsCustom)
+    // You have to generate the annotations again but only if we already
+    // have all the map items
+    if ([self mapItemsDidFinishLoading])
     {
-        [self generateAnnotationForMapItem:item];
+        for (MKMapItem *item in _mapItemsCustom)
+        {
+            [self generateAnnotationForMapItem:item];
+        }
+        // We need to calculate the route again
+        [self calculateBestRoute:_mapItemsCustom];
     }
-    // We need to calculate the route again
-    [self calculateBestRoute:_mapItemsCustom];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -347,14 +366,17 @@
         // Clear all markers and routes from the map
         [_mapView removeAnnotations:[_mapView annotations]];
         [_mapView removeOverlays:[_mapView overlays]];
-        // You have to generate the annotations again (we should have all the
-        // map items at this point so no need to check that)
-        for (MKMapItem *item in _mapItemsCustom)
+        // You have to generate the annotations again but only if we already
+        // have all the map items (not the case when this method is called from viewDidLoad())
+        if ([self mapItemsDidFinishLoading])
         {
-            [self generateAnnotationForMapItem:item];
+            for (MKMapItem *item in _mapItemsCustom)
+            {
+                [self generateAnnotationForMapItem:item];
+            }
+            // We need to calculate the route again
+            [self calculateBestRoute:_mapItemsCustom];
         }
-        // We need to calculate the route again
-        [self calculateBestRoute:_mapItemsCustom];
     }
 }
 

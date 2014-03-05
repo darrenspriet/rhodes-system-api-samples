@@ -38,14 +38,14 @@
     BOOL _currentLocationView;
     BOOL _optimalRouteView;
     BOOL _customRouteView;
-    int _mapItemIndex;
+    int _locationIndex;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (void)searchLocationsUsingString:(NSString *)query;
+- (void)searchLocationsWithQueries:(NSArray *)queries;
 - (void)generateAnnotationForMapItem:(MKMapItem *)item;
 - (void)calculateBestRoute:(NSArray *)mapItems;
 - (void)drawPolylineOnMap:(MKDirectionsResponse *)response;
