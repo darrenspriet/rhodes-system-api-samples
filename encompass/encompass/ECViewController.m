@@ -15,31 +15,38 @@
     [super viewDidLoad];
     _mapView.delegate = self;
     _dateLabel.text = [self getCurrentDateString];
-    // Store the dummy addresses in the addresses array
-    _addresses = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
+    // Store the dummy addresses in the optimal addresses array
+    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
                                                 @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
                                                 @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
                                                 @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
                                                 @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
                                                 nil];
-    _mapItems = [[NSMutableArray alloc] initWithCapacity:_addresses.count];
+    _addressesCustom = [[NSMutableArray alloc] init];
+    // Copy the optimal addresses array into the custom addresses array
+    for (NSString *address in _addressesOptimal)
+    {
+        [_addressesCustom addObject:address];
+    }
+    _mapItemsOptimal = [[NSMutableArray alloc] init];
+    _mapItemsCustom = [[NSMutableArray alloc] init];
     // Need to do this to allow non-sequential inertion during location search
     // because NSMutableArray objects never contain free spaces (except at the end)
-    for (int i = 0; i < _addresses.count; i++)
+    for (int i = 0; i < _addressesOptimal.count; i++)
     {
-        [_mapItems addObject:[NSNull null]];
+        [_mapItemsOptimal addObject:[NSNull null]];
+    }
+    // Initialize the custom map items array as well with the null items
+    for (int i = 0; i < _addressesOptimal.count; i++)
+    {
+        [_mapItemsCustom addObject:[NSNull null]];
     }
     _mapItemIndex = 0;
-    _optimalRouteView = YES;
-    _currentLocationView = NO;
-    _customRouteView = NO;
+    // We need to call this to set the map region
     [self optimizedRoutePressed:nil];
-    // Clear all markers and routes from the map (there shouldn't be any at this point!)
-    [_mapView removeAnnotations:[_mapView annotations]];
-    [_mapView removeOverlays:[_mapView overlays]];
     // Get the MKMapItems for each address, store them in the array, and
     // generate annotations for each item on the map.
-    for (NSString *address in _addresses)
+    for (NSString *address in _addressesOptimal)
     {
         [self searchLocationsUsingString:address];
     }
@@ -52,7 +59,7 @@
     MKCoordinateRegion searchRegion = MKCoordinateRegionMakeWithDistance (_mapView.region.center, 20000, 20000);
     request.region = searchRegion;
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
-    
+    // This search will be asynchronous!
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
     {
         // Search yielded no results
@@ -64,8 +71,10 @@
         else if (response.mapItems.count == 1)
         {
             MKMapItem *item = [response.mapItems objectAtIndex:0];
-            // _mapItems should have the same ordering as _addresses
-            [_mapItems replaceObjectAtIndex:[_addresses indexOfObject:query] withObject:item];
+            // _mapItems arrays should have the same ordering as _addresses arrays.
+            // Also, this ensures that both optimal and custom arrays are populated simultaenously.
+            [_mapItemsOptimal replaceObjectAtIndex:[_addressesOptimal indexOfObject:query] withObject:item];
+            [_mapItemsCustom replaceObjectAtIndex:[_addressesCustom indexOfObject:query] withObject:item];
             [self generateAnnotationForMapItem:item];
         }
         // If our search yields multiple results (this shouldn't happen
@@ -81,11 +90,11 @@
         // determine the optimal route and draw the polylines for this route.
         if ([self mapItemsDidFinishLoading])
         {
-            for (MKMapItem *item in _mapItems)
+            for (MKMapItem *item in _mapItemsOptimal)
             {
                 NSLog(@"Location Name = %@", item.name);
             }
-            [self calculateBestRoute];
+            [self calculateBestRoute:_mapItemsOptimal];
         }
     }];
 }
@@ -101,13 +110,14 @@
 // Called recursively to construct the route piecewise.
 // NOTE: This is just done in the order in which the locations are stored
 // in our _mapItems array.  We still have to work out a proper routing algorithm!
-- (void)calculateBestRoute
+- (void)calculateBestRoute:(NSArray *)mapItems
 {
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-    request.source = (MKMapItem *)[_mapItems objectAtIndex:_mapItemIndex];
-    request.destination = (MKMapItem *)[_mapItems objectAtIndex:_mapItemIndex+1];
+    request.source = (MKMapItem *)[mapItems objectAtIndex:_mapItemIndex];
+    request.destination = (MKMapItem *)[mapItems objectAtIndex:_mapItemIndex+1];
     request.requestsAlternateRoutes = NO;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    // This search will be asynchronous!
     [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
      {
          if (error)
@@ -118,9 +128,9 @@
          {
              [self drawPolylineOnMap:response];
              _mapItemIndex++;
-             if (_mapItemIndex < _addresses.count-1)
+             if (_mapItemIndex < _addressesOptimal.count-1)
              {
-                 [self calculateBestRoute];
+                 [self calculateBestRoute:mapItems];
              }
              else
              {
@@ -176,6 +186,8 @@
     _customRouteView = NO;
     // Allow address listing to not be editable
     [_tableView setEditing:NO animated:YES];
+    // Refresh the table view
+    [_tableView reloadData];
     // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
@@ -187,12 +199,12 @@
     // have all the map items (not the case when this method is called from viewDidLoad())
     if ([self mapItemsDidFinishLoading])
     {
-        for (MKMapItem *item in _mapItems)
+        for (MKMapItem *item in _mapItemsOptimal)
         {
             [self generateAnnotationForMapItem:item];
         }
         // We need to calculate the route again
-        [self calculateBestRoute];
+        [self calculateBestRoute:_mapItemsOptimal];
     }
 }
 
@@ -204,6 +216,8 @@
     _customRouteView = NO;
     // Allow address listing to not be editable
     [_tableView setEditing:NO animated:YES];
+    // Refresh the table view
+    [_tableView reloadData];
     // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
@@ -211,6 +225,7 @@
     MKUserLocation *userLocation = _mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (userLocation.location.coordinate, 2000, 2000);
     [_mapView setRegion:region animated:NO];
+    
 }
 
 // Launch the native Maps application with all the locations
@@ -218,7 +233,7 @@
 {
     if ([self mapItemsDidFinishLoading])
     {
-        [MKMapItem openMapsWithItems:_mapItems launchOptions:nil];
+        [MKMapItem openMapsWithItems:_mapItemsOptimal launchOptions:nil];
     }
 }
 
@@ -229,11 +244,24 @@
     _customRouteView = YES;
     // Allow address listing to be editable
     [_tableView setEditing:YES animated:YES];
+    // Refresh the table view
+    [_tableView reloadData];
+    // Clear all markers and routes from the map
+    [_mapView removeAnnotations:[_mapView annotations]];
+    [_mapView removeOverlays:[_mapView overlays]];
+    // You have to generate the annotations again (we should have all the
+    // map items at this point so no need to check that)
+    for (MKMapItem *item in _mapItemsCustom)
+    {
+        [self generateAnnotationForMapItem:item];
+    }
+    // We need to calculate the route again
+    [self calculateBestRoute:_mapItemsCustom];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _addresses.count;
+    return _addressesOptimal.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -250,7 +278,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MyIdentifier"];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
-    cell.textLabel.text = [_addresses objectAtIndex:indexPath.row];
+    // Use an appropriate data source
+    if (_optimalRouteView || _currentLocationView)
+    {
+        cell.textLabel.text = [_addressesOptimal objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        cell.textLabel.text = [_addressesCustom objectAtIndex:indexPath.row];
+    }
     cell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:15];
     cell.textLabel.numberOfLines = 4;
     [cell.textLabel sizeToFit];
@@ -276,27 +312,53 @@
         // Clear all markers and routes from the map
         [_mapView removeAnnotations:[_mapView annotations]];
         [_mapView removeOverlays:[_mapView overlays]];
-        // Update the _addresses array for the relocated row
-        NSString *address = (NSString *)[_addresses objectAtIndex:fromIndexPath.row];
-        [_addresses removeObjectAtIndex:fromIndexPath.row];
-        [_addresses insertObject:address atIndex:toIndexPath.row];
-        // Update the _mapItems array for the relocated row
-        MKMapItem *item = (MKMapItem *)[_mapItems objectAtIndex:fromIndexPath.row];
-        [_mapItems removeObjectAtIndex:fromIndexPath.row];
-        [_mapItems insertObject:item atIndex:toIndexPath.row];
-        // The optimal route will use this ordering as well (going to change this soon!)
-        [self optimizedRoutePressed:nil];
-        // This ensures that edit controls have been removed from all visible cells
-        [_tableView reloadData];
+        // Update the appropriate _addresses array for the relocated row
+        if (_optimalRouteView || _currentLocationView)
+        {
+            NSString *address = (NSString *)[_addressesOptimal objectAtIndex:fromIndexPath.row];
+            [_addressesOptimal removeObjectAtIndex:fromIndexPath.row];
+            [_addressesOptimal insertObject:address atIndex:toIndexPath.row];
+        }
+        else
+        {
+            NSString *address = (NSString *)[_addressesCustom objectAtIndex:fromIndexPath.row];
+            [_addressesCustom removeObjectAtIndex:fromIndexPath.row];
+            [_addressesCustom insertObject:address atIndex:toIndexPath.row];
+        }
+        // Update the appropriate _mapItems array for the relocated row
+        if (_optimalRouteView || _currentLocationView)
+        {
+            MKMapItem *item = (MKMapItem *)[_mapItemsOptimal objectAtIndex:fromIndexPath.row];
+            [_mapItemsOptimal removeObjectAtIndex:fromIndexPath.row];
+            [_mapItemsOptimal insertObject:item atIndex:toIndexPath.row];
+        }
+        else
+        {
+            MKMapItem *item = (MKMapItem *)[_mapItemsCustom objectAtIndex:fromIndexPath.row];
+            [_mapItemsCustom removeObjectAtIndex:fromIndexPath.row];
+            [_mapItemsCustom insertObject:item atIndex:toIndexPath.row];
+        }
+        // Clear all markers and routes from the map
+        [_mapView removeAnnotations:[_mapView annotations]];
+        [_mapView removeOverlays:[_mapView overlays]];
+        // You have to generate the annotations again (we should have all the
+        // map items at this point so no need to check that)
+        for (MKMapItem *item in _mapItemsCustom)
+        {
+            [self generateAnnotationForMapItem:item];
+        }
+        // We need to calculate the route again
+        [self calculateBestRoute:_mapItemsCustom];
     }
 }
 
 // Custom method for checking that we have fully populated
-// the _mapItems array
+// the optimal _mapItems array (the custom array was populated at the same
+// time so we shouldn't need to check that).
 - (BOOL)mapItemsDidFinishLoading
 {
     BOOL didFinishLoading = YES;
-    for (id item in _mapItems)
+    for (id item in _mapItemsOptimal)
     {
         if ([item isKindOfClass:[NSNull class]])
         {
