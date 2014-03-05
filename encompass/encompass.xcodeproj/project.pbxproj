@@ -492,6 +492,7 @@
 				E0C14F7418BEB1970016990C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E0C14F7518BEB1970016990C /* Build configuration list for PBXNativeTarget "encompassTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +501,7 @@
 				E0C14F7718BEB1970016990C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
