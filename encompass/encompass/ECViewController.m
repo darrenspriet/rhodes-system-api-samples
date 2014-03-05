@@ -286,6 +286,23 @@
     }
 }
 
+// Custom method for checking that we have fully populated
+// the optimal _mapItems array (the custom array was populated at the same
+// time so we shouldn't need to check that).
+- (BOOL)mapItemsDidFinishLoading
+{
+    BOOL didFinishLoading = YES;
+    for (id item in _mapItemsOptimal)
+    {
+        if ([item isKindOfClass:[NSNull class]])
+        {
+            didFinishLoading = NO;
+            break;
+        }
+    }
+    return didFinishLoading;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _locationCount;
@@ -315,7 +332,7 @@
         cell.textLabel.text = [_addressesCustom objectAtIndex:indexPath.row];
     }
     cell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:15];
-    cell.textLabel.numberOfLines = 4;
+    cell.textLabel.numberOfLines = 5;
     [cell.textLabel sizeToFit];
     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]];
     cell.showsReorderControl = YES;
@@ -330,6 +347,18 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
+}
+
+// Disables row deletion while in edit mode
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
+// Prevents indenting the cells while in edit mode
+- (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
@@ -380,23 +409,6 @@
             [self calculateBestRoute:_mapItemsCustom];
         }
     }
-}
-
-// Custom method for checking that we have fully populated
-// the optimal _mapItems array (the custom array was populated at the same
-// time so we shouldn't need to check that).
-- (BOOL)mapItemsDidFinishLoading
-{
-    BOOL didFinishLoading = YES;
-    for (id item in _mapItemsOptimal)
-    {
-        if ([item isKindOfClass:[NSNull class]])
-        {
-            didFinishLoading = NO;
-            break;
-        }
-    }
-    return didFinishLoading;
 }
 
 @end
