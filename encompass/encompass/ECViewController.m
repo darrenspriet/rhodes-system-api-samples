@@ -46,6 +46,8 @@
     [self searchLocationsWithQueries:_addressesOptimal];
 }
 
+
+#pragma mark Custom Methods
 // Called recursively to obtain all the map items for the given addresses
 - (void)searchLocationsWithQueries:(NSArray *)queries
 {
@@ -169,34 +171,6 @@
     }
 }
 
-// If the map is set to the current location, move the location marker
-// as the user changes position
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    if (_currentLocationView)
-    {
-        _mapView.centerCoordinate = userLocation.location.coordinate;
-    }
-}
-
-// This method is called everytime a polyline needs to be drawn
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
-{
-    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
-    renderer.strokeColor = [UIColor blueColor];
-    renderer.lineWidth = 3.0;
-    return renderer;
-}
-
-- (NSString *)getCurrentDateString
-{
-    NSDate *currDate = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"MM.dd.YYYY"];
-    NSString *dateString = [dateFormatter stringFromDate:currDate];
-    return dateString;
-}
-
 // Set 3359 Mississauga Rd as the default location
 - (void)setDefaultMapRegion
 {
@@ -204,6 +178,9 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (coordinate, 20000, 20000);
     [_mapView setRegion:region animated:NO];
 }
+
+
+#pragma mark Button Methods
 
 - (IBAction)optimizedRoutePressed:(UIButton *)sender
 {
@@ -286,6 +263,18 @@
     }
 }
 
+
+#pragma mark Convenience Methods
+
+- (NSString *)getCurrentDateString
+{
+    NSDate *currDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"MM.dd.YYYY"];
+    NSString *dateString = [dateFormatter stringFromDate:currDate];
+    return dateString;
+}
+
 // Custom method for checking that we have fully populated
 // the optimal _mapItems array (the custom array was populated at the same
 // time so we shouldn't need to check that).
@@ -302,6 +291,31 @@
     }
     return didFinishLoading;
 }
+
+
+#pragma mark MKMapViewDelegate Protocol Methods
+
+// If the map is set to the current location, move the location marker
+// as the user changes position
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if (_currentLocationView)
+    {
+        _mapView.centerCoordinate = userLocation.location.coordinate;
+    }
+}
+
+// This method is called everytime a polyline needs to be drawn
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
+{
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    renderer.strokeColor = [UIColor blueColor];
+    renderer.lineWidth = 3.0;
+    return renderer;
+}
+
+
+#pragma mark UITableView Protocol Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

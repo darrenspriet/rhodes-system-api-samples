@@ -14,13 +14,12 @@
 //      appropriately in the optimized route view before drawing the polylines on the map.
 //  4.  When in custom route view, change "Locations" label and button color to indicate the current mode
 //      and also what actions need to be performed.
-//  5.  Insert pragma marks.
-//  6.  Pass routing information as well to Apple Maps.
-//  7.  Build an option into custom view that can allow/disallow toll routes.
-//  8.  Pull addresses from plist file.
-//  9. Create a single "location" object that pairs each address with its map item.
-//  10. Do something when a row is selected!
-//  11. Dyamically determine the map view region based on the locations.
+//  5.  Pass routing information as well to Apple Maps.
+//  6.  Build an option into custom view that can allow/disallow toll routes.
+//  7.  Pull addresses from plist file.
+//  8.  Create a single "location" object that pairs each address with its map item.
+//  9.  Do something when a row is selected!
+//  10. Dyamically determine the map view region based on the locations.
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
