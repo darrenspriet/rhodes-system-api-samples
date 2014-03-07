@@ -12,7 +12,8 @@
 @interface ECViewController : UIViewController <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-
-- (IBAction)launchMapsPressed:(UIButton *)sender;
-
+-(IBAction)OpenInMapsPressed:(UIButton *)sender;
+- (IBAction)menuShow:(UIButton *)sender;
+- (IBAction)MenuItemSelected:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIView *menuView;
 @end

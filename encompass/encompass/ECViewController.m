@@ -55,9 +55,7 @@
             annotation.coordinate = item.placemark.coordinate;
             annotation.title = item.name;
             [_mapView addAnnotation:annotation];
-
         }
-        
     }];
     NSLog(@"Dilip is great!");
 }
@@ -67,9 +65,120 @@
     // Do something when the user changes the location
 }
 
-- (IBAction)launchMapsPressed:(UIButton *)sender
+-(IBAction)OpenInMapsPressed:(UIButton *)sender
 {
     [MKMapItem openMapsWithItems:nil launchOptions:nil];
 }
+
+
+- (IBAction)menuShow:(UIButton *)sender {
+    if (sender.tag == 0) {
+        sender.tag = 1;
+        self.menuView.hidden = NO;
+        [sender setTitle:@"Options                 ▲" forState:UIControlStateNormal];
+    } else {
+        sender.tag = 0;
+        self.menuView.hidden = YES;
+        [sender setTitle:@"Options                 ▼" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)MenuItemSelected:(UIButton *)sender {
+    switch (sender.tag) {
+        case 1:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:2];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:8];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            break;
+        case 2:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:1];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:7];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            
+            break;
+        case 3:
+            
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:4];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:10];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            
+            
+            break;
+        case 4:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:3];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:9];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            
+            break;
+        case 5:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            break;
+        case 6:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
 
 @end
