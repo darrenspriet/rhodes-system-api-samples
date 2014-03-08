@@ -8,6 +8,7 @@
 
 #import "ECViewController.h"
 
+
 @interface ECViewController ()
 
 @end
@@ -24,6 +25,7 @@
                   @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
                   @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
                   @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON, \nL5A 2G4",
+                  @"Best Buy \n2500 Winston Park Dr \nOakville, ON, \nL6H 7E5",
                   nil];
     
     _mapItems = [[NSMutableArray alloc] initWithCapacity:4];
@@ -37,8 +39,21 @@
     }
     
     self.tableViewCell = [[ECTableViewCell alloc]init];
-
     
+    UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:1];
+    ButtonTag.selected=YES;
+    NSDate *date = [[NSDate alloc]init];
+    _dateCounter = 0;
+    [self  setDateLabel:date];
+}
+
+-(void)setDateLabel:(NSDate *)date{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of
+    dateFormatter.dateFormat=@"MMMM";
+    NSString * monthString = [[dateFormatter stringFromDate:date] capitalizedString];
+    dateFormatter.dateFormat=@"d";
+    NSString * dayString = [[dateFormatter stringFromDate:date] capitalizedString];
+    [self.lblDate setText:[NSString stringWithFormat:@"%@ %@", monthString, dayString]];
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
@@ -195,7 +210,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"MyCell";
-
+    
     ECTableViewCell *cell = (ECTableViewCell*)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"MyCell"];
@@ -209,6 +224,7 @@
     [cell setAddresses: [NSMutableArray arrayWithArray:_addresses]];
     [cell.horizontalTableView setAllowsSelection:YES];
     [cell.selectedBackgroundView setBackgroundColor:[UIColor clearColor]];
+    [self setDelegate:cell];
     return cell;
 }
 
@@ -239,31 +255,33 @@
 }
 
 - (IBAction)MenuItemSelected:(UIButton *)sender {
+    if (sender.tag<5) {
+        if (sender.selected==YES) {
+            sender.selected=NO;
+        }
+    }
+    
     switch (sender.tag) {
         case 1:
-            if (sender.selected==YES) {
-                sender.selected = NO;
-                UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
-                ViewTag.backgroundColor = [UIColor whiteColor];
-            }else{
+            if (sender.selected==NO) {
                 sender.selected=YES;
                 UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:2];
-                ButtonTag.selected=NO;
+              //  NSLog(@"this is the button %@", ButtonTag);
+               [ButtonTag setSelected:NO];
                 UIView *NumTag = (UIView*)[self.view viewWithTag:8];
                 NumTag.backgroundColor = [UIColor whiteColor];
                 UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
                 ViewTag.backgroundColor = [UIColor greenColor];
             }
+
             break;
         case 2:
-            if (sender.selected==YES) {
-                sender.selected = NO;
-                UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
-                ViewTag.backgroundColor = [UIColor whiteColor];
-            }else{
+            if (sender.selected==NO) {
+               // UIButton *button = sender;
                 sender.selected=YES;
                 UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:1];
-                ButtonTag.selected=NO;
+               // NSLog(@"this is the button %@", ButtonTag);
+                [ButtonTag setSelected:NO];
                 UIView *NumTag = (UIView*)[self.view viewWithTag:7];
                 NumTag.backgroundColor = [UIColor whiteColor];
                 UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
@@ -273,11 +291,10 @@
             break;
         case 3:
 
-            if (sender.selected==YES) {
-                sender.selected = NO;
-                UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
-                ViewTag.backgroundColor = [UIColor whiteColor];
-            }else{
+            if (sender.selected==NO){
+                if ([self.delegate isTableEditible]) {
+                    [self.delegate changeToOptimized];
+                }
                 sender.selected=YES;
                 UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:4];
                 ButtonTag.selected=NO;
@@ -290,11 +307,8 @@
             
             break;
         case 4:
-            if (sender.selected==YES) {
-                sender.selected = NO;
-                UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
-                ViewTag.backgroundColor = [UIColor whiteColor];
-            }else{
+            if (sender.selected==NO){
+                [self.delegate changeToCustomized];
                 sender.selected=YES;
                 UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:3];
                 ButtonTag.selected=NO;
@@ -331,5 +345,33 @@
         default:
             break;
     }
+}
+
+- (IBAction)OnDateForward:(UIButton *)sender {
+    _dateCounter++;
+    NSDate *now = [NSDate date];
+    int daysToAdd = _dateCounter;
+    NSDate *date = [now dateByAddingTimeInterval:60*60*24*daysToAdd];
+    [self  setDateLabel:date];
+}
+
+- (IBAction)OnDateBackward:(UIButton *)sender {
+    _dateCounter--;
+    NSDate *now = [NSDate date];
+    int daysToAdd = _dateCounter;
+    NSDate *date = [now dateByAddingTimeInterval:60*60*24*daysToAdd];
+    [self  setDateLabel:date];
+}
+
+- (IBAction)OnTodaysNotesPressed:(UIButton *)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Encompass" message:@"Your Notes For the Day " delegate:Nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    [alert show];
+}
+
+- (IBAction)OnColdCallPressed:(UIButton *)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Encompass" message:@"Your Cold Call Starting Point " delegate:Nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 @end

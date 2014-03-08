@@ -64,14 +64,33 @@
     [tableView setEditing:NO animated:YES];
     
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView setEditing:YES animated:YES];
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [tableView setEditing:YES animated:YES];
+//}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleNone;
 }
+
+-(void)changeToCustomized{
+
+         [self.horizontalTableView setEditing:YES animated:YES];
+
+}
+-(void)changeToOptimized{
+    [self.horizontalTableView setEditing:NO animated:YES];
+}
+
+-(BOOL)isTableEditible{
+    if (self.horizontalTableView.editing==YES) {
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
+
 
 @end

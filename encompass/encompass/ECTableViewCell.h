@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ECActualTableViewCell.h"
+#import "ECViewController.h"
 
-@interface ECTableViewCell : UITableViewCell<UITableViewDelegate, UITableViewDataSource>
+@class ECViewController;
+
+@interface ECTableViewCell : UITableViewCell<UITableViewDelegate, UITableViewDataSource, ECViewControllerDelegate>
+
 
 @property (weak, nonatomic) IBOutlet UITableView *horizontalTableView;
 

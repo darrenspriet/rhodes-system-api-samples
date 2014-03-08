@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E05F15ED18CAB5DD00FA5F08 /* notes.png in Resources */ = {isa = PBXBuildFile; fileRef = E05F15EC18CAB5DD00FA5F08 /* notes.png */; };
+		E072A50918C9604000951982 /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50718C9604000951982 /* forwardButton.png */; };
+		E072A50A18C9604000951982 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50818C9604000951982 /* forwardButton@2x.png */; };
+		E072A50D18C9604E00951982 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50B18C9604E00951982 /* backButton.png */; };
+		E072A50E18C9604E00951982 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50C18C9604E00951982 /* backButton@2x.png */; };
 		E091AFC618C556A200AF4224 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC518C556A200AF4224 /* background.jpg */; };
 		E091AFC818C5721B00AF4224 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC718C5721B00AF4224 /* tablecell.png */; };
 		E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */; };
@@ -40,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E05F15EC18CAB5DD00FA5F08 /* notes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notes.png; sourceTree = "<group>"; };
+		E072A50718C9604000951982 /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forwardButton.png; sourceTree = "<group>"; };
+		E072A50818C9604000951982 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forwardButton@2x.png"; sourceTree = "<group>"; };
+		E072A50B18C9604E00951982 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
+		E072A50C18C9604E00951982 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		E091AFC518C556A200AF4224 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		E091AFC718C5721B00AF4224 /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
 		E091AFC918C5730D00AF4224 /* ECTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECTableViewCell.h; sourceTree = "<group>"; };
@@ -147,6 +157,11 @@
 		E0C14F4A18BEB1970016990C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E072A50B18C9604E00951982 /* backButton.png */,
+				E05F15EC18CAB5DD00FA5F08 /* notes.png */,
+				E072A50C18C9604E00951982 /* backButton@2x.png */,
+				E072A50718C9604000951982 /* forwardButton.png */,
+				E072A50818C9604000951982 /* forwardButton@2x.png */,
 				E0C14F4B18BEB1970016990C /* encompass-Info.plist */,
 				E0D0EEA518C62E29005871D7 /* Graybtn.png */,
 				E091AFC518C556A200AF4224 /* background.jpg */,
@@ -266,9 +281,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */,
+				E072A50918C9604000951982 /* forwardButton.png in Resources */,
+				E072A50A18C9604000951982 /* forwardButton@2x.png in Resources */,
 				E091AFC618C556A200AF4224 /* background.jpg in Resources */,
+				E072A50D18C9604E00951982 /* backButton.png in Resources */,
 				E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */,
 				E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */,
+				E072A50E18C9604E00951982 /* backButton@2x.png in Resources */,
+				E05F15ED18CAB5DD00FA5F08 /* notes.png in Resources */,
 				E091AFC818C5721B00AF4224 /* tablecell.png in Resources */,
 				E0D0EEA618C62E29005871D7 /* Graybtn.png in Resources */,
 			);
