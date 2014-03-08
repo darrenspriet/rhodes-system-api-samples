@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>21B25A90-320F-498B-8658-E747B526106D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>encompass</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>176E4A67-730E-4AAC-B94A-39AD6EF83848</key>
+		<string>https://github.com/darrenspriet/rhodes-system-api-samples.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>encompass/encompass.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>176E4A67-730E-4AAC-B94A-39AD6EF83848</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/darrenspriet/rhodes-system-api-samples.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>176E4A67-730E-4AAC-B94A-39AD6EF83848</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>176E4A67-730E-4AAC-B94A-39AD6EF83848</string>
+			<key>IDESourceControlWCCName</key>
+			<string>rhodes-system-api-samples</string>
+		</dict>
+	</array>
+</dict>
+</plist>
