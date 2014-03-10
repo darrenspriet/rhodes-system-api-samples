@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6407CD2318C40F4C009653FC /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = 6407CD2218C40F4C009653FC /* tablecell.png */; };
+		64165CF218CE59EC00CB8652 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64165CF118CE59EC00CB8652 /* libsqlite3.dylib */; };
+		64165CF318CE6C8800CB8652 /* encompass.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 64165CF018CE4AD500CB8652 /* encompass.sqlite */; };
 		642B269718C1B25F004DA3EB /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 642B269618C1B25F004DA3EB /* background.jpg */; };
 		6472E03918C26ADE006E6FE8 /* Graybtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6472E03818C26ADE006E6FE8 /* Graybtn.png */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		6407CD2218C40F4C009653FC /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
+		64165CF018CE4AD500CB8652 /* encompass.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = encompass.sqlite; sourceTree = "<group>"; };
+		64165CF118CE59EC00CB8652 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		642B269618C1B25F004DA3EB /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		6472E03818C26ADE006E6FE8 /* Graybtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Graybtn.png; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64165CF218CE59EC00CB8652 /* libsqlite3.dylib in Frameworks */,
 				E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */,
 				E0C14F4818BEB1970016990C /* UIKit.framework in Frameworks */,
 				E0C14F7C18BEB28B0016990C /* MapKit.framework in Frameworks */,
@@ -111,6 +116,7 @@
 		E0C14F4218BEB1970016990C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64165CF118CE59EC00CB8652 /* libsqlite3.dylib */,
 				E0C14F7B18BEB28B0016990C /* MapKit.framework */,
 				E0C14F4318BEB1970016990C /* Foundation.framework */,
 				E0C14F4518BEB1970016990C /* CoreGraphics.framework */,
@@ -127,8 +133,8 @@
 				E0C14F5218BEB1970016990C /* ECAppDelegate.h */,
 				E0C14F5318BEB1970016990C /* ECAppDelegate.m */,
 				E0C14F5818BEB1970016990C /* ECViewController.h */,
-				E0C14F7818BEB1EA0016990C /* Main.storyboard */,
 				E0C14F5918BEB1970016990C /* ECViewController.m */,
+				E0C14F7818BEB1EA0016990C /* Main.storyboard */,
 				E0C14F5B18BEB1970016990C /* Images.xcassets */,
 				E0C14F4A18BEB1970016990C /* Supporting Files */,
 			);
@@ -140,6 +146,7 @@
 			children = (
 				E0C14F4B18BEB1970016990C /* encompass-Info.plist */,
 				6472E03818C26ADE006E6FE8 /* Graybtn.png */,
+				64165CF018CE4AD500CB8652 /* encompass.sqlite */,
 				6407CD2218C40F4C009653FC /* tablecell.png */,
 				642B269618C1B25F004DA3EB /* background.jpg */,
 				E0C14F4C18BEB1970016990C /* InfoPlist.strings */,
@@ -255,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64165CF318CE6C8800CB8652 /* encompass.sqlite in Resources */,
 				E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */,
 				642B269718C1B25F004DA3EB /* background.jpg in Resources */,
 				E0C14F7918BEB1EA0016990C /* Main.storyboard in Resources */,

@@ -23,6 +23,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <sqlite3.h>
 
 @interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -37,13 +38,14 @@
     BOOL _customRouteView;
     int _locationIndex;
     int _locationCount;
+    sqlite3 *databaseHandle;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (void)searchLocationsWithQueries:(NSArray *)queries;
+- (void)populateArraysFromDatabase;
 - (void)generateAnnotationForMapItem:(MKMapItem *)item;
 - (void)calculateBestRoute:(NSArray *)mapItems;
 - (void)drawPolylineOnMap:(MKDirectionsResponse *)response;
@@ -53,6 +55,5 @@
 - (IBAction)currentLocationPressed:(UIButton *)sender;
 - (IBAction)openInMapsPressed:(UIButton *)sender;
 - (IBAction)customRoutePressed:(UIButton *)sender;
-- (BOOL)mapItemsDidFinishLoading;
 
 @end

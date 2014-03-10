@@ -16,102 +16,68 @@
     _mapView.delegate = self;
     _dateLabel.text = [self getCurrentDateString];
     // Store the dummy addresses in the optimal addresses array
-    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road \nMississauga, ON \nL5H 2M9",
-                                                @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
-                                                @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
-                                                @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
-                                                @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
-                                                nil];
-    _locationCount = (int)_addressesOptimal.count;
+    _addressesOptimal = [[NSMutableArray alloc] init];
     _addressesCustom = [[NSMutableArray alloc] init];
-    // Copy the optimal addresses array into the custom addresses array
-    for (NSString *address in _addressesOptimal)
-    {
-        [_addressesCustom addObject:address];
-    }
     _mapItemsOptimal = [[NSMutableArray alloc] init];
     _mapItemsCustom = [[NSMutableArray alloc] init];
-    // Need to do this to allow non-sequential inertion during location search
-    // because NSMutableArray objects never contain free spaces (except at the end)
-    for (int i = 0; i < _locationCount; i++)
-    {
-        [_mapItemsOptimal addObject:[NSNull null]];
-        [_mapItemsCustom addObject:[NSNull null]];
-    }
+    // Populate the above arrays using the local database
+    [self populateArraysFromDatabase];
+    _locationCount = (int)_addressesOptimal.count;
     _locationIndex = 0;
-    // We need to call this to set the map region
+    // We need to call this to set the map region.
+    // It will also calculate the route and generate the annotations.
     [self optimizedRoutePressed:nil];
-    // Get the MKMapItems for each address, store them in the array, and
-    // generate annotations for each item on the map.
-    [self searchLocationsWithQueries:_addressesOptimal];
 }
 
 
 #pragma mark Custom Methods
-// Called recursively to obtain all the map items for the given addresses
-- (void)searchLocationsWithQueries:(NSArray *)queries
+
+// Connect to the local databse and populate the addresses and map items arrays
+- (void)populateArraysFromDatabase
 {
-    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    request.naturalLanguageQuery = (NSString *)[queries objectAtIndex:_locationIndex];
-    MKCoordinateRegion searchRegion = MKCoordinateRegionMakeWithDistance (_mapView.region.center, 20000, 20000);
-    request.region = searchRegion;
-    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
-    // This search will be asynchronous!
-    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
+    NSString *databasePath = [[NSBundle mainBundle] pathForResource:@"encompass"
+                                                             ofType:@"sqlite"];
+    if (sqlite3_open([databasePath UTF8String], &databaseHandle) != SQLITE_OK)
     {
-        // No internet connection, perhaps?
-        if (error)
+        // Hopefully, this never happens!
+        NSLog(@"Failed to open database!");
+    }
+    // Load the data from the Account table
+    NSString *queryStatement = [NSString stringWithFormat:@"SELECT * FROM account"];
+    sqlite3_stmt *statement;
+    if (sqlite3_prepare_v2(databaseHandle, [queryStatement UTF8String], -1, &statement, NULL) == SQLITE_OK)
+    {
+        while (sqlite3_step(statement) == SQLITE_ROW)
         {
-            NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            _locationIndex = 0;
-            // Remove all annotations from the map and clear the map item arrays
-            [_mapView removeAnnotations:[_mapView annotations]];
-            for (int i = 0; i < _locationCount; i++)
-            {
-                [_mapItemsOptimal addObject:[NSNull null]];
-                [_mapItemsCustom addObject:[NSNull null]];
-            }
+            // Get the raw field data
+            char *nameChars = (char *) sqlite3_column_text(statement, 1);
+            NSString *name = [[NSString alloc] initWithUTF8String:nameChars];
+            char *addressChars = (char *) sqlite3_column_text(statement, 2);
+            NSString *address = [[NSString alloc] initWithUTF8String:addressChars];
+            char *cityChars = (char *) sqlite3_column_text(statement, 3);
+            NSString *city = [[NSString alloc] initWithUTF8String:cityChars];
+            char *provChars = (char *) sqlite3_column_text(statement, 4);
+            NSString *prov = [[NSString alloc] initWithUTF8String:provChars];
+            char *postalChars = (char *) sqlite3_column_text(statement, 5);
+            NSString *postal = [[NSString alloc] initWithUTF8String:postalChars];
+            double longitude = sqlite3_column_double(statement, 6);
+            double latitude = sqlite3_column_double(statement, 7);
+            // Build the full address string and add it to the addresses arrays
+            NSString *fullAddress = [NSString stringWithFormat:@"%@\n%@\n%@, %@\n%@",
+                                     name, address, city, prov, postal];
+            [_addressesOptimal addObject:fullAddress];
+            [_addressesCustom addObject:fullAddress];
+            // Create the map item object and add it to the map items arrays
+            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+                                                           addressDictionary:nil];
+            MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
+            item.name = address;
+            [_mapItemsOptimal addObject:item];
+            [_mapItemsCustom addObject:item];
         }
-        else
-        {
-            // Search yielded no results
-            if (response.mapItems.count == 0)
-            {
-                NSLog(@"No Matches");
-            }
-            // If we are searching for an address
-            else if (response.mapItems.count == 1)
-            {
-                MKMapItem *item = [response.mapItems objectAtIndex:0];
-                // This ensures that both optimal and custom arrays are populated simultaenously.
-                [_mapItemsOptimal replaceObjectAtIndex:_locationIndex withObject:item];
-                [_mapItemsCustom replaceObjectAtIndex:_locationIndex withObject:item];
-                [self generateAnnotationForMapItem:item];
-            }
-            // If our search yields multiple results (this shouldn't happen
-            // in this application because we are only searching addresses)
-            else
-            {
-                for (MKMapItem *item in response.mapItems)
-                {
-                    NSLog(@"name = %@", item.name);
-                }
-            }
-            // Search for another address, if there is one
-            _locationIndex++;
-            if (_locationIndex < _locationCount)
-            {
-                [self searchLocationsWithQueries:queries];
-            }
-            else
-            {
-                _locationIndex = 0;
-                [self calculateBestRoute:_mapItemsOptimal];
-            }
-        }
-    }];
+    }
+    sqlite3_close(databaseHandle);
 }
 
 - (void)generateAnnotationForMapItem:(MKMapItem *)item
@@ -137,8 +103,9 @@
      {
          if (error)
          {
-             NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             NSString *message = error.localizedFailureReason;
+             NSString *title = error.localizedDescription;
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
              [alert show];
              _locationIndex = 0;
              // Erase any routes that we may have already found
@@ -195,17 +162,12 @@
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
     [self setDefaultMapRegion];
-    // You have to generate the annotations again but only if we already
-    // have all the map items (not the case when this method is called from viewDidLoad())
-    if ([self mapItemsDidFinishLoading])
+    // You have to generate the annotations and calculate the route again
+    for (MKMapItem *item in _mapItemsCustom)
     {
-        for (MKMapItem *item in _mapItemsOptimal)
-        {
-            [self generateAnnotationForMapItem:item];
-        }
-        // We need to calculate the route again
-        [self calculateBestRoute:_mapItemsOptimal];
+        [self generateAnnotationForMapItem:item];
     }
+    [self calculateBestRoute:_mapItemsOptimal];
 }
 
 // Set the current location as the specified location
@@ -225,16 +187,12 @@
     MKUserLocation *userLocation = _mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (userLocation.location.coordinate, 2000, 2000);
     [_mapView setRegion:region animated:NO];
-    
 }
 
 // Launch the native Maps application with all the locations
 - (IBAction)openInMapsPressed:(UIButton *)sender
 {
-    if ([self mapItemsDidFinishLoading])
-    {
-        [MKMapItem openMapsWithItems:_mapItemsOptimal launchOptions:nil];
-    }
+    [MKMapItem openMapsWithItems:_mapItemsOptimal launchOptions:nil];
 }
 
 - (IBAction)customRoutePressed:(UIButton *)sender
@@ -250,17 +208,12 @@
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
     [self setDefaultMapRegion];
-    // You have to generate the annotations again but only if we already
-    // have all the map items
-    if ([self mapItemsDidFinishLoading])
+    // You have to generate the annotations and calculate the route again
+    for (MKMapItem *item in _mapItemsCustom)
     {
-        for (MKMapItem *item in _mapItemsCustom)
-        {
-            [self generateAnnotationForMapItem:item];
-        }
-        // We need to calculate the route again
-        [self calculateBestRoute:_mapItemsCustom];
+        [self generateAnnotationForMapItem:item];
     }
+    [self calculateBestRoute:_mapItemsCustom];
 }
 
 
@@ -273,23 +226,6 @@
     [dateFormatter setDateFormat:@"MM.dd.YYYY"];
     NSString *dateString = [dateFormatter stringFromDate:currDate];
     return dateString;
-}
-
-// Custom method for checking that we have fully populated
-// the optimal _mapItems array (the custom array was populated at the same
-// time so we shouldn't need to check that).
-- (BOOL)mapItemsDidFinishLoading
-{
-    BOOL didFinishLoading = YES;
-    for (id item in _mapItemsOptimal)
-    {
-        if ([item isKindOfClass:[NSNull class]])
-        {
-            didFinishLoading = NO;
-            break;
-        }
-    }
-    return didFinishLoading;
 }
 
 
@@ -411,17 +347,12 @@
         // Clear all markers and routes from the map
         [_mapView removeAnnotations:[_mapView annotations]];
         [_mapView removeOverlays:[_mapView overlays]];
-        // You have to generate the annotations again but only if we already
-        // have all the map items (not the case when this method is called from viewDidLoad())
-        if ([self mapItemsDidFinishLoading])
+        // You have to generate the annotations and calculate the route again
+        for (MKMapItem *item in _mapItemsCustom)
         {
-            for (MKMapItem *item in _mapItemsCustom)
-            {
-                [self generateAnnotationForMapItem:item];
-            }
-            // We need to calculate the route again
-            [self calculateBestRoute:_mapItemsCustom];
+            [self generateAnnotationForMapItem:item];
         }
+        [self calculateBestRoute:_mapItemsCustom];
     }
 }
 
