@@ -13,7 +13,13 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 -(IBAction)OpenInMapsPressed:(UIButton *)sender;
-- (IBAction)menuShow:(UIButton *)sender;
-- (IBAction)MenuItemSelected:(UIButton *)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *launchMaps;
+
 @property (weak, nonatomic) IBOutlet UIView *menuView;
+
+
+- (IBAction)MenuItemSelected:(UIButton *)sender;
+
+- (IBAction)menuShow:(UIButton *)sender;
 @end

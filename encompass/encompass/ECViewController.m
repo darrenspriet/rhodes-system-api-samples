@@ -14,6 +14,8 @@
 
 @implementation ECViewController
 
+@synthesize launchMaps;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -22,6 +24,8 @@
     // Removing annotations (no annotations at this point!)
     //[_mapView removeAnnotations:[_mapView annotations]];
 
+    //[self.launchMaps setImage:[UIImage imageNamed:@"Graybtn.png"] forState:UIControlStateNormal];
+    
     // Set HMC as the center of the map with radius 1 km
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(43.590917, -79.647192);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coordinate, 20000, 20000);
@@ -57,7 +61,6 @@
             [_mapView addAnnotation:annotation];
         }
     }];
-    NSLog(@"Dilip is great!");
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -98,6 +101,9 @@
                 NumTag.backgroundColor = [UIColor whiteColor];
                 UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
                 ViewTag.backgroundColor = [UIColor greenColor];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"All Notes" message:@"Call 1 - Take papers from last visit \nCall 2 - Bring sample for client" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+                
             }
             break;
         case 2:
