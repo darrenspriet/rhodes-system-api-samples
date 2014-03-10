@@ -146,6 +146,7 @@
                                         </state>
                                         <connections>
                                             <action selector="MenuItemSelected:" destination="gpL-LS-UDj" eventType="touchUpInside" id="y6A-dd-5In"/>
+                                            <segue destination="OTB-7R-hdc" kind="modal" id="fay-tz-MGN"/>
                                         </connections>
                                     </button>
                                     <view tag="11" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sgg-0Z-aUD">
@@ -221,10 +222,52 @@
             </objects>
             <point key="canvasLocation" x="414" y="92"/>
         </scene>
+        <!--Ccalender View Controller-->
+        <scene sceneID="vfI-wb-Omt">
+            <objects>
+                <viewController id="OTB-7R-hdc" customClass="ECcalenderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SR3-lG-ydk"/>
+                        <viewControllerLayoutGuide type="bottom" id="tU2-9m-hCB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lh7-SB-mpU">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="IgY-AT-OK2">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="calender.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="5hJ-yo-kuD">
+                                <rect key="frame" x="430" y="196" width="569" height="547"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Qp-aq-car">
+                                <rect key="frame" x="430" y="122" width="101" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back" backgroundImage="Graybtn.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="OTB-7R-hdc" eventType="touchUpInside" id="l2n-cb-bXb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cvw-9z-fPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1491" y="104"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Graybtn.png" width="390" height="112"/>
         <image name="background.jpg" width="1024" height="768"/>
+        <image name="calender.jpg" width="1024" height="768"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
