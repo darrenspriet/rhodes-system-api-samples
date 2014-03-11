@@ -64,10 +64,12 @@
     [tableView setEditing:NO animated:YES];
     
 }
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [tableView setEditing:YES animated:YES];
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (isCustomized) {
+        [tableView setEditing:YES animated:YES];
+    }
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -75,12 +77,39 @@
 }
 
 -(void)changeToCustomized{
-
+    isCustomized = YES;
          [self.horizontalTableView setEditing:YES animated:YES];
 
 }
 -(void)changeToOptimized{
+    isCustomized = NO;
     [self.horizontalTableView setEditing:NO animated:YES];
+}
+
+-(NSMutableArray*)changeAddressesOrder{
+    if (isNormalAddress) {
+        self.addresses = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road                      \nMississauga, ON \nL5H 2M9",
+                      @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
+                      @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
+                      @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON, \nL5A 2G4",
+                      @"Best Buy \n2500 Winston Park Dr \nOakville, ON, \nL6H 7E5",
+                      nil];
+        isNormalAddress = NO;
+    }
+    else{
+        self.addresses = [[NSMutableArray alloc] initWithObjects:
+                      @"Shoppers Drug Mart\n5033 Hurontario Street \nMississauga, ON, \nL4Z 3X7",
+                      @"PetSmart \n5800 McLaughlin Rd \nMississauga, ON \nL5R 4B7",
+                      @"Winners \n50 Matheson W \nMississauga, ON, \nL5R 3T2",
+                      @"Michaels \n3105 Argentia Rd\nMississauga, ON \nL5N 8E1",
+                      @"Walmart \n2959 Argentia Rd \nMississauga, ON \nL5N 0B2",
+                      @"Best Buy \n2500 Winston Park Dr \nOakville, ON, \nL6H 7E5",
+                      nil];
+        isNormalAddress=YES;
+    }
+    
+    [self.horizontalTableView reloadData];
+        return self.addresses;
 }
 
 -(BOOL)isTableEditible{

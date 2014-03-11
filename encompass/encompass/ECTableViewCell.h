@@ -12,7 +12,10 @@
 
 @class ECViewController;
 
-@interface ECTableViewCell : UITableViewCell<UITableViewDelegate, UITableViewDataSource, ECViewControllerDelegate>
+@interface ECTableViewCell : UITableViewCell<UITableViewDelegate, UITableViewDataSource, ECViewControllerDelegate>{
+    BOOL isNormalAddress;
+    BOOL isCustomized;
+}
 
 
 @property (weak, nonatomic) IBOutlet UITableView *horizontalTableView;

@@ -325,7 +325,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="27 Km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8W-dB-7Pa">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="65 Km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8W-dB-7Pa">
                                 <rect key="frame" x="572" y="588" width="78" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -355,6 +355,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="lblDate" destination="dQy-rD-U0R" id="9dc-fJ-V3B"/>
+                        <outlet property="lblDistance" destination="b8W-dB-7Pa" id="jlg-eN-mgc"/>
+                        <outlet property="lblTime" destination="vYy-bE-pgy" id="FPx-wb-bdX"/>
                         <outlet property="mapView" destination="LfH-kz-SZS" id="SDd-mU-2Ta"/>
                         <outlet property="menuView" destination="aMs-u4-3AW" id="ebi-Wh-IRu"/>
                     </connections>

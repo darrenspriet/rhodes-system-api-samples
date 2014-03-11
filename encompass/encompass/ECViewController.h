@@ -9,6 +9,7 @@
 -(void)changeToCustomized;
 -(BOOL)isTableEditible;
 -(void)changeToOptimized;
+-(NSMutableArray *)changeAddressesOrder;
 @end
 
 #import <UIKit/UIKit.h>
@@ -35,6 +36,8 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *menuView;
 @property (weak, nonatomic) IBOutlet UILabel *lblDate;
+@property (weak, nonatomic) IBOutlet UILabel *lblDistance;
+@property (weak, nonatomic) IBOutlet UILabel *lblTime;
 
 - (IBAction)OpenInMapsPressed:(UIButton *)sender;
 - (IBAction)menuShow:(UIButton *)sender;

@@ -12,6 +12,7 @@
 		E072A50A18C9604000951982 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50818C9604000951982 /* forwardButton@2x.png */; };
 		E072A50D18C9604E00951982 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50B18C9604E00951982 /* backButton.png */; };
 		E072A50E18C9604E00951982 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E072A50C18C9604E00951982 /* backButton@2x.png */; };
+		E080D24618CE9D0400E15ECE /* notes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E080D24518CE9D0400E15ECE /* notes@2x.png */; };
 		E091AFC618C556A200AF4224 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC518C556A200AF4224 /* background.jpg */; };
 		E091AFC818C5721B00AF4224 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC718C5721B00AF4224 /* tablecell.png */; };
 		E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */; };
@@ -50,6 +51,7 @@
 		E072A50818C9604000951982 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forwardButton@2x.png"; sourceTree = "<group>"; };
 		E072A50B18C9604E00951982 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
 		E072A50C18C9604E00951982 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
+		E080D24518CE9D0400E15ECE /* notes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notes@2x.png"; sourceTree = "<group>"; };
 		E091AFC518C556A200AF4224 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		E091AFC718C5721B00AF4224 /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
 		E091AFC918C5730D00AF4224 /* ECTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECTableViewCell.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				E072A50B18C9604E00951982 /* backButton.png */,
 				E05F15EC18CAB5DD00FA5F08 /* notes.png */,
+				E080D24518CE9D0400E15ECE /* notes@2x.png */,
 				E072A50C18C9604E00951982 /* backButton@2x.png */,
 				E072A50718C9604000951982 /* forwardButton.png */,
 				E072A50818C9604000951982 /* forwardButton@2x.png */,
@@ -290,6 +293,7 @@
 				E072A50E18C9604E00951982 /* backButton@2x.png in Resources */,
 				E05F15ED18CAB5DD00FA5F08 /* notes.png in Resources */,
 				E091AFC818C5721B00AF4224 /* tablecell.png in Resources */,
+				E080D24618CE9D0400E15ECE /* notes@2x.png in Resources */,
 				E0D0EEA618C62E29005871D7 /* Graybtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

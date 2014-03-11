@@ -349,18 +349,46 @@
 
 - (IBAction)OnDateForward:(UIButton *)sender {
     _dateCounter++;
-    NSDate *now = [NSDate date];
-    int daysToAdd = _dateCounter;
-    NSDate *date = [now dateByAddingTimeInterval:60*60*24*daysToAdd];
-    [self  setDateLabel:date];
+    [self ForBothChangesOfDates];
 }
 
 - (IBAction)OnDateBackward:(UIButton *)sender {
     _dateCounter--;
+    [self ForBothChangesOfDates];
+}
+
+-(void)ForBothChangesOfDates{
     NSDate *now = [NSDate date];
     int daysToAdd = _dateCounter;
     NSDate *date = [now dateByAddingTimeInterval:60*60*24*daysToAdd];
     [self  setDateLabel:date];
+    [_mapView removeOverlays:_mapView.overlays];
+    
+    NSArray *existingpoints = _mapView.annotations;
+    
+    if ([existingpoints count])
+        [_mapView removeAnnotations:existingpoints];
+    
+    _addresses = [self.delegate changeAddressesOrder];
+    _mapItemIndex = 0;
+    NSLog(@"address lenght %d", [_addresses count]);
+    if ([_addresses count]!=5) {
+        [self.lblTime setText: @"1hr 35min"];
+        [self.lblDistance setText: @"100km"];
+        _mapItems = [[NSMutableArray alloc] initWithCapacity:5];
+        
+    }
+    else{
+        [self.lblTime setText: @"2hr 10min"];
+        [self.lblDistance setText: @"65 km"];
+        _mapItems = [[NSMutableArray alloc] initWithCapacity:4];
+        
+    }
+    
+    for (NSString *address in _addresses)
+    {
+        [self searchLocationsUsingString:address];
+    }
 }
 
 - (IBAction)OnTodaysNotesPressed:(UIButton *)sender {
