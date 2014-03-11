@@ -39,6 +39,7 @@
     int _locationIndex;
     int _locationCount;
     sqlite3 *databaseHandle;
+    BOOL connectedToServer;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

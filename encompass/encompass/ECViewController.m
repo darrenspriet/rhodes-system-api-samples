@@ -24,6 +24,7 @@
     [self populateArraysFromDatabase];
     _locationCount = (int)_addressesOptimal.count;
     _locationIndex = 0;
+    connectedToServer = NO;
     // We need to call this to set the map region.
     // It will also calculate the route and generate the annotations.
     [self optimizedRoutePressed:nil];
@@ -98,6 +99,7 @@
     request.destination = (MKMapItem *)[mapItems objectAtIndex:_locationIndex+1];
     request.requestsAlternateRoutes = NO;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    connectedToServer = YES;
     // This search will be asynchronous!
     [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
      {
@@ -110,6 +112,7 @@
              _locationIndex = 0;
              // Erase any routes that we may have already found
              [_mapView removeOverlays:[_mapView overlays]];
+             connectedToServer = NO;
          }
          else
          {
@@ -122,6 +125,7 @@
              else
              {
                  _locationIndex = 0;
+                 connectedToServer = NO;
              }
          }
      }];
@@ -151,6 +155,10 @@
 
 - (IBAction)optimizedRoutePressed:(UIButton *)sender
 {
+    if (connectedToServer)
+    {
+        return;
+    }
     _currentLocationView = NO;
     _optimalRouteView = YES;
     _customRouteView = NO;
@@ -174,6 +182,10 @@
 // Set the current location as the specified location
 - (IBAction)currentLocationPressed:(UIButton *)sender
 {
+    if (connectedToServer)
+    {
+        return;
+    }
     _currentLocationView = YES;
     _optimalRouteView = NO;
     _customRouteView = NO;
@@ -194,11 +206,19 @@
 // Launch the native Maps application with all the locations
 - (IBAction)openInMapsPressed:(UIButton *)sender
 {
+    if (connectedToServer)
+    {
+        return;
+    }
     [MKMapItem openMapsWithItems:_mapItemsOptimal launchOptions:nil];
 }
 
 - (IBAction)customRoutePressed:(UIButton *)sender
 {
+    if (connectedToServer)
+    {
+        return;
+    }
     _currentLocationView = NO;
     _optimalRouteView = NO;
     _customRouteView = YES;
@@ -316,11 +336,9 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    // The list order of the locations hasn't changed
     if (fromIndexPath != toIndexPath)
     {
-        // Clear all markers and routes from the map
-        [_mapView removeAnnotations:[_mapView annotations]];
-        [_mapView removeOverlays:[_mapView overlays]];
         // Update the appropriate _addresses array for the relocated row
         if (_optimalRouteView || _currentLocationView)
         {
@@ -354,6 +372,10 @@
         for (MKMapItem *item in _mapItemsCustom)
         {
             [self generateAnnotationForMapItem:item];
+        }
+        if (connectedToServer)
+        {
+            return;
         }
         [self calculateBestRoute:_mapItemsCustom];
     }
