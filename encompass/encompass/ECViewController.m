@@ -23,7 +23,7 @@
     // Populate the above arrays using the local database
     [self populateArraysFromDatabase];
     _locationCount = (int)_addressesOptimal.count;
-    _locationIndex = 0;
+    _locationIndex = -1;
     connectedToServer = NO;
     // We need to call this to set the map region.
     // It will also calculate the route and generate the annotations.
@@ -95,7 +95,15 @@
 - (void)calculateBestRoute:(NSArray *)mapItems
 {
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-    request.source = (MKMapItem *)[mapItems objectAtIndex:_locationIndex];
+    // We always want our route to start from the current location
+    if (_locationIndex == -1)
+    {
+        request.source = [MKMapItem mapItemForCurrentLocation];
+    }
+    else
+    {
+        request.source = (MKMapItem *)[mapItems objectAtIndex:_locationIndex];
+    }
     request.destination = (MKMapItem *)[mapItems objectAtIndex:_locationIndex+1];
     request.requestsAlternateRoutes = NO;
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
@@ -109,7 +117,7 @@
              NSString *title = error.localizedDescription;
              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
              [alert show];
-             _locationIndex = 0;
+             _locationIndex = -1;
              // Erase any routes that we may have already found
              [_mapView removeOverlays:[_mapView overlays]];
              connectedToServer = NO;
@@ -124,7 +132,7 @@
              }
              else
              {
-                 _locationIndex = 0;
+                 _locationIndex = -1;
                  connectedToServer = NO;
              }
          }
