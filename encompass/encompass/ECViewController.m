@@ -170,7 +170,6 @@
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
     [self setDefaultMapRegion];
-    _mapView.showsUserLocation = NO;
     // You have to generate the annotations and calculate the route again
     for (MKMapItem *item in _mapItemsCustom)
     {
@@ -196,7 +195,6 @@
     // Clear all markers and routes from the map
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
-    _mapView.showsUserLocation = YES;
     // Display the current location of the user
     MKUserLocation *userLocation = _mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (userLocation.location.coordinate, 2000, 2000);
@@ -230,7 +228,6 @@
     [_mapView removeAnnotations:[_mapView annotations]];
     [_mapView removeOverlays:[_mapView overlays]];
     [self setDefaultMapRegion];
-    _mapView.showsUserLocation = NO;
     // You have to generate the annotations and calculate the route again
     for (MKMapItem *item in _mapItemsCustom)
     {
