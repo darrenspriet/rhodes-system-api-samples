@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) IBOutlet ECTableViewCell *tableViewCell;
+@property (weak, nonatomic) IBOutlet UIView *menuViewTwo;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *menuView;
 @property (weak, nonatomic) IBOutlet UILabel *lblDate;

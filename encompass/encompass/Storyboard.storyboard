@@ -128,6 +128,21 @@
                                     <action selector="menuShow:" destination="gpL-LS-UDj" eventType="touchUpInside" id="PpW-Jg-utH"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wLt-Ba-OEE">
+                                <rect key="frame" x="117" y="137" width="159" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XDo-9Z-I9O">
+                                        <rect key="frame" x="0.0" y="0.0" width="159" height="375"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="JkV-lg-BYz" kind="embed" id="Lnm-1p-oz4"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMs-u4-3AW">
                                 <rect key="frame" x="116" y="137" width="159" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -359,11 +374,41 @@
                         <outlet property="lblTime" destination="vYy-bE-pgy" id="FPx-wb-bdX"/>
                         <outlet property="mapView" destination="LfH-kz-SZS" id="SDd-mU-2Ta"/>
                         <outlet property="menuView" destination="aMs-u4-3AW" id="ebi-Wh-IRu"/>
+                        <outlet property="menuViewTwo" destination="wLt-Ba-OEE" id="voh-vP-XnU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gij-ad-L1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="434" y="10"/>
+            <point key="canvasLocation" x="203" y="-76"/>
+        </scene>
+        <!--Options Table View Controller-->
+        <scene sceneID="EAQ-ap-uHr">
+            <objects>
+                <tableViewController id="JkV-lg-BYz" customClass="ECOptionsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="63" sectionHeaderHeight="22" sectionFooterHeight="22" id="wdS-i8-gDR">
+                        <rect key="frame" x="0.0" y="0.0" width="159" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="optionsCell" rowHeight="63" id="gSc-Ej-eE3" customClass="ECOptionsCell">
+                                <rect key="frame" x="0.0" y="22" width="159" height="63"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gSc-Ej-eE3" id="Chf-UL-qCu">
+                                    <rect key="frame" x="0.0" y="0.0" width="159" height="62"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="JkV-lg-BYz" id="7g3-0Q-vEh"/>
+                            <outlet property="delegate" destination="JkV-lg-BYz" id="3fg-am-ALK"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m3c-b4-26F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1403" y="120"/>
         </scene>
     </scenes>
     <resources>
@@ -371,7 +416,7 @@
         <image name="backButton.png" width="15" height="19"/>
         <image name="background.jpg" width="1024" height="768"/>
         <image name="forwardButton.png" width="15" height="19"/>
-        <image name="notes.png" width="640" height="640"/>
+        <image name="notes.png" width="320" height="320"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>

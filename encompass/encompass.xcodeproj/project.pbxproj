@@ -17,6 +17,8 @@
 		E091AFC818C5721B00AF4224 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E091AFC718C5721B00AF4224 /* tablecell.png */; };
 		E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */; };
 		E091AFCE18C5765100AF4224 /* ECActualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E091AFCD18C5765100AF4224 /* ECActualTableViewCell.m */; };
+		E0B6A3B218CF720300FCF56B /* ECOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B6A3B118CF720300FCF56B /* ECOptionsCell.m */; };
+		E0B6A3B518CF721D00FCF56B /* ECOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B6A3B418CF721D00FCF56B /* ECOptionsTableViewController.m */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
 		E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4518BEB1970016990C /* CoreGraphics.framework */; };
 		E0C14F4818BEB1970016990C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4718BEB1970016990C /* UIKit.framework */; };
@@ -58,6 +60,10 @@
 		E091AFCA18C5730D00AF4224 /* ECTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECTableViewCell.m; sourceTree = "<group>"; };
 		E091AFCC18C5765100AF4224 /* ECActualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECActualTableViewCell.h; sourceTree = "<group>"; };
 		E091AFCD18C5765100AF4224 /* ECActualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECActualTableViewCell.m; sourceTree = "<group>"; };
+		E0B6A3B018CF720300FCF56B /* ECOptionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECOptionsCell.h; sourceTree = "<group>"; };
+		E0B6A3B118CF720300FCF56B /* ECOptionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECOptionsCell.m; sourceTree = "<group>"; };
+		E0B6A3B318CF721D00FCF56B /* ECOptionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECOptionsTableViewController.h; sourceTree = "<group>"; };
+		E0B6A3B418CF721D00FCF56B /* ECOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECOptionsTableViewController.m; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C14F4318BEB1970016990C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E0C14F4518BEB1970016990C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -107,6 +113,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E0B6A3B618CF722600FCF56B /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				E0B6A3B318CF721D00FCF56B /* ECOptionsTableViewController.h */,
+				E0B6A3B418CF721D00FCF56B /* ECOptionsTableViewController.m */,
+				E0B6A3B018CF720300FCF56B /* ECOptionsCell.h */,
+				E0B6A3B118CF720300FCF56B /* ECOptionsCell.m */,
+			);
+			name = Options;
+			sourceTree = "<group>";
+		};
 		E0C14F3718BEB1970016990C = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +158,7 @@
 		E0C14F4918BEB1970016990C /* encompass */ = {
 			isa = PBXGroup;
 			children = (
+				E0B6A3B618CF722600FCF56B /* Options */,
 				E0C14F7A18BEB2830016990C /* encompass.entitlements */,
 				E0C14F5218BEB1970016990C /* ECAppDelegate.h */,
 				E0C14F5318BEB1970016990C /* ECAppDelegate.m */,
@@ -315,9 +333,11 @@
 			files = (
 				E0C14F5A18BEB1970016990C /* ECViewController.m in Sources */,
 				E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */,
+				E0B6A3B218CF720300FCF56B /* ECOptionsCell.m in Sources */,
 				E091AFCE18C5765100AF4224 /* ECActualTableViewCell.m in Sources */,
 				E0C14F5018BEB1970016990C /* main.m in Sources */,
 				E091AFCB18C5730D00AF4224 /* ECTableViewCell.m in Sources */,
+				E0B6A3B518CF721D00FCF56B /* ECOptionsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

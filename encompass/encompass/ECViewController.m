@@ -245,11 +245,11 @@
 - (IBAction)menuShow:(UIButton *)sender {
     if (sender.tag == 0) {
         sender.tag = 1;
-        self.menuView.hidden = NO;
+        self.menuViewTwo.hidden = NO;
         [sender setTitle:@"Options                 ▲" forState:UIControlStateNormal];
     } else {
         sender.tag = 0;
-        self.menuView.hidden = YES;
+        self.menuViewTwo.hidden = YES;
         [sender setTitle:@"Options                 ▼" forState:UIControlStateNormal];
     }
 }
