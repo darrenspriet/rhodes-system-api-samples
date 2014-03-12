@@ -14,18 +14,29 @@
 
 @implementation ECOptionsTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (id)initWithStyle:(UITableViewStyle)style
+//{
+//    self = [super initWithStyle:style];
+//    if (self) {
+//        // Custom initialization
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
+        self.options =  [[NSMutableArray alloc] initWithObjects:
+                               @"Use Current Location",
+                                @"Custom Location",
+                                @"Shortest Route",
+                                @"Custom Route",
+                                @"Use Toll Roads",
+                                @"Show Traffic", nil];
+
+
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -51,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 6;
+    return [self.options count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,14 +70,70 @@
     static NSString *CellIdentifier = @"optionsCell";
     ECOptionsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    if ((indexPath.row==0)||(indexPath.row==2) ){
+         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
+    }
+   
+    
     if (cell == nil)
     {
-        cell = [[ECOptionsCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"optionsCell"];
+        cell = [[ECOptionsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"optionsCell"];
     }
     
     // Configure the cell...
-    
+    [cell.optionsLabel setText:[self.options objectAtIndex:indexPath.row]];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSUInteger index = [[tableView indexPathsForVisibleRows] indexOfObject:indexPath];
+    
+    if (index != NSNotFound) {
+        UITableViewCell *cell = [[tableView visibleCells] objectAtIndex:index];
+        if ([cell accessoryType] == UITableViewCellAccessoryNone) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+            if (index==0) {
+                
+
+               UITableViewCell *cell = [[tableView visibleCells] objectAtIndex:1];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+            else  if (index==1) {
+               
+                UITableViewCell *cell = [[tableView visibleCells] objectAtIndex:0];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+            else if (index==2) {
+                [self.delegate changeToOptimized];
+                UITableViewCell *cell = [[tableView visibleCells] objectAtIndex:3];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+            else  if (index==3) {
+                [self.delegate changeToCustomized];
+
+                UITableViewCell *cell = [[tableView visibleCells] objectAtIndex:2];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+        } else {
+            if ((index==0)||(index==1) ||(index==2) ||(index==3) ) {
+
+            }
+            else{
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+        }
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+}
+
+- (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
+{
+    cell.backgroundColor = cell.contentView.backgroundColor;
+
 }
 
 /*

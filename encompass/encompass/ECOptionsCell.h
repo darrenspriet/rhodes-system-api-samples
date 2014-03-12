@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ECOptionsCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *optionsLabel;
 
 @end

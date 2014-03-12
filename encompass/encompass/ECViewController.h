@@ -15,9 +15,11 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "ECTableViewCell.h"
+#import "ECOptionsTableViewController.h"
+
 @class ECTableViewCell;
 
-@interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ECViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ECOptionsTableViewControllerDelegate>
 {
     NSMutableArray *_addresses;
     NSMutableArray *_mapItems;

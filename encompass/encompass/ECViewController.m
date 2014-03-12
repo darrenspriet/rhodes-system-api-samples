@@ -253,6 +253,18 @@
         [sender setTitle:@"Options                 ▼" forState:UIControlStateNormal];
     }
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"containerSegue"]){
+        [(ECOptionsTableViewController*)segue.destinationViewController setDelegate:self];
+    }
+}
+-(void)changeToCustomized{
+    [self.delegate changeToCustomized];
+}
+-(void)changeToOptimized{
+    [self.delegate changeToOptimized];
+}
 
 - (IBAction)MenuItemSelected:(UIButton *)sender {
     if (sender.tag<5) {
