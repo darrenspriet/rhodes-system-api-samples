@@ -22,12 +22,17 @@
     BOOL _customRouteView;
     int _locationIndex;
     int _locationCount;
+    int _dateCounter;
+    
+    NSDateFormatter *timeFormeter;
 }
 - (IBAction)back:(UIButton *)sender;
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblDate;
+@property (weak, nonatomic) IBOutlet UILabel *lblTime;
 
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 

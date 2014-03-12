@@ -11,6 +11,10 @@
 		33191EDA18CD335200AF304A /* Graybtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 33191ED918CD335200AF304A /* Graybtn.png */; };
 		33191EDC18CD65A700AF304A /* calender.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33191EDB18CD65A700AF304A /* calender.jpg */; };
 		33191EDF18CD65E400AF304A /* ECcalenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33191EDE18CD65E400AF304A /* ECcalenderViewController.m */; };
+		33C6127918D108E60027A4A0 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127518D108E60027A4A0 /* backButton.png */; };
+		33C6127A18D108E60027A4A0 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127618D108E60027A4A0 /* backButton@2x.png */; };
+		33C6127B18D108E60027A4A0 /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127718D108E60027A4A0 /* forwardButton.png */; };
+		33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127818D108E60027A4A0 /* forwardButton@2x.png */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
 		E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4518BEB1970016990C /* CoreGraphics.framework */; };
 		E0C14F4818BEB1970016990C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4718BEB1970016990C /* UIKit.framework */; };
@@ -45,6 +49,10 @@
 		33191EDB18CD65A700AF304A /* calender.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = calender.jpg; path = ../calender.jpg; sourceTree = "<group>"; };
 		33191EDD18CD65E400AF304A /* ECcalenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECcalenderViewController.h; sourceTree = "<group>"; };
 		33191EDE18CD65E400AF304A /* ECcalenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECcalenderViewController.m; sourceTree = "<group>"; };
+		33C6127518D108E60027A4A0 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backButton.png; path = ../backButton.png; sourceTree = "<group>"; };
+		33C6127618D108E60027A4A0 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backButton@2x.png"; path = "../backButton@2x.png"; sourceTree = "<group>"; };
+		33C6127718D108E60027A4A0 /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardButton.png; path = ../forwardButton.png; sourceTree = "<group>"; };
+		33C6127818D108E60027A4A0 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forwardButton@2x.png"; path = "../forwardButton@2x.png"; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C14F4318BEB1970016990C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E0C14F4518BEB1970016990C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -166,6 +174,10 @@
 		E0C14F6918BEB1970016990C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				33C6127518D108E60027A4A0 /* backButton.png */,
+				33C6127618D108E60027A4A0 /* backButton@2x.png */,
+				33C6127718D108E60027A4A0 /* forwardButton.png */,
+				33C6127818D108E60027A4A0 /* forwardButton@2x.png */,
 				33191EDB18CD65A700AF304A /* calender.jpg */,
 				33191ED918CD335200AF304A /* Graybtn.png */,
 				33191ED718CA6F3900AF304A /* background.jpg */,
@@ -264,11 +276,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */,
+				33C6127A18D108E60027A4A0 /* backButton@2x.png in Resources */,
 				33191ED818CA6F3900AF304A /* background.jpg in Resources */,
+				33C6127B18D108E60027A4A0 /* forwardButton.png in Resources */,
 				E0C14F7918BEB1EA0016990C /* Storyboard.storyboard in Resources */,
 				E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */,
 				33191EDC18CD65A700AF304A /* calender.jpg in Resources */,
+				33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */,
 				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
+				33C6127918D108E60027A4A0 /* backButton.png in Resources */,
 				33191EDA18CD335200AF304A /* Graybtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
