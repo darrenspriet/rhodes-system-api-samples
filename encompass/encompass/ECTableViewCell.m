@@ -31,7 +31,6 @@
     [cell.storeInformation setText : [self.addresses objectAtIndex:indexPath.row] ];
     [cell.storeInformation setFont : [UIFont fontWithName:@"Arial-BoldMT" size:15] ];
     [cell.storeInformation setNumberOfLines : 5];
-    [cell.storeInformation sizeToFit];
     [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]]];
     [cell.storeInformation setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
     
@@ -57,7 +56,7 @@
 
 
 - (void)tableView: (UITableView *)tableView moveRowAtIndexPath: (NSIndexPath *)fromIndexPath toIndexPath: (NSIndexPath *)toIndexPath{
-    NSLog(@"INDEX PATH IS: %d", [fromIndexPath row]);
+  //  NSLog(@"INDEX PATH IS: %d", [fromIndexPath row]);
     NSString *mover = [self.addresses objectAtIndex:[fromIndexPath row]];
     [self.addresses removeObjectAtIndex:[fromIndexPath row]];
     [self.addresses insertObject:mover atIndex:[toIndexPath row]];
@@ -84,13 +83,13 @@
 }
 -(void)changeToOptimized{
     isCustomized = NO;
-    [self.horizontalTableView setEditing:NO animated:YES];
     self.addresses = [[NSMutableArray alloc] initWithObjects:@"Best Buy \n6075 Mavis Road                      \nMississauga, ON \nL5H 2M9",
                       @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
                       @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
                       @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON, \nL5A 2G4",
                       @"Best Buy \n2500 Winston Park Dr \nOakville, ON, \nL6H 7E5",
                       nil];
+    [self.horizontalTableView setEditing:NO animated:YES];
     [self.horizontalTableView reloadData];
 
 }
