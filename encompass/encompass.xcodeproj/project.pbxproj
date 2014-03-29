@@ -15,6 +15,8 @@
 		33C6127A18D108E60027A4A0 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127618D108E60027A4A0 /* backButton@2x.png */; };
 		33C6127B18D108E60027A4A0 /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127718D108E60027A4A0 /* forwardButton.png */; };
 		33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127818D108E60027A4A0 /* forwardButton@2x.png */; };
+		E07D148F18E662C70073D815 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D148E18E662C70073D815 /* LeftViewController.m */; };
+		E07D149218E662D80073D815 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D149118E662D80073D815 /* RightViewController.m */; };
 		E0C01B7618E6560C0035E193 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0C01B7518E6560C0035E193 /* background.jpg */; };
 		E0C01B7918E656130035E193 /* CalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C01B7818E656130035E193 /* CalendarItem.m */; };
 		E0C01B7C18E6561B0035E193 /* DMCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C01B7B18E6561B0035E193 /* DMCollectionViewCell.m */; };
@@ -60,6 +62,10 @@
 		33C6127618D108E60027A4A0 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backButton@2x.png"; path = "../backButton@2x.png"; sourceTree = "<group>"; };
 		33C6127718D108E60027A4A0 /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardButton.png; path = ../forwardButton.png; sourceTree = "<group>"; };
 		33C6127818D108E60027A4A0 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forwardButton@2x.png"; path = "../forwardButton@2x.png"; sourceTree = "<group>"; };
+		E07D148D18E662C70073D815 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
+		E07D148E18E662C70073D815 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
+		E07D149018E662D80073D815 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
+		E07D149118E662D80073D815 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		E0C01B7518E6560C0035E193 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		E0C01B7718E656130035E193 /* CalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarItem.h; sourceTree = "<group>"; };
 		E0C01B7818E656130035E193 /* CalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarItem.m; sourceTree = "<group>"; };
@@ -120,6 +126,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E07D148C18E662B50073D815 /* SplitView */ = {
+			isa = PBXGroup;
+			children = (
+				E07D149018E662D80073D815 /* RightViewController.h */,
+				E07D149118E662D80073D815 /* RightViewController.m */,
+				E07D148D18E662C70073D815 /* LeftViewController.h */,
+				E07D148E18E662C70073D815 /* LeftViewController.m */,
+			);
+			name = SplitView;
+			sourceTree = "<group>";
+		};
 		E0C01B8718E656610035E193 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +207,7 @@
 		E0C14F4918BEB1970016990C /* encompass */ = {
 			isa = PBXGroup;
 			children = (
+				E07D148C18E662B50073D815 /* SplitView */,
 				E0C01B8918E6568A0035E193 /* Images */,
 				E0C01B8818E656680035E193 /* Map */,
 				E0C01B8718E656610035E193 /* Calendar */,
@@ -361,8 +379,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0C14F5A18BEB1970016990C /* ECViewController.m in Sources */,
+				E07D148F18E662C70073D815 /* LeftViewController.m in Sources */,
 				E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */,
 				E0C01B8618E656580035E193 /* ViewController.m in Sources */,
+				E07D149218E662D80073D815 /* RightViewController.m in Sources */,
 				33191EDF18CD65E400AF304A /* ECcalenderViewController.m in Sources */,
 				E0C01B7F18E6562B0035E193 /* I3DragBetweenHelper.m in Sources */,
 				E0C01B7C18E6561B0035E193 /* DMCollectionViewCell.m in Sources */,

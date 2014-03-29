@@ -21,10 +21,10 @@
 
 - (void)viewDidLoad
 {
-[super viewDidLoad];
-
-_mapView.delegate = self;
-
+    [super viewDidLoad];
+    
+    _mapView.delegate = self;
+    
     NSDate *currentDate = [[NSDate alloc] init];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -40,40 +40,40 @@ _mapView.delegate = self;
                                    selector:@selector(targetMethod:)
                                    userInfo:nil
                                     repeats:YES];
-     //NSString *localTimeString = [timeFormeter stringFromDate:currentDate];
+    //NSString *localTimeString = [timeFormeter stringFromDate:currentDate];
     //[self.lblTime setText:[NSString stringWithFormat:@"%@",localTimeString]];
     
     
-
-// Store the dummy addresses in the optimal addresses array
-_addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"My Home \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
-                 @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
-                 @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
-                 @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
-                 @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
-                 nil];
-_locationCount = (int)_addressesOptimal.count;
-_addressesCustom = [[NSMutableArray alloc] init];
-// Copy the optimal addresses array into the custom addresses array
-for (NSString *address in _addressesOptimal)
-{
-[_addressesCustom addObject:address];
-}
-_mapItemsOptimal = [[NSMutableArray alloc] init];
-_mapItemsCustom = [[NSMutableArray alloc] init];
-// Need to do this to allow non-sequential inertion during location search
-// because NSMutableArray objects never contain free spaces (except at the end)
-for (int i = 0; i < _locationCount; i++)
-{
-[_mapItemsOptimal addObject:[NSNull null]];
-[_mapItemsCustom addObject:[NSNull null]];
-}
-_locationIndex = 0;
-// We need to call this to set the map region
-[self optimizedRoutePressed:nil];
-// Get the MKMapItems for each address, store them in the array, and
-// generate annotations for each item on the map.
-[self searchLocationsWithQueries:_addressesOptimal];
+    
+    // Store the dummy addresses in the optimal addresses array
+    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"My Home \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
+                         @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
+                         @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
+                         @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
+                         @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
+                         nil];
+    _locationCount = (int)_addressesOptimal.count;
+    _addressesCustom = [[NSMutableArray alloc] init];
+    // Copy the optimal addresses array into the custom addresses array
+    for (NSString *address in _addressesOptimal)
+    {
+        [_addressesCustom addObject:address];
+    }
+    _mapItemsOptimal = [[NSMutableArray alloc] init];
+    _mapItemsCustom = [[NSMutableArray alloc] init];
+    // Need to do this to allow non-sequential inertion during location search
+    // because NSMutableArray objects never contain free spaces (except at the end)
+    for (int i = 0; i < _locationCount; i++)
+    {
+        [_mapItemsOptimal addObject:[NSNull null]];
+        [_mapItemsCustom addObject:[NSNull null]];
+    }
+    _locationIndex = 0;
+    // We need to call this to set the map region
+    [self optimizedRoutePressed:nil];
+    // Get the MKMapItems for each address, store them in the array, and
+    // generate annotations for each item on the map.
+    [self searchLocationsWithQueries:_addressesOptimal];
 }
 
 -(void)targetMethod:(id)sender
@@ -85,67 +85,67 @@ _locationIndex = 0;
 
 - (void)searchLocationsWithQueries:(NSArray *)queries
 {
-MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-request.naturalLanguageQuery = (NSString *)[queries objectAtIndex:_locationIndex];
-MKCoordinateRegion searchRegion = MKCoordinateRegionMakeWithDistance (_mapView.region.center, 20000, 20000);
-request.region = searchRegion;
-MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
-// This search will be asynchronous!
-[search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
-{
- // No internet connection, perhaps?
- if (error)
- {
-     NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
-     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-     [alert show];
-     _locationIndex = 0;
-     // Remove all annotations from the map and clear the map item arrays
-     [_mapView removeAnnotations:[_mapView annotations]];
-     for (int i = 0; i < _locationCount; i++)
-     {
-         [_mapItemsOptimal addObject:[NSNull null]];
-         [_mapItemsCustom addObject:[NSNull null]];
-     }
- }
- else
- {
-     // Search yielded no results
-     if (response.mapItems.count == 0)
-     {
-         NSLog(@"No Matches");
-     }
-     // If we are searching for an address
-     else if (response.mapItems.count == 1)
-     {
-         MKMapItem *item = [response.mapItems objectAtIndex:0];
-         // This ensures that both optimal and custom arrays are populated simultaenously.
-         [_mapItemsOptimal replaceObjectAtIndex:_locationIndex withObject:item];
-         [_mapItemsCustom replaceObjectAtIndex:_locationIndex withObject:item];
-         [self generateAnnotationForMapItem:item];
-     }
-     // If our search yields multiple results (this shouldn't happen
-     // in this application because we are only searching addresses)
-     else
-     {
-         for (MKMapItem *item in response.mapItems)
-         {
-             NSLog(@"name = %@", item.name);
-         }
-     }
-     // Search for another address, if there is one
-     _locationIndex++;
-     if (_locationIndex < _locationCount)
-     {
-         [self searchLocationsWithQueries:queries];
-     }
-     else
-     {
-         _locationIndex = 0;
-         [self calculateBestRoute:_mapItemsOptimal];
-     }
- }
-}];
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = (NSString *)[queries objectAtIndex:_locationIndex];
+    MKCoordinateRegion searchRegion = MKCoordinateRegionMakeWithDistance (_mapView.region.center, 20000, 20000);
+    request.region = searchRegion;
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    // This search will be asynchronous!
+    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
+    {
+        // No internet connection, perhaps?
+        if (error)
+        {
+            NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            _locationIndex = 0;
+            // Remove all annotations from the map and clear the map item arrays
+            [_mapView removeAnnotations:[_mapView annotations]];
+            for (int i = 0; i < _locationCount; i++)
+            {
+                [_mapItemsOptimal addObject:[NSNull null]];
+                [_mapItemsCustom addObject:[NSNull null]];
+            }
+        }
+        else
+        {
+            // Search yielded no results
+            if (response.mapItems.count == 0)
+            {
+                NSLog(@"No Matches");
+            }
+            // If we are searching for an address
+            else if (response.mapItems.count == 1)
+            {
+                MKMapItem *item = [response.mapItems objectAtIndex:0];
+                // This ensures that both optimal and custom arrays are populated simultaenously.
+                [_mapItemsOptimal replaceObjectAtIndex:_locationIndex withObject:item];
+                [_mapItemsCustom replaceObjectAtIndex:_locationIndex withObject:item];
+                [self generateAnnotationForMapItem:item];
+            }
+            // If our search yields multiple results (this shouldn't happen
+            // in this application because we are only searching addresses)
+            else
+            {
+                for (MKMapItem *item in response.mapItems)
+                {
+                    NSLog(@"name = %@", item.name);
+                }
+            }
+            // Search for another address, if there is one
+            _locationIndex++;
+            if (_locationIndex < _locationCount)
+            {
+                [self searchLocationsWithQueries:queries];
+            }
+            else
+            {
+                _locationIndex = 0;
+                [self calculateBestRoute:_mapItemsOptimal];
+            }
+        }
+    }];
 }
 
 -(void)setDateLabel:(NSDate *)date{
@@ -157,7 +157,7 @@ MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     dateFormatter.dateFormat=@"d";
     NSString * dayString = [[dateFormatter stringFromDate:date] capitalizedString];
     [self.lblDate setText:[NSString stringWithFormat:@"%@ %@", monthString, dayString]];
-   // NSString *localDateString = [dateFormatter stringFromDate:currentDate];
+    // NSString *localDateString = [dateFormatter stringFromDate:currentDate];
     //[self.lblDate setText:[NSString stringWithFormat:@"%@", localDateString]];
 }
 
@@ -215,12 +215,12 @@ MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     // have all the map items (not the case when this method is called from viewDidLoad())
     if ([self mapItemsDidFinishLoading])
     {
-    for (MKMapItem *item in _mapItemsOptimal)
-    {
-        [self generateAnnotationForMapItem:item];
-    }
-    // We need to calculate the route again
-    [self calculateBestRoute:_mapItemsOptimal];
+        for (MKMapItem *item in _mapItemsOptimal)
+        {
+            [self generateAnnotationForMapItem:item];
+        }
+        // We need to calculate the route again
+        [self calculateBestRoute:_mapItemsOptimal];
     }
 }
 
@@ -241,12 +241,12 @@ MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     // have all the map items
     if ([self mapItemsDidFinishLoading])
     {
-    for (MKMapItem *item in _mapItemsCustom)
-    {
-        [self generateAnnotationForMapItem:item];
-    }
-    // We need to calculate the route again
-    [self calculateBestRoute:_mapItemsCustom];
+        for (MKMapItem *item in _mapItemsCustom)
+        {
+            [self generateAnnotationForMapItem:item];
+        }
+        // We need to calculate the route again
+        [self calculateBestRoute:_mapItemsCustom];
     }
 }
 
@@ -261,7 +261,7 @@ MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-// Do something when the user changes the location
+    // Do something when the user changes the location
 }
 
 -(IBAction)OpenInMapsPressed:(UIButton *)sender
@@ -272,288 +272,288 @@ MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
 
 - (IBAction)menuShow:(UIButton *)sender {
     if (sender.tag == 0) {
-    sender.tag = 1;
-    self.menuView.hidden = NO;
-    [sender setTitle:@"Options                 ▲" forState:UIControlStateNormal];
+        sender.tag = 1;
+        self.menuView.hidden = NO;
+        [sender setTitle:@"Options                 ▲" forState:UIControlStateNormal];
     } else {
-    sender.tag = 0;
-    self.menuView.hidden = YES;
-    [sender setTitle:@"Options                 ▼" forState:UIControlStateNormal];
+        sender.tag = 0;
+        self.menuView.hidden = YES;
+        [sender setTitle:@"Options                 ▼" forState:UIControlStateNormal];
     }
 }
 
 - (IBAction)MenuItemSelected:(UIButton *)sender {
     switch (sender.tag) {
-    case 1:
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:2];
-            ButtonTag.selected=NO;
-            UIView *NumTag = (UIView*)[self.view viewWithTag:8];
-            NumTag.backgroundColor = [UIColor whiteColor];
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
-            ViewTag.backgroundColor = [UIColor greenColor];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"All Notes" message:@"Call 1 - Take papers from last visit \nCall 2 - Bring sample for client" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+        case 1:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:2];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:8];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:7];
+                ViewTag.backgroundColor = [UIColor greenColor];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"All Notes" message:@"Call 1 - Take papers from last visit \nCall 2 - Bring sample for client" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+                
+            }
+            break;
+        case 2:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:1];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:7];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
             
-        }
-        break;
-    case 2:
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:1];
-            ButtonTag.selected=NO;
-            UIView *NumTag = (UIView*)[self.view viewWithTag:7];
-            NumTag.backgroundColor = [UIColor whiteColor];
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:8];
-            ViewTag.backgroundColor = [UIColor greenColor];
-        }
-        
-        break;
-    case 3:
-        
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:4];
-            ButtonTag.selected=NO;
-            UIView *NumTag = (UIView*)[self.view viewWithTag:10];
-            NumTag.backgroundColor = [UIColor whiteColor];
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
-            ViewTag.backgroundColor = [UIColor greenColor];
-        }
-        
-        
-        break;
-    case 4:
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:3];
-            ButtonTag.selected=NO;
-            UIView *NumTag = (UIView*)[self.view viewWithTag:9];
-            NumTag.backgroundColor = [UIColor whiteColor];
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
-            ViewTag.backgroundColor = [UIColor greenColor];
-        }
-        
-        break;
-    case 5:
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
-            ViewTag.backgroundColor = [UIColor greenColor];
-        }
-        break;
-    case 6:
-        if (sender.selected==YES) {
-            sender.selected = NO;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
-            ViewTag.backgroundColor = [UIColor whiteColor];
-        }else{
-            sender.selected=YES;
-            UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
-            ViewTag.backgroundColor = [UIColor greenColor];
-        }
-        break;
-        
-    default:
-        break;
+            break;
+        case 3:
+            
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:4];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:10];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:9];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            
+            
+            break;
+        case 4:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIButton *ButtonTag = (UIButton*)[self.view viewWithTag:3];
+                ButtonTag.selected=NO;
+                UIView *NumTag = (UIView*)[self.view viewWithTag:9];
+                NumTag.backgroundColor = [UIColor whiteColor];
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:10];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            
+            break;
+        case 5:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:11];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            break;
+        case 6:
+            if (sender.selected==YES) {
+                sender.selected = NO;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
+                ViewTag.backgroundColor = [UIColor whiteColor];
+            }else{
+                sender.selected=YES;
+                UIView *ViewTag = (UIView*)[self.view viewWithTag:12];
+                ViewTag.backgroundColor = [UIColor greenColor];
+            }
+            break;
+            
+        default:
+            break;
     }
 }
 
 - (BOOL)mapItemsDidFinishLoading
 {
-BOOL didFinishLoading = YES;
-for (id item in _mapItemsOptimal)
-{
-if ([item isKindOfClass:[NSNull class]])
-{
-    didFinishLoading = NO;
-    break;
-}
-}
-return didFinishLoading;
+    BOOL didFinishLoading = YES;
+    for (id item in _mapItemsOptimal)
+    {
+        if ([item isKindOfClass:[NSNull class]])
+        {
+            didFinishLoading = NO;
+            break;
+        }
+    }
+    return didFinishLoading;
 }
 
 - (void)generateAnnotationForMapItem:(MKMapItem *)item
 {
-MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-annotation.coordinate = item.placemark.coordinate;
-annotation.title = item.name;
-[_mapView addAnnotation:annotation];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = item.placemark.coordinate;
+    annotation.title = item.name;
+    [_mapView addAnnotation:annotation];
 }
 
 
 - (void)calculateBestRoute:(NSArray *)mapItems
 {
-MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-request.source = (MKMapItem *)[mapItems objectAtIndex:_locationIndex];
-request.destination = (MKMapItem *)[mapItems objectAtIndex:_locationIndex+1];
-request.requestsAlternateRoutes = NO;
-MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-// This search will be asynchronous!
-[directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
-{
- if (error)
- {
-     NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
-     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-     [alert show];
-     _locationIndex = 0;
-     // Erase any routes that we may have already found
-     [_mapView removeOverlays:[_mapView overlays]];
- }
- else
- {
-     [self drawPolylineOnMap:response];
-     _locationIndex++;
-     if (_locationIndex < _locationCount-1)
-     {
-         [self calculateBestRoute:mapItems];
-     }
-     else
-     {
-         _locationIndex = 0;
-     }
- }
-}];
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+    request.source = (MKMapItem *)[mapItems objectAtIndex:_locationIndex];
+    request.destination = (MKMapItem *)[mapItems objectAtIndex:_locationIndex+1];
+    request.requestsAlternateRoutes = NO;
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    // This search will be asynchronous!
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
+    {
+        if (error)
+        {
+            NSString *message = @"Unable to reach Apple's servers!  Please check your internet connection.";
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            _locationIndex = 0;
+            // Erase any routes that we may have already found
+            [_mapView removeOverlays:[_mapView overlays]];
+        }
+        else
+        {
+            [self drawPolylineOnMap:response];
+            _locationIndex++;
+            if (_locationIndex < _locationCount-1)
+            {
+                [self calculateBestRoute:mapItems];
+            }
+            else
+            {
+                _locationIndex = 0;
+            }
+        }
+    }];
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-return _locationCount;
+    return _locationCount;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-// Height of the table cell background image
-return 140;
+    // Height of the table cell background image
+    return 140;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyIdentifier"];
-if (cell == nil)
-{
-cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MyIdentifier"];
-cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-}
-// Use an appropriate data source
-if (_optimalRouteView || _currentLocationView)
-{
-cell.textLabel.text = [_addressesOptimal objectAtIndex:indexPath.row];
-}
-else
-{
-cell.textLabel.text = [_addressesCustom objectAtIndex:indexPath.row];
-}
-cell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:15];
-cell.textLabel.numberOfLines = 5;
-[cell.textLabel sizeToFit];
-cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]];
-cell.showsReorderControl = YES;
-return cell;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyIdentifier"];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MyIdentifier"];
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+    // Use an appropriate data source
+    if (_optimalRouteView || _currentLocationView)
+    {
+        cell.textLabel.text = [_addressesOptimal objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        cell.textLabel.text = [_addressesCustom objectAtIndex:indexPath.row];
+    }
+    cell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:15];
+    cell.textLabel.numberOfLines = 5;
+    [cell.textLabel sizeToFit];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]];
+    cell.showsReorderControl = YES;
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-// What do we want to show if the user selects a location?
+    // What do we want to show if the user selects a location?
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-return YES;
+    return YES;
 }
 
 // Disables row deletion while in edit mode
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-return UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleNone;
 }
 
 // Prevents indenting the cells while in edit mode
 - (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
-return NO;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-if (fromIndexPath != toIndexPath)
-{
-// Clear all markers and routes from the map
-[_mapView removeAnnotations:[_mapView annotations]];
-[_mapView removeOverlays:[_mapView overlays]];
-// Update the appropriate _addresses array for the relocated row
-if (_optimalRouteView || _currentLocationView)
-{
-    NSString *address = (NSString *)[_addressesOptimal objectAtIndex:fromIndexPath.row];
-    [_addressesOptimal removeObjectAtIndex:fromIndexPath.row];
-    [_addressesOptimal insertObject:address atIndex:toIndexPath.row];
-}
-else
-{
-    NSString *address = (NSString *)[_addressesCustom objectAtIndex:fromIndexPath.row];
-    [_addressesCustom removeObjectAtIndex:fromIndexPath.row];
-    [_addressesCustom insertObject:address atIndex:toIndexPath.row];
-}
-// Update the appropriate _mapItems array for the relocated row
-if (_optimalRouteView || _currentLocationView)
-{
-    MKMapItem *item = (MKMapItem *)[_mapItemsOptimal objectAtIndex:fromIndexPath.row];
-    [_mapItemsOptimal removeObjectAtIndex:fromIndexPath.row];
-    [_mapItemsOptimal insertObject:item atIndex:toIndexPath.row];
-}
-else
-{
-    MKMapItem *item = (MKMapItem *)[_mapItemsCustom objectAtIndex:fromIndexPath.row];
-    [_mapItemsCustom removeObjectAtIndex:fromIndexPath.row];
-    [_mapItemsCustom insertObject:item atIndex:toIndexPath.row];
-}
-// Clear all markers and routes from the map
-[_mapView removeAnnotations:[_mapView annotations]];
-[_mapView removeOverlays:[_mapView overlays]];
-// You have to generate the annotations again but only if we already
-// have all the map items (not the case when this method is called from viewDidLoad())
-if ([self mapItemsDidFinishLoading])
-{
-    for (MKMapItem *item in _mapItemsCustom)
+    if (fromIndexPath != toIndexPath)
     {
-        [self generateAnnotationForMapItem:item];
+        // Clear all markers and routes from the map
+        [_mapView removeAnnotations:[_mapView annotations]];
+        [_mapView removeOverlays:[_mapView overlays]];
+        // Update the appropriate _addresses array for the relocated row
+        if (_optimalRouteView || _currentLocationView)
+        {
+            NSString *address = (NSString *)[_addressesOptimal objectAtIndex:fromIndexPath.row];
+            [_addressesOptimal removeObjectAtIndex:fromIndexPath.row];
+            [_addressesOptimal insertObject:address atIndex:toIndexPath.row];
+        }
+        else
+        {
+            NSString *address = (NSString *)[_addressesCustom objectAtIndex:fromIndexPath.row];
+            [_addressesCustom removeObjectAtIndex:fromIndexPath.row];
+            [_addressesCustom insertObject:address atIndex:toIndexPath.row];
+        }
+        // Update the appropriate _mapItems array for the relocated row
+        if (_optimalRouteView || _currentLocationView)
+        {
+            MKMapItem *item = (MKMapItem *)[_mapItemsOptimal objectAtIndex:fromIndexPath.row];
+            [_mapItemsOptimal removeObjectAtIndex:fromIndexPath.row];
+            [_mapItemsOptimal insertObject:item atIndex:toIndexPath.row];
+        }
+        else
+        {
+            MKMapItem *item = (MKMapItem *)[_mapItemsCustom objectAtIndex:fromIndexPath.row];
+            [_mapItemsCustom removeObjectAtIndex:fromIndexPath.row];
+            [_mapItemsCustom insertObject:item atIndex:toIndexPath.row];
+        }
+        // Clear all markers and routes from the map
+        [_mapView removeAnnotations:[_mapView annotations]];
+        [_mapView removeOverlays:[_mapView overlays]];
+        // You have to generate the annotations again but only if we already
+        // have all the map items (not the case when this method is called from viewDidLoad())
+        if ([self mapItemsDidFinishLoading])
+        {
+            for (MKMapItem *item in _mapItemsCustom)
+            {
+                [self generateAnnotationForMapItem:item];
+            }
+            // We need to calculate the route again
+            [self calculateBestRoute:_mapItemsCustom];
+        }
     }
-    // We need to calculate the route again
-    [self calculateBestRoute:_mapItemsCustom];
-}
-}
 }
 
 
 
 
 - (IBAction)back:(UIButton *)sender {
-
-
-
-[self dismissViewControllerAnimated:YES completion:nil];
+    
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
