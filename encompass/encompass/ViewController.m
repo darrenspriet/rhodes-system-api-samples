@@ -17,6 +17,8 @@
     self.sourceTable.dataSource = self;
     self.destinationCollection.delegate = self;
     self.destinationCollection.dataSource = self;
+    self.destinationCollection.backgroundColor = [UIColor lightGrayColor];
+    isTableViewVisible = YES;
     self.tableData = @[
                       @"Dilip",
                       @"Kshitij",
@@ -101,7 +103,14 @@
 
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
-    return (container == self.destinationCollection) ? NO : YES;
+    if (!isTableViewVisible)
+    {
+        return NO;
+    }
+    else
+    {
+        return (container == self.destinationCollection) ? NO : YES;
+    }
 }
 
 
@@ -123,6 +132,7 @@
         cell.backgroundColor = [UIColor lightGrayColor];
         cell.dateLabel.text = @"";
         cell.entriesLabel.text = @"";
+        [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     }
     else
     {
@@ -132,8 +142,9 @@
         cell.dateLabel.textColor = [UIColor blueColor];
         cell.entriesLabel.textColor = [UIColor blackColor];
         cell.backgroundColor = [UIColor whiteColor];
+        [cell.layer setBorderColor:[UIColor blackColor].CGColor];
+        [cell.layer setBorderWidth:1.0f];
     }
-    
     return cell;
 }
 
@@ -141,7 +152,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(88.0, 88.0);
+    if (isTableViewVisible)
+    {
+        return CGSizeMake(88.0, 88.0);
+    }
+    else
+    {
+        return CGSizeMake(129.0, 103.0);
+    }
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -183,6 +201,41 @@
     cell.showsReorderControl = YES;
     
     return cell;
+}
+
+#pragma mark - Slide the table view left or right to hide/unhide it
+
+-(IBAction)hideView:(id)sender
+{
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:.5];
+    [UIView setAnimationDelay:0];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    
+    if (self.sourceTable.frame.origin.x == 115)
+    {
+        isTableViewVisible = NO;
+        self.sourceTable.frame = CGRectMake(115-290, 211, 290, 556);
+        self.locationsTitleBar.frame = CGRectMake(115-290, 109, 290, 101);
+        self.locationsLabel.frame = CGRectMake(115-290, 168, 100, 21);
+        self.monthLabel.frame = CGRectMake(456, 81, 162, 19);
+        self.weekImage.frame = CGRectMake(115, 109, 909, 34);
+        self.destinationCollection.frame = CGRectMake(115, 146, 909, 621);
+    }
+    else
+    {
+        isTableViewVisible = YES;
+        self.sourceTable.frame = CGRectMake(115, 211, 290, 556);
+        self.locationsLabel.frame = CGRectMake(115, 168, 100, 21);
+        self.locationsTitleBar.frame = CGRectMake(115, 109, 290, 101);
+        self.monthLabel.frame = CGRectMake(633, 134, 162, 19);
+        self.weekImage.frame = CGRectMake(405, 202, 619, 34);
+        self.destinationCollection.frame = CGRectMake(405, 237, 619, 531);
+    }
+    
+    [UIView commitAnimations];
+    [self.destinationCollection reloadData];
 }
 
 
