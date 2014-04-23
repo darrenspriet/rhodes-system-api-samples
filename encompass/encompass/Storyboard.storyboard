@@ -290,7 +290,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SSF-Mp-P8c">
-                                        <rect key="frame" x="3.5" y="15" width="895" height="645"/>
+                                        <rect key="frame" x="4" y="15" width="895" height="645"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qt2-UT-64i">
@@ -301,10 +301,10 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="datesCell" id="bQW-dt-kYR" customClass="DMCollectionViewCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="48" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="34" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="48" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="34" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="label for nothing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tc7-Ra-j0g">
@@ -324,17 +324,17 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <size key="customSize" width="48" height="50"/>
+                                                <size key="customSize" width="34" height="50"/>
                                                 <connections>
                                                     <outlet property="dateLabel" destination="LjH-TY-0WZ" id="ZmD-aZ-HCV"/>
                                                     <outlet property="entriesLabel" destination="Tc7-Ra-j0g" id="UGr-2a-vwg"/>
                                                 </connections>
                                             </collectionViewCell>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DequeueReusableCell" id="sZA-mq-db2" customClass="DMCollectionViewCell">
-                                                <rect key="frame" x="48" y="0.0" width="120" height="50"/>
+                                                <rect key="frame" x="34" y="0.0" width="123" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="123" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Event" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sb-ew-Oya">
@@ -357,7 +357,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <size key="customSize" width="120" height="50"/>
+                                                <size key="customSize" width="123" height="50"/>
                                                 <connections>
                                                     <outlet property="dateLabel" destination="7Fx-H8-XXg" id="htD-gV-gz0"/>
                                                     <outlet property="entriesLabel" destination="7sb-ew-Oya" id="8hv-kw-3PM"/>
