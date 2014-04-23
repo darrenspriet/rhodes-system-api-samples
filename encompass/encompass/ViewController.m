@@ -57,14 +57,12 @@
     
     self.helper.delegate = self;
     
-    self.helper.isSrcRearrangeable = NO;
-    self.helper.doesSrcRecieveDst = NO;
-    self.helper.hideSrcDraggingCell = NO;
-    
-    self.helper.isDstRearrangeable = NO;
+    self.helper.isDstRearrangeable = YES;
+    self.helper.isSrcRearrangeable = YES;
+    self.helper.doesSrcRecieveDst = YES;
     self.helper.doesDstRecieveSrc = YES;
-    self.helper.doesSrcRecieveDst = NO;
-    self.helper.hideDstDraggingCell = YES;
+    self.helper.hideDstDraggingCell = NO;
+    self.helper.hideSrcDraggingCell = NO;
 }
 
 
@@ -101,6 +99,17 @@
     return YES;
 }
 
+-(void) droppedOnDstAtIndexPath:(NSIndexPath*) to fromDstIndexPath:(NSIndexPath*) from{
+    
+    [self.destinationCollection cellForItemAtIndexPath:from].alpha = 1;
+    
+    NSInteger fromIndex = (from.item);
+    NSInteger toIndex = (to.item);
+    
+    [self.collectionData exchangeObjectAtIndex:toIndex withObjectAtIndex:fromIndex];
+    
+}
+
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
     if (!isTableViewVisible)
@@ -109,7 +118,8 @@
     }
     else
     {
-        return (container == self.destinationCollection) ? NO : YES;
+        return YES;
+      //  return (container == self.destinationCollection) ? NO : YES;
     }
 }
 

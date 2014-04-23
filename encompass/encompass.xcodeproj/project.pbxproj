@@ -15,12 +15,15 @@
 		33C6127A18D108E60027A4A0 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127618D108E60027A4A0 /* backButton@2x.png */; };
 		33C6127B18D108E60027A4A0 /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127718D108E60027A4A0 /* forwardButton.png */; };
 		33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127818D108E60027A4A0 /* forwardButton@2x.png */; };
+		E01B899E190742C900B0B563 /* WeeklyCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E01B899D190742C900B0B563 /* WeeklyCalendarItem.m */; };
+		E02658BE1906DBB4002DEFAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E02658BD1906DBB4002DEFAE /* QuartzCore.framework */; };
 		E0555A3C18E7783100BA13E5 /* sevendays.gif in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3918E7783100BA13E5 /* sevendays.gif */; };
 		E0555A3D18E7783100BA13E5 /* sidepanel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3A18E7783100BA13E5 /* sidepanel.jpg */; };
 		E0555A3E18E7783100BA13E5 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3B18E7783100BA13E5 /* tablecell.png */; };
 		E0555A4118E7784700BA13E5 /* DMCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0555A4018E7784700BA13E5 /* DMCollectionViewCell.m */; };
 		E0555A4418E7785500BA13E5 /* CalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E0555A4318E7785500BA13E5 /* CalendarItem.m */; };
 		E0555A4718E7786B00BA13E5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0555A4618E7786B00BA13E5 /* ViewController.m */; };
+		E067BBAA1904A31700198D32 /* background1.png in Resources */ = {isa = PBXBuildFile; fileRef = E067BBA91904A31700198D32 /* background1.png */; };
 		E0C01B7F18E6562B0035E193 /* I3DragBetweenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C01B7E18E6562B0035E193 /* I3DragBetweenHelper.m */; };
 		E0C14F4418BEB1970016990C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4318BEB1970016990C /* Foundation.framework */; };
 		E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F4518BEB1970016990C /* CoreGraphics.framework */; };
@@ -60,6 +63,9 @@
 		33C6127618D108E60027A4A0 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backButton@2x.png"; path = "../backButton@2x.png"; sourceTree = "<group>"; };
 		33C6127718D108E60027A4A0 /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardButton.png; path = ../forwardButton.png; sourceTree = "<group>"; };
 		33C6127818D108E60027A4A0 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forwardButton@2x.png"; path = "../forwardButton@2x.png"; sourceTree = "<group>"; };
+		E01B899C190742C900B0B563 /* WeeklyCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyCalendarItem.h; sourceTree = "<group>"; };
+		E01B899D190742C900B0B563 /* WeeklyCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyCalendarItem.m; sourceTree = "<group>"; };
+		E02658BD1906DBB4002DEFAE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0555A3918E7783100BA13E5 /* sevendays.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sevendays.gif; sourceTree = "<group>"; };
 		E0555A3A18E7783100BA13E5 /* sidepanel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sidepanel.jpg; sourceTree = "<group>"; };
 		E0555A3B18E7783100BA13E5 /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
@@ -69,6 +75,7 @@
 		E0555A4318E7785500BA13E5 /* CalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarItem.m; sourceTree = "<group>"; };
 		E0555A4518E7786B00BA13E5 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E0555A4618E7786B00BA13E5 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E067BBA91904A31700198D32 /* background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background1.png; sourceTree = "<group>"; };
 		E0C01B7D18E6562B0035E193 /* I3DragBetweenHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = I3DragBetweenHelper.h; sourceTree = "<group>"; };
 		E0C01B7E18E6562B0035E193 /* I3DragBetweenHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = I3DragBetweenHelper.m; sourceTree = "<group>"; };
 		E0C14F4018BEB1970016990C /* encompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = encompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E02658BE1906DBB4002DEFAE /* QuartzCore.framework in Frameworks */,
 				E0C14F4618BEB1970016990C /* CoreGraphics.framework in Frameworks */,
 				E0C14F4818BEB1970016990C /* UIKit.framework in Frameworks */,
 				E0C14F7C18BEB28B0016990C /* MapKit.framework in Frameworks */,
@@ -133,6 +141,8 @@
 				E0555A4618E7786B00BA13E5 /* ViewController.m */,
 				E0555A4218E7785500BA13E5 /* CalendarItem.h */,
 				E0555A4318E7785500BA13E5 /* CalendarItem.m */,
+				E01B899C190742C900B0B563 /* WeeklyCalendarItem.h */,
+				E01B899D190742C900B0B563 /* WeeklyCalendarItem.m */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -149,6 +159,7 @@
 		E0C01B8918E6568A0035E193 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E067BBA91904A31700198D32 /* background1.png */,
 				E0555A3918E7783100BA13E5 /* sevendays.gif */,
 				E0555A3A18E7783100BA13E5 /* sidepanel.jpg */,
 				E0555A3B18E7783100BA13E5 /* tablecell.png */,
@@ -178,6 +189,7 @@
 		E0C14F4218BEB1970016990C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E02658BD1906DBB4002DEFAE /* QuartzCore.framework */,
 				E0C14F7B18BEB28B0016990C /* MapKit.framework */,
 				E0C14F4318BEB1970016990C /* Foundation.framework */,
 				E0C14F4518BEB1970016990C /* CoreGraphics.framework */,
@@ -341,6 +353,7 @@
 				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
 				33C6127918D108E60027A4A0 /* backButton.png in Resources */,
 				E0555A3D18E7783100BA13E5 /* sidepanel.jpg in Resources */,
+				E067BBAA1904A31700198D32 /* background1.png in Resources */,
 				33191EDA18CD335200AF304A /* Graybtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +377,7 @@
 				E0555A4118E7784700BA13E5 /* DMCollectionViewCell.m in Sources */,
 				E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */,
 				E0555A4718E7786B00BA13E5 /* ViewController.m in Sources */,
+				E01B899E190742C900B0B563 /* WeeklyCalendarItem.m in Sources */,
 				E0555A4418E7785500BA13E5 /* CalendarItem.m in Sources */,
 				33191EDF18CD65E400AF304A /* ECcalenderViewController.m in Sources */,
 				E0C01B7F18E6562B0035E193 /* I3DragBetweenHelper.m in Sources */,
