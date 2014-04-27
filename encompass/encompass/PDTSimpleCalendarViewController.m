@@ -292,32 +292,32 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     self.sourceTable.delegate = self;
     self.sourceTable.dataSource = self;
     self.tableData = @[
-                       @"Dilip",
-                       @"Kshitij",
-                       @"Chandar",
-                       @"Darren",
-                       @"Boris",
-                       @"George",
-                       @"Abraham",
-                       @"Jessica",
-                       @"Rekha"
+                       @"Staples",
+                       @"Future Shop",
+                       @"Rattray Mar",
+                       @"Trinbago",
+                       @"Super Store",
+                       @"Kraft",
+                       @"Maple Leaf",
+                       @"Tim Hortons",
+                       @"Panera"
                        ];
     
-    self.collectionData = [NSMutableArray arrayWithCapacity:36];
+    self.collectionData = [NSMutableArray arrayWithCapacity:365];
     
-    for (int i = 0; i < 42; i++)
+    for (int i = 0; i < 365; i++)
     {
         NSMutableArray *entries = [[NSMutableArray alloc] initWithObjects:nil];
-        CalendarItem *item;
-        if (i < 5 || i > 36)
-        {
-            item = [[CalendarItem alloc] initWithDate:@"0" entries:entries];
-        }
-        else
-        {
-            NSString *date = [NSString stringWithFormat:@"%i", i-5];
-            item = [[CalendarItem alloc] initWithDate:date entries:entries];
-        }
+        CalendarItemAdvanced *item;
+//        if (i < 5 || i > 36)
+//        {
+//            item = [[CalendarItemAdvanced alloc] initWithDate:@"0" entries:entries andSectionIs:nil];
+//        }
+//        else
+//        {
+//            NSString *date = [NSString stringWithFormat:@"%i", i-5];
+            item = [[CalendarItemAdvanced alloc] initWithDate:@"" entries:entries andSectionIs:nil];
+//        }
         [self.collectionData addObject:item];
     }
     
@@ -329,9 +329,9 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     
     self.helper.delegate = self;
     
-    self.helper.isDstRearrangeable = YES;
+    self.helper.isDstRearrangeable = NO;
     self.helper.isSrcRearrangeable = YES;
-    self.helper.doesSrcRecieveDst = YES;
+    self.helper.doesSrcRecieveDst = NO;
     self.helper.doesDstRecieveSrc = YES;
     self.helper.hideDstDraggingCell = NO;
     self.helper.hideSrcDraggingCell = NO;
@@ -344,21 +344,30 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     /* Grab the appropriate data */
     NSInteger fromIndex = (from.item);
     NSInteger toIndex = (to.item);
-    // Disable drag and drop on invalid calendar cells
-    if (toIndex < 5 || toIndex > 36)
-    {
-        return;
+    NSNumber *startingPoint = [NSNumber numberWithInt:0];
+    if (to.section!=0) {
+        startingPoint = [NSNumber numberWithInt:to.section *35];
     }
+    
+    NSNumber * numberForLater = [NSNumber numberWithInt:[startingPoint integerValue]+toIndex];
+    NSInteger myInt = [numberForLater integerValue];
+    
+    // Disable drag and drop on invalid calendar cells
+    
+//    if (toIndex < 5 || toIndex > 36)
+//    {
+//        return;
+//    }
     // Don't allow more than 4 names in a calendar item
-    CalendarItem *item = [self.collectionData objectAtIndex:toIndex];
+    CalendarItemAdvanced *item = [self.collectionData objectAtIndex:myInt];
     if (item.entries.count > 3)
     {
         [[[UIAlertView alloc] initWithTitle:@"Invalid" message:@"Only 4 items per day!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
-    
     NSString *name = [self.tableData objectAtIndex:fromIndex];
     
+   // item.section = sectionNumber;
     /* Update the data and collections accordingly */
     [item.entries addObject:name];
     
@@ -383,8 +392,8 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
-        return YES;
-        //  return (container == self.destinationCollection) ? NO : YES;
+ //       return YES;
+          return (container == self.collectionView) ? NO : YES;
    // }
 }
 
@@ -455,8 +464,14 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     PDTSimpleCalendarViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:PDTSimpleCalendarViewCellIdentifier
                
                                                                                      forIndexPath:indexPath];
+    NSNumber *startingPoint = [NSNumber numberWithInt:0];
+    if (indexPath.section!=0) {
+        startingPoint = [NSNumber numberWithInt:indexPath.section *35];
+    }
     
-    CalendarItem *item = (CalendarItem *)[self.collectionData objectAtIndex:indexPath.item];
+    NSNumber * numberForLater = [NSNumber numberWithInt:[startingPoint integerValue]+indexPath.item];
+    NSInteger myInt = [numberForLater integerValue];
+    CalendarItemAdvanced *item = (CalendarItemAdvanced *)[self.collectionData objectAtIndex:myInt];
 
     cell.delegate = self;
     
@@ -555,7 +570,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 {
     CGFloat itemWidth = floorf(CGRectGetWidth(self.collectionView.bounds) / self.daysPerWeek);
 
-    return CGSizeMake(itemWidth-1.5, itemWidth-1.5);
+    return CGSizeMake(itemWidth - .5f, itemWidth - .5f);
 }
 
 #pragma mark - UIScrollViewDelegate

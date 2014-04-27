@@ -64,9 +64,12 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
         [self.informationLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.informationLabel setBackgroundColor:[UIColor clearColor]];
         self.informationLabel.layer.masksToBounds = YES;
+        self.informationLabel.numberOfLines = 4;
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.informationLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.informationLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-25.0]];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:PDTSimpleCalendarCircleSize]];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:PDTSimpleCalendarCircleSize]];
         
@@ -141,6 +144,7 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
     [super prepareForReuse];
     _date = nil;
     _isToday = NO;
+    [self.informationLabel setText:@""];
     [self.dayLabel setText:@""];
     [self.dayLabel setBackgroundColor:[self circleDefaultColor]];
     [self.dayLabel setTextColor:[self textDefaultColor]];
