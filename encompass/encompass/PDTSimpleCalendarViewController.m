@@ -281,12 +281,16 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 //    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[overlayView]|" options:NSLayoutFormatAlignAllTop metrics:nil views:viewsDictionary]];
 //    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlayView(==overlayViewHeight)]" options:NSLayoutFormatAlignAllTop metrics:metricsDictionary views:viewsDictionary]];
     
+    //Update Content of the Overlay View
+    NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
+    //indexPaths is not sorted
+    NSArray *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(compare:)];
+    NSIndexPath *firstIndexPath = [sortedIndexPaths firstObject];
+    
+    self.monthLabel.text =[self.headerDateFormatter stringFromDate:[self firstOfMonthForSection:firstIndexPath.section]];
+
     self.sourceTable.delegate = self;
     self.sourceTable.dataSource = self;
-//    self.destinationCollection.delegate = self;
-//    self.destinationCollection.dataSource = self;
-//    self.destinationCollection.backgroundColor = [UIColor lightGrayColor];
-  //  isTableViewVisible = YES;
     self.tableData = @[
                        @"Dilip",
                        @"Kshitij",
@@ -499,7 +503,8 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     cell.layer.shouldRasterize = YES;
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     [cell.informationLabel setText:[item.entries componentsJoinedByString:@"\n"]];
-
+     [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+     [cell.layer setBorderWidth:.1f];
 
     return cell;
 }
@@ -550,7 +555,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 {
     CGFloat itemWidth = floorf(CGRectGetWidth(self.collectionView.bounds) / self.daysPerWeek);
 
-    return CGSizeMake(itemWidth, itemWidth);
+    return CGSizeMake(itemWidth-1.5, itemWidth-1.5);
 }
 
 #pragma mark - UIScrollViewDelegate
