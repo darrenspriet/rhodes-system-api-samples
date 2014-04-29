@@ -15,6 +15,9 @@
 
 
 @interface ECcalenderViewController : UIViewController<I3DragBetweenDelegate, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource, UICollectionViewDelegate>
+{
+    bool isTableViewVisible;
+}
 
 - (IBAction)back:(id)sender;
 

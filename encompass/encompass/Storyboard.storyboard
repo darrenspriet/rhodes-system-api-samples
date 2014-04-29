@@ -270,7 +270,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Qp-aq-car">
-                                <rect key="frame" x="418" y="39" width="101" height="55"/>
+                                <rect key="frame" x="411" y="38" width="101" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back" backgroundImage="Graybtn.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -524,7 +524,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="OTB-7R-hdc" kind="modal" identifier="MonthToWeek" id="fOW-yP-eHY"/>
+                                    <segue destination="ojA-pQ-6su" kind="modal" identifier="MonthToWeek" id="N3i-Hz-PHn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -534,13 +534,61 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="collectionView" destination="Zxa-JZ-60I" id="uie-ze-HBX"/>
+                        <outlet property="locationsLabel" destination="HuA-qq-H9r" id="ZGy-Jh-JUk"/>
+                        <outlet property="locationsTitleBar" destination="0nZ-LC-H6v" id="Ae9-QN-2gU"/>
                         <outlet property="monthLabel" destination="VB0-xt-xFl" id="YKT-mS-KIK"/>
                         <outlet property="sourceTable" destination="PEU-Lo-omQ" id="Oh6-Sc-wmj"/>
+                        <outlet property="weekImage" destination="MkJ-pc-xzn" id="UhA-bq-3EU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txx-AC-REI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1294" y="-10"/>
+        </scene>
+        <!--Week View Controller-->
+        <scene sceneID="pVo-to-Kj8">
+            <objects>
+                <viewController id="ojA-pQ-6su" customClass="MAWeekViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kGM-lf-nOB"/>
+                        <viewControllerLayoutGuide type="bottom" id="tyC-1p-cZf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sdw-oC-Gsj">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background1.png" translatesAutoresizingMaskIntoConstraints="NO" id="eKq-gs-cer">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t3f-BD-bsj">
+                                <rect key="frame" x="453" y="44" width="119" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back" backgroundImage="Graybtn.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="ojA-pQ-6su" eventType="touchUpInside" id="zIP-i3-etc"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh8-e3-9CP" customClass="MAWeekView">
+                                <rect key="frame" x="115" y="108" width="909" height="660"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="weekView" destination="Yh8-e3-9CP" id="zZ5-Kt-hPm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Umn-vJ-TYn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2622" y="-10"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="JnL-ox-wRb">
@@ -663,7 +711,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tit-U1-BPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2693" y="488"/>
+            <point key="canvasLocation" x="2597" y="1112"/>
         </scene>
     </scenes>
     <resources>
@@ -681,7 +729,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="fOW-yP-eHY"/>
-    </inferredMetricsTieBreakers>
 </document>

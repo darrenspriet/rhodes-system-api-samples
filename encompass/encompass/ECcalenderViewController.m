@@ -31,15 +31,6 @@
 {
     [super viewDidLoad];
     
-    // Verify the week data that we have recevied from the month view
-    NSLog(@"\n");
-    for (CalendarItemAdvanced *item in _weekCalendarData)
-    {
-        NSLog(@"Date = %@", item.date);
-        NSLog(@"Items = \n%@", item.entries);
-    }
-    NSLog(@"\n");
-    
     self.collectionData = [[NSMutableArray alloc]init];
     
     [self loadUpCollectionWithItems];
