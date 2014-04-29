@@ -10,7 +10,11 @@
 
 @implementation CalendarItemAdvanced
 
--(id) initWithDate:(NSString *)date entries:(NSMutableArray *)entries andSectionIs:(NSNumber*)section
+@synthesize date = _date;
+@synthesize entries = _entries;
+@synthesize section = _section;
+
+-(id) initWithDate:(NSDate *)date entries:(NSMutableArray *)entries andSectionIs:(NSNumber*)section
 {
     if (self = [super init])
     {

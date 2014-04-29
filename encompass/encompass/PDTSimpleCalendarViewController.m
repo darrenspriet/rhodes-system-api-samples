@@ -305,19 +305,11 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     
     self.collectionData = [NSMutableArray arrayWithCapacity:365];
     
-    for (int i = 0; i < 365; i++)
+    for (int i = 0; i < 420; i++)
     {
         NSMutableArray *entries = [[NSMutableArray alloc] initWithObjects:nil];
         CalendarItemAdvanced *item;
-//        if (i < 5 || i > 36)
-//        {
-//            item = [[CalendarItemAdvanced alloc] initWithDate:@"0" entries:entries andSectionIs:nil];
-//        }
-//        else
-//        {
-//            NSString *date = [NSString stringWithFormat:@"%i", i-5];
-            item = [[CalendarItemAdvanced alloc] initWithDate:@"" entries:entries andSectionIs:nil];
-//        }
+        item = [[CalendarItemAdvanced alloc] initWithDate:nil entries:entries andSectionIs:nil];
         [self.collectionData addObject:item];
     }
     
@@ -336,6 +328,59 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     self.helper.hideDstDraggingCell = NO;
     self.helper.hideSrcDraggingCell = NO;
 }
+
+// Don't switch to the week view if no date is selected
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if (!_selectedDate)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+// This method is skipped if the previous one returns NO
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Figure out the dates for the week of the currently selected date
+    NSCalendar *gregorian = self.calendar;
+    NSDateComponents *currentComps =[gregorian components:(NSYearCalendarUnit |
+                                                                NSWeekdayCalendarUnit |
+                                                                NSMonthCalendarUnit |
+                                                                NSWeekOfYearCalendarUnit |
+                                                                NSWeekdayCalendarUnit |
+                                                                NSHourCalendarUnit |
+                                                                NSMinuteCalendarUnit)
+                                                      fromDate:_selectedDate];
+    // To store the calendar items for this particular week
+    NSMutableArray *weekCalendarData = [NSMutableArray arrayWithCapacity:7];
+    // Gather the calendar items for this week only (kind of inefficient!)
+    for (int i = 1; i < 8; i++)
+    {
+        for (CalendarItemAdvanced *item in _collectionData)
+        {
+            // Skip the calendar items for disabled dates (i.e. blank spots)
+            if (item.date)
+            {
+                [currentComps setWeekday:i]; // 1: Sunday, 2: Monday, etc.
+                NSDate *dayOfTheWeek = [gregorian dateFromComponents:currentComps];
+                if ([item.date compare:dayOfTheWeek] == NSOrderedSame)
+                {
+                    [weekCalendarData addObject:item];
+                    break;
+                }
+            }
+        }
+    }
+    ECcalenderViewController *controller = (ECcalenderViewController *)segue.destinationViewController;
+    controller.weekCalendarData = weekCalendarData;
+}
+
 
 #pragma mark - Drag n drop exchange and rearrange delegate methods
 
@@ -485,7 +530,8 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     BOOL isSelected = NO;
     BOOL isCustomDate = NO;
 
-    if (cellDateComponents.month == firstOfMonthsComponents.month) {
+    if (cellDateComponents.month == firstOfMonthsComponents.month)
+    {
         isSelected = ([self isSelectedDate:cellDate] && (indexPath.section == [self sectionForDate:cellDate]));
         isToday = [self isTodayDate:cellDate];
         [cell setDate:cellDate calendar:self.calendar];
@@ -494,9 +540,15 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:shouldUseCustomColorsForDate:)]) {
             isCustomDate = [self.delegate simpleCalendarViewController:self shouldUseCustomColorsForDate:cellDate];
         }
+        // Add the date to the calendar item if it's nil
+        if (!item.date)
+        {
+            item.date = cellDate;
+        }
 
-
-    } else {
+    }
+    else
+    {
         [cell setDate:nil calendar:nil];
     }
 

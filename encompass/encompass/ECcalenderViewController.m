@@ -14,6 +14,9 @@
 
 @implementation ECcalenderViewController
 
+@synthesize collectionData = _collectionData;
+@synthesize weekCalendarData = _weekCalendarData;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +30,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Verify the week data that we have recevied from the month view
+    NSLog(@"\n");
+    for (CalendarItemAdvanced *item in _weekCalendarData)
+    {
+        NSLog(@"Date = %@", item.date);
+        NSLog(@"Items = \n%@", item.entries);
+    }
+    NSLog(@"\n");
     
     self.collectionData = [[NSMutableArray alloc]init];
     

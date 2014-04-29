@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface CalendarItemAdvanced : NSObject
-@property (nonatomic, strong) NSString* date;
+@property (nonatomic, strong) NSDate* date;
 @property (nonatomic, strong) NSNumber* section;
 
 
 @property (nonatomic, strong) NSMutableArray* entries;
 
--(id) initWithDate:(NSString *)date entries:(NSMutableArray *)entries andSectionIs:(NSNumber*)section;
+-(id) initWithDate:(NSDate *)date entries:(NSMutableArray *)entries andSectionIs:(NSNumber*)section;
 
 
 
