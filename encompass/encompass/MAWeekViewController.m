@@ -60,54 +60,48 @@
 
 #else
 
-static int counter = 7 * 5;
-
-- (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate {
-	counter--;
-	
-	unsigned int r = arc4random() % 24;
-	unsigned int r2 = arc4random() % 10;
-	
-	NSArray *arr;
-	
-//	if (counter < 0) {
-		arr = [NSArray arrayWithObjects: self.event, nil];
-//	} else {
-//		arr = (r <= 5 ? [NSArray arrayWithObjects: self.event, self.event, nil] : [NSArray arrayWithObjects: self.event, self.event, self.event, nil]);
-//		
-//		((MAEvent *) [arr objectAtIndex:1]).title = @"All-day events test";
-//		((MAEvent *) [arr objectAtIndex:1]).allDay = YES;
-//		
-//		if (r > 5) {
-//			((MAEvent *) [arr objectAtIndex:2]).title = @"Foo!";
-//			((MAEvent *) [arr objectAtIndex:2]).backgroundColor = [UIColor brownColor];
-//			((MAEvent *) [arr objectAtIndex:2]).allDay = YES;
-//		}
-//	}
-	
-	((MAEvent *) [arr objectAtIndex:0]).title = @"Event lorem ipsum es dolor test";
-	
-	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:startDate];
-	[components setHour:r];
-	[components setMinute:0];
-	[components setSecond:0];
-	
-	((MAEvent *) [arr objectAtIndex:0]).start = [CURRENT_CALENDAR dateFromComponents:components];
-	
-	[components setHour:r+1];
-	[components setMinute:0];
-	
-	((MAEvent *) [arr objectAtIndex:0]).end = [CURRENT_CALENDAR dateFromComponents:components];
-	
-	if (r2 > 5) {
-		((MAEvent *) [arr objectAtIndex:0]).backgroundColor = [UIColor brownColor];
-	}
-	
+// This method gets called when the week calendar comes into view for each day
+// of the current week so this allows us to parse our data from the month view
+// and create events for each of those days.
+- (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate
+{
+    // An array that holds all events for this date
+	NSMutableArray *arr;
+    CalendarItemAdvanced *calendarItem = nil;
+    // Find a calendar item in our data that matches this date
+    for (CalendarItemAdvanced *item in _weekCalendarData)
+    {
+        if ([item.date compare:startDate] == NSOrderedSame)
+        {
+            calendarItem = item;
+            break;
+        }
+    }
+    // If there are events available for this date
+    if (calendarItem)
+    {
+        NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:startDate];
+        arr = [NSMutableArray arrayWithCapacity:calendarItem.entries.count];
+        // Iterate through the calendar item's entries and create events
+        for (int i = 0; i < calendarItem.entries.count; i++)
+        {
+            MAEvent *event = self.event;
+            event.title = [calendarItem.entries objectAtIndex:i];
+            [components setHour:4*i+1];
+            [components setMinute:0];
+            [components setSecond:0];
+            event.start = [CURRENT_CALENDAR dateFromComponents:components];
+            [components setHour:4*i+3];
+            event.end = [CURRENT_CALENDAR dateFromComponents:components];
+            [arr addObject:event];
+        }
+    }
 	return arr;
 }
 
 #endif
 
+// Creates an empty event
 - (MAEvent *)event {
 	static int counter;
 	
@@ -116,7 +110,7 @@ static int counter = 7 * 5;
 	[dict setObject:[NSString stringWithFormat:@"number %i", counter++] forKey:@"test"];
 	
 	MAEvent *event = [[MAEvent alloc] init];
-	event.backgroundColor = [UIColor purpleColor];
+	event.backgroundColor = [UIColor brownColor];
 	event.textColor = [UIColor whiteColor];
 	event.allDay = NO;
 	event.userInfo = dict;
@@ -132,18 +126,20 @@ static int counter = 7 * 5;
 
 /* Implementation for the MAWeekViewDelegate protocol */
 
-- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event {
+- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event
+{
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
-	NSString *eventInfo = [NSString stringWithFormat:@"Event tapped: %02i:%02i. Userinfo: %@", [components hour], [components minute], [event.userInfo objectForKey:@"test"]];
+	NSString *eventInfo = [NSString stringWithFormat:@"Event tapped: %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
 													 message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
 }
 
-- (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event {
+- (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event
+{
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
-	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02i:%02i. Userinfo: %@", [components hour], [components minute], [event.userInfo objectForKey:@"test"]];
+	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -162,6 +158,8 @@ static int counter = 7 * 5;
         NSLog(@"Items = \n%@", item.entries);
     }
     NSLog(@"\n");
+    // Set the correct week to display (based on received data)
+    _weekView.week = ((CalendarItemAdvanced *)[_weekCalendarData firstObject]).date;
 }
 
 - (void)didReceiveMemoryWarning {
