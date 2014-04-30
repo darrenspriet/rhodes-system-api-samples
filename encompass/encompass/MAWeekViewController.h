@@ -27,18 +27,30 @@
 
 #import <UIKit/UIKit.h>
 #import "MAWeekView.h" // MAWeekViewDataSource,MAWeekViewDelegate
+#import "CalendarItemAdvanced.h"
 
 @class MAEventKitDataSource;
 
-@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate> {
+// To send updated calendar data back to the month view (delegation
+// is the recommended and, possibly, the only way to achieve this)
+@protocol MAWeekViewControllerDelegate <NSObject>
+
+- (void)updateCollectionDataWithCalendarItems:(NSArray *)items;
+
+@end
+
+@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate>
+{
     MAEventKitDataSource *_eventKitDataSource;
 }
 
-- (IBAction)back:(id)sender;
+@property (nonatomic, weak) id <MAWeekViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet MAWeekView *weekView;
 
 // Raw week data obtained from month calendar (needs to be parsed!)
 @property (nonatomic, strong) NSMutableArray *weekCalendarData;
+
+- (IBAction)back:(id)sender;
 
 @end

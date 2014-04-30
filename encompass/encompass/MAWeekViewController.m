@@ -29,7 +29,6 @@
 #import "MAWeekView.h"
 #import "MAEvent.h"
 #import "MAEventKitDataSource.h"
-#import "CalendarItemAdvanced.h"
 
 // Uncomment the following line to use the built in calendar as a source for events:
 //#define USE_EVENTKIT_DATA_SOURCE 1
@@ -45,10 +44,7 @@
 @implementation MAWeekViewController
 
 @synthesize weekCalendarData = _weekCalendarData;
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
-}
+@synthesize delegate = _delegate;
 
 /* Implementation for the MAWeekViewDataSource protocol */
 
@@ -140,7 +136,7 @@
 {
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
 	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
-	
+	[self.delegate updateCollectionDataWithCalendarItems:nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
@@ -150,32 +146,12 @@
 {
     _weekView.delegate = self;
     _weekView.dataSource = self;
-    // Verify the week data that we have recevied from the month view
-    NSLog(@"\n");
-    for (CalendarItemAdvanced *item in _weekCalendarData)
-    {
-        NSLog(@"Date = %@", item.date);
-        NSLog(@"Items = \n%@", item.entries);
-    }
-    NSLog(@"\n");
     // Set the correct week to display (based on received data)
     _weekView.week = ((CalendarItemAdvanced *)[_weekCalendarData firstObject]).date;
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
-- (IBAction)back:(id)sender {
-    
+- (IBAction)back:(id)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

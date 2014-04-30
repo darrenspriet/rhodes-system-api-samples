@@ -11,7 +11,6 @@
 #import "PDTSimpleCalendarViewFlowLayout.h"
 #import "PDTSimpleCalendarViewCell.h"
 #import "PDTSimpleCalendarViewHeader.h"
-#import "MAWeekViewController.h"
 
 
 const CGFloat PDTSimpleCalendarOverlaySize = 14.0f;
@@ -382,6 +381,17 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     }
     MAWeekViewController *controller = (MAWeekViewController *)segue.destinationViewController;
     controller.weekCalendarData = weekCalendarData;
+    controller.delegate = self;
+}
+
+
+#pragma mark - MAWeekViewController delegate methods
+
+// Receives updated calendar items from week view and subsequently
+// updates the collection data for the month calendar
+- (void)updateCollectionDataWithCalendarItems:(NSArray *)items
+{
+    NSLog(@"Month collection data updated!");
 }
 
 
@@ -796,6 +806,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     }
     return nil;
 }
+
 
 #pragma mark - Slide the table view left or right to hide/unhide it
 

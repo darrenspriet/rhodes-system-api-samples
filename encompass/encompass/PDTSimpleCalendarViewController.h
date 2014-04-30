@@ -10,8 +10,7 @@
 #import "I3DragBetweenHelper.h"
 #import "CalendarItemAdvanced.h"
 #import "ECcalenderViewController.h"
-
-
+#import "MAWeekViewController.h"
 
 @protocol PDTSimpleCalendarViewDelegate;
 
@@ -19,7 +18,7 @@
 /**
  *  `PDTSimpleCalendarViewController` is a `UICollectionViewController` subclass that displays a scrollable calendar view inspired by iOS7 Apple Cal App.
  */
-@interface PDTSimpleCalendarViewController : UIViewController <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, I3DragBetweenDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface PDTSimpleCalendarViewController : UIViewController <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, I3DragBetweenDelegate, UITableViewDataSource, UITableViewDelegate, MAWeekViewControllerDelegate>
 {
     bool isTableViewVisible;
 }
