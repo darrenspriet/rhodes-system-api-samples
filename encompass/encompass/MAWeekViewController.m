@@ -33,9 +33,6 @@
 // Uncomment the following line to use the built in calendar as a source for events:
 //#define USE_EVENTKIT_DATA_SOURCE 1
 
-#define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
-#define CURRENT_CALENDAR [NSCalendar currentCalendar]
-
 @interface MAWeekViewController(PrivateMethods)
 @property (readonly) MAEvent *event;
 @property (readonly) MAEventKitDataSource *eventKitDataSource;
@@ -61,8 +58,6 @@
 // and create events for each of those days.
 - (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate
 {
-    // An array that holds all events for this date
-	NSMutableArray *arr;
     CalendarItemAdvanced *calendarItem = nil;
     // Find a calendar item in our data that matches this date
     for (CalendarItemAdvanced *item in _weekCalendarData)
@@ -73,26 +68,7 @@
             break;
         }
     }
-    // If there are events available for this date
-    if (calendarItem)
-    {
-        NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:startDate];
-        arr = [NSMutableArray arrayWithCapacity:calendarItem.entries.count];
-        // Iterate through the calendar item's entries and create events
-        for (int i = 0; i < calendarItem.entries.count; i++)
-        {
-            MAEvent *event = self.event;
-            event.title = [calendarItem.entries objectAtIndex:i];
-            [components setHour:4*i+1];
-            [components setMinute:0];
-            [components setSecond:0];
-            event.start = [CURRENT_CALENDAR dateFromComponents:components];
-            [components setHour:4*i+3];
-            event.end = [CURRENT_CALENDAR dateFromComponents:components];
-            [arr addObject:event];
-        }
-    }
-	return arr;
+    return calendarItem.entries;
 }
 
 #endif
@@ -109,7 +85,7 @@
 	event.backgroundColor = [UIColor brownColor];
 	event.textColor = [UIColor whiteColor];
 	event.allDay = NO;
-	event.userInfo = dict;
+    event.userInfo = dict;
 	return event;
 }
 

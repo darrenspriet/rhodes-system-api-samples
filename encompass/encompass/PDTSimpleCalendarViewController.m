@@ -296,20 +296,21 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     self.tableData = @[
                        @"Staples",
                        @"Future Shop",
-                       @"Rattray Mar",
-                       @"Trinbago",
-                       @"Super Store",
+                       @"Sobeys",
+                       @"No Frills",
+                       @"Superstore",
                        @"Kraft",
                        @"Maple Leaf",
                        @"Tim Hortons",
-                       @"Panera"
+                       @"Panera Bread"
                        ];
     
-    self.collectionData = [NSMutableArray arrayWithCapacity:365];
+    self.collectionData = [NSMutableArray arrayWithCapacity:420];
     
     for (int i = 0; i < 420; i++)
     {
-        NSMutableArray *entries = [[NSMutableArray alloc] initWithObjects:nil];
+        NSMutableArray *entries = [NSMutableArray arrayWithCapacity:4];
+
         CalendarItemAdvanced *item;
         item = [[CalendarItemAdvanced alloc] initWithDate:nil entries:entries andSectionIs:nil];
         [self.collectionData addObject:item];
@@ -424,10 +425,11 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         return;
     }
     NSString *name = [self.tableData objectAtIndex:fromIndex];
+    MAEvent *event = [self eventFromString:name forCalendarItem:item];
     
    // item.section = sectionNumber;
     /* Update the data and collections accordingly */
-    [item.entries addObject:name];
+    [item.entries addObject:event];
     
     [self.collectionView reloadData];
 }
@@ -582,9 +584,15 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     //The circle background is made using roundedCorner which is a super expensive operation, specially with a lot of items on the screen to display (like we do)
     cell.layer.shouldRasterize = YES;
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    [cell.informationLabel setText:[item.entries componentsJoinedByString:@"\n"]];
-     [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-     [cell.layer setBorderWidth:.1f];
+    // We need to get the titles from each event in this calendar item
+    NSMutableArray *entries = [NSMutableArray arrayWithCapacity:4];
+    for (MAEvent *event in item.entries)
+    {
+        [entries addObject:event.title];
+    }
+    [cell.informationLabel setText:[entries componentsJoinedByString:@"\n"]];
+    [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [cell.layer setBorderWidth:.3f];
 
     return cell;
 }
@@ -767,6 +775,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     return (PDTSimpleCalendarViewCell *)[self.collectionView cellForItemAtIndexPath:[self indexPathForCellAtDate:date]];
 }
 
+
 #pragma mark PDTSimpleCalendarViewCellDelegate
 
 - (BOOL)simpleCalendarViewCell:(PDTSimpleCalendarViewCell *)cell shouldUseCustomColorsForDate:(NSDate *)date
@@ -841,6 +850,28 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     
     [UIView commitAnimations];
     [self.collectionView reloadData];
+}
+
+
+#pragma mark - Convenience methods
+
+- (MAEvent *)eventFromString:(NSString *)title forCalendarItem:(CalendarItemAdvanced *)item
+{
+    NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:item.date];
+    
+	MAEvent *event = [[MAEvent alloc] init];
+	event.backgroundColor = [UIColor brownColor];
+	event.textColor = [UIColor whiteColor];
+	event.allDay = NO;
+    event.title = title;
+    [components setHour:4*item.entries.count+1];
+    [components setMinute:0];
+    [components setSecond:0];
+    event.start = [CURRENT_CALENDAR dateFromComponents:components];
+    [components setHour:4*item.entries.count+3];
+    event.end = [CURRENT_CALENDAR dateFromComponents:components];
+    
+	return event;
 }
 
 

@@ -11,6 +11,7 @@
 #import "CalendarItemAdvanced.h"
 #import "ECcalenderViewController.h"
 #import "MAWeekViewController.h"
+#import "MAEvent.h"
 
 @protocol PDTSimpleCalendarViewDelegate;
 
@@ -100,6 +101,8 @@
 
 -(IBAction)hideView:(id)sender;
 
+- (MAEvent *)eventFromString:(NSString *)title forCalendarItem:(CalendarItemAdvanced *)item;
+
 
 //Adjustments to the calendar
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
@@ -114,9 +117,6 @@
 @property (nonatomic, strong) I3DragBetweenHelper* helper;
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
-
-
-
 
 
 @end

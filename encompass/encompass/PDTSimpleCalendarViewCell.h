@@ -101,6 +101,9 @@
  */
 @property (nonatomic, strong) UIColor *textDisabledColor UI_APPEARANCE_SELECTOR;
 
+// A listing of the events for this day
+@property (nonatomic, strong) UILabel *informationLabel;
+
 /**
  * Set the date for this cell
  *
@@ -115,6 +118,5 @@
  */
 - (void)refreshCellColors;
 
-@property (nonatomic, strong) UILabel *informationLabel;
 
 @end

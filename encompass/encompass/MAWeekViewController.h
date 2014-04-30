@@ -29,6 +29,10 @@
 #import "MAWeekView.h" // MAWeekViewDataSource,MAWeekViewDelegate
 #import "CalendarItemAdvanced.h"
 
+#define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
+
+#define CURRENT_CALENDAR [NSCalendar currentCalendar]
+
 @class MAEventKitDataSource;
 
 // To send updated calendar data back to the month view (delegation

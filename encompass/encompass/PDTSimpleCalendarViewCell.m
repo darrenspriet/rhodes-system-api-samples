@@ -54,7 +54,6 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
         [self.contentView addSubview:self.dayLabel];
         [self.contentView addSubview:self.informationLabel];
 
-
         //Add the Constraints
         [self.dayLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.dayLabel setBackgroundColor:[UIColor clearColor]];
@@ -65,6 +64,8 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
         [self.informationLabel setBackgroundColor:[UIColor clearColor]];
         self.informationLabel.layer.masksToBounds = YES;
         self.informationLabel.numberOfLines = 4;
+        self.informationLabel.font = [UIFont fontWithName:@"Arial" size:10];
+        
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.informationLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.informationLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
         
