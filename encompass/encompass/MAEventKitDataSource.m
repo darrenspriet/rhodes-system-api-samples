@@ -94,13 +94,23 @@
     return [CURRENT_CALENDAR dateByAddingComponents:components toDate:date options:0];
 }
 
+// Changed this so that it obtains permission from the native calendar first
 - (NSArray *)eventKitEventsForDate:(NSDate *)startDate
 {
-    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:startDate
-                                                                      endDate:[self nextDayForDate:startDate]
-                                                                    calendars:nil];
-    
-    NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
+    EKEventStore *store = self.eventStore;
+    __block NSArray *events;
+    __block NSPredicate *predicate;
+    if([store respondsToSelector:@selector(requestAccessToEntityType:completion:)])
+    {
+        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error)
+         {
+             predicate = [store predicateForEventsWithStartDate:startDate
+                                                                     endDate:[self nextDayForDate:startDate]
+                                                                   calendars:nil];
+             
+             events = [store eventsMatchingPredicate:predicate];
+        }];
+    }
     return events;
 }
 

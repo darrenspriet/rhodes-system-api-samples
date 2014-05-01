@@ -122,6 +122,7 @@
 @property (weak, nonatomic) IBOutlet UIView *weeklyViewContainer;
 //Needed to get a reference so it can be removed
 @property (nonatomic) MAWeekViewController *weeklyController;
+@property (assign,nonatomic) BOOL weeklyViewShown;
 
 @end
 

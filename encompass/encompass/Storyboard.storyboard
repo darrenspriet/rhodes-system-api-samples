@@ -527,14 +527,6 @@
                                     <segue destination="ojA-pQ-6su" kind="modal" identifier="MonthToWeek" id="N3i-Hz-PHn"/>
                                 </connections>
                             </button>
-                            <containerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2l1-L4-zFF">
-                                <rect key="frame" x="115" y="109" width="909" height="659"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="AdJ-eF-Dys" kind="embed" identifier="weeklyContainer" id="LMw-87-HfU"/>
-                                </connections>
-                            </containerView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pLu-MH-dUk">
                                 <rect key="frame" x="742" y="52" width="127" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -547,6 +539,14 @@
                                     <action selector="segmentControlPressed:" destination="wHB-lx-U8x" eventType="valueChanged" id="Dg4-4T-CXr"/>
                                 </connections>
                             </segmentedControl>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2l1-L4-zFF">
+                                <rect key="frame" x="115" y="109" width="909" height="659"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="AdJ-eF-Dys" kind="embed" identifier="weeklyContainer" id="LMw-87-HfU"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -742,7 +742,7 @@
                         <viewControllerLayoutGuide type="top" id="rJ8-sk-oY5"/>
                         <viewControllerLayoutGuide type="bottom" id="L9N-f7-hwo"/>
                     </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="sqY-So-hRh">
+                    <view key="view" contentMode="center" id="sqY-So-hRh">
                         <rect key="frame" x="0.0" y="0.0" width="909" height="659"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

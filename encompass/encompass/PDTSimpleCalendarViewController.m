@@ -391,6 +391,21 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 // updates the collection data for the month calendar
 - (void)updateCollectionDataWithCalendarItems:(NSArray *)items
 {
+    for (CalendarItemAdvanced *updatedItem in items)
+    {
+        for (int i = 0; i < _collectionData.count; i++)
+        {
+            CalendarItemAdvanced *item = (CalendarItemAdvanced *)[_collectionData objectAtIndex:i];
+            // If we find the item with the matching date, update it with
+            // this new one that has been received from the week view
+            if ([item.date compare:updatedItem.date] == NSOrderedSame)
+            {
+                item = updatedItem;
+                break;
+            }
+        }
+    }
+    [self.collectionView reloadData];
     NSLog(@"Month collection data updated!");
 }
 
@@ -452,7 +467,11 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
  //       return YES;
-          return (container == self.collectionView) ? NO : YES;
+    if (self.weeklyViewShown) {
+        return NO;
+    }else{
+        return (container == self.collectionView) ? NO : YES;
+    }
    // }
 }
 
@@ -880,6 +899,13 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     //If we go back to the monthview and change the weekly view to hidden
     if (sender.selectedSegmentIndex==0) {
         [self.weeklyController.view removeFromSuperview];
+        self.helper.isDstRearrangeable = NO;
+        self.helper.isSrcRearrangeable = YES;
+        self.helper.doesSrcRecieveDst = NO;
+        self.helper.doesDstRecieveSrc = YES;
+        self.helper.hideDstDraggingCell = NO;
+        self.helper.hideSrcDraggingCell = NO;
+        self.weeklyViewShown = NO;
         self.weeklyViewContainer.hidden = YES;
     }
     else{
@@ -892,7 +918,14 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         }
         //Else if the weekly has not been shown call the
         else{
+            self.helper.isDstRearrangeable = NO;
+            self.helper.isSrcRearrangeable = NO;
+            self.helper.doesSrcRecieveDst = NO;
+            self.helper.doesDstRecieveSrc = NO;
+            self.helper.hideDstDraggingCell = NO;
+            self.helper.hideSrcDraggingCell = NO;
             [self performSegueWithIdentifier:@"weeklyContainer" sender:self];
+            self.weeklyViewShown = YES;
             [self.weeklyViewContainer setHidden :NO];
         }
     }
