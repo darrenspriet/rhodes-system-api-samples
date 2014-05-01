@@ -34,9 +34,12 @@
 //#define USE_EVENTKIT_DATA_SOURCE 1
 
 @interface MAWeekViewController(PrivateMethods)
+
 @property (readonly) MAEvent *event;
 @property (readonly) MAEventKitDataSource *eventKitDataSource;
+
 @end
+
 
 @implementation MAWeekViewController
 
@@ -47,15 +50,15 @@
 
 #ifdef USE_EVENTKIT_DATA_SOURCE
 
-- (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate {
+- (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate
+{
     return [self.eventKitDataSource weekView:weekView eventsForDate:startDate];
 }
 
 #else
 
 // This method gets called when the week calendar comes into view for each day
-// of the current week so this allows us to parse our data from the month view
-// and create events for each of those days.
+// of the current week so this allows us to retrieve the events from the month view
 - (NSArray *)weekView:(MAWeekView *)weekView eventsForDate:(NSDate *)startDate
 {
     CalendarItemAdvanced *calendarItem = nil;
@@ -74,13 +77,11 @@
 #endif
 
 // Creates an empty event
-- (MAEvent *)event {
+- (MAEvent *)event
+{
 	static int counter;
-	
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-	
 	[dict setObject:[NSString stringWithFormat:@"number %i", counter++] forKey:@"test"];
-	
 	MAEvent *event = [[MAEvent alloc] init];
 	event.backgroundColor = [UIColor brownColor];
 	event.textColor = [UIColor whiteColor];
@@ -89,8 +90,10 @@
 	return event;
 }
 
-- (MAEventKitDataSource *)eventKitDataSource {
-    if (!_eventKitDataSource) {
+- (MAEventKitDataSource *)eventKitDataSource
+{
+    if (!_eventKitDataSource)
+    {
         _eventKitDataSource = [[MAEventKitDataSource alloc] init];
     }
     return _eventKitDataSource;
@@ -124,6 +127,14 @@
     _weekView.dataSource = self;
     // Set the correct week to display (based on received data)
     _weekView.week = ((CalendarItemAdvanced *)[_weekCalendarData firstObject]).date;
+    for (CalendarItemAdvanced *item in _weekCalendarData)
+    {
+        if (item.entries.count > 0)
+        {
+            MAEvent *event = (MAEvent *)[item.entries objectAtIndex:0];
+            event.title = @"Dilip";
+        }
+    }
 }
 
 - (IBAction)back:(id)sender

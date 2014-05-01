@@ -392,6 +392,21 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 // updates the collection data for the month calendar
 - (void)updateCollectionDataWithCalendarItems:(NSArray *)items
 {
+    for (CalendarItemAdvanced *updatedItem in items)
+    {
+        for (int i = 0; i < _collectionData.count; i++)
+        {
+            CalendarItemAdvanced *item = (CalendarItemAdvanced *)[_collectionData objectAtIndex:i];
+            // If we find the item with the matching date, update it with
+            // this new one that has been received from the week view
+            if ([item.date compare:updatedItem.date] == NSOrderedSame)
+            {
+                item = updatedItem;
+                break;
+            }
+        }
+    }
+    [self.collectionView reloadData];
     NSLog(@"Month collection data updated!");
 }
 

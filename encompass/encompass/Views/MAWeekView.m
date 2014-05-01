@@ -182,8 +182,8 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	self.week = [NSDate date];
     
 	[self addSubview:self.topBackground];
-	//[self addSubview:self.leftArrow];
-	//[self addSubview:self.rightArrow];
+	[self addSubview:self.leftArrow];
+	[self addSubview:self.rightArrow];
 	[self addSubview:self.dateLabel];
 	[self addSubview:self.weekdayBarView];
 	
@@ -197,7 +197,8 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	//[self.gridView addGestureRecognizer:self.swipeRightRecognizer];
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
 	const CGSize sizeNecessary = [TEXT_WHICH_MUST_FIT sizeWithFont:self.regularFont];
 	const CGSize sizeNecessaryBold = [TEXT_WHICH_MUST_FIT sizeWithFont:self.boldFont];
     
@@ -223,9 +224,12 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 											ALL_DAY_VIEW_EMPTY_SPACE);
 	
 	unsigned int hourLabelSpacer;
-	if (CGRectGetWidth(self.bounds) > CGRectGetHeight(self.bounds)) {
+	if (CGRectGetWidth(self.bounds) > CGRectGetHeight(self.bounds))
+    {
 		hourLabelSpacer = SPACE_BETWEEN_HOUR_LABELS_LANDSCAPE;
-	} else {
+	}
+    else
+    {
 		hourLabelSpacer = SPACE_BETWEEN_HOUR_LABELS;
 	}
 	
@@ -257,8 +261,10 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
     [self.gridView setNeedsDisplay];
 }
 
-- (UIImageView *)topBackground {
-	if (!_topBackground) {
+- (UIImageView *)topBackground
+{
+	if (!_topBackground)
+    {
 		_topBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:TOP_BACKGROUND_IMAGE]];
 	}
 	return _topBackground;
