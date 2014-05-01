@@ -337,8 +337,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 {
     if (!_selectedDate)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        //I moved this stuff to the bottom in the Segmented control
         return NO;
     }
     else
@@ -380,9 +379,9 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
             }
         }
     }
-    MAWeekViewController *controller = (MAWeekViewController *)segue.destinationViewController;
-    controller.weekCalendarData = weekCalendarData;
-    controller.delegate = self;
+    self.weeklyController = (MAWeekViewController *)segue.destinationViewController;
+    self.weeklyController.weekCalendarData = weekCalendarData;
+    self.weeklyController.delegate = self;
 }
 
 
@@ -876,4 +875,26 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 
 
+- (IBAction)segmentControlPressed:(UISegmentedControl *)sender {
+    
+    //If we go back to the monthview and change the weekly view to hidden
+    if (sender.selectedSegmentIndex==0) {
+        [self.weeklyController.view removeFromSuperview];
+        self.weeklyViewContainer.hidden = YES;
+    }
+    else{
+        //If the selected date is nil then we just alert and keep the segment
+        if (!_selectedDate)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [sender setSelectedSegmentIndex:0];
+        }
+        //Else if the weekly has not been shown call the
+        else{
+            [self performSegueWithIdentifier:@"weeklyContainer" sender:self];
+            [self.weeklyViewContainer setHidden :NO];
+        }
+    }
+}
 @end

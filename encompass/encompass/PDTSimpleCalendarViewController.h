@@ -118,6 +118,10 @@
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
 
+- (IBAction)segmentControlPressed:(UISegmentedControl *)sender;
+@property (weak, nonatomic) IBOutlet UIView *weeklyViewContainer;
+//Needed to get a reference so it can be removed
+@property (nonatomic) MAWeekViewController *weeklyController;
 
 @end
 

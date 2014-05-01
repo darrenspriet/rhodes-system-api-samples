@@ -73,6 +73,10 @@
 
 #endif
 
+- (void)weekView:(MAWeekView *)weekView weekDidChange:(NSDate *)week{
+    
+}
+
 // Creates an empty event
 - (MAEvent *)event {
 	static int counter;
@@ -125,6 +129,7 @@
     // Set the correct week to display (based on received data)
     _weekView.week = ((CalendarItemAdvanced *)[_weekCalendarData firstObject]).date;
 }
+
 
 - (IBAction)back:(id)sender
 {
