@@ -182,8 +182,8 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	self.week = [NSDate date];
     
 	[self addSubview:self.topBackground];
-	[self addSubview:self.leftArrow];
-	[self addSubview:self.rightArrow];
+	//[self addSubview:self.leftArrow];
+	//[self addSubview:self.rightArrow];
 	[self addSubview:self.dateLabel];
 	[self addSubview:self.weekdayBarView];
 	
