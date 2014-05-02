@@ -114,6 +114,13 @@
 
 - (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event
 {
+    // Snap event to one hour intervals (just for visualization, we can change this later)
+    NSDateComponents *startComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
+    startComponents.second = 0;
+    NSDateComponents *endComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.end];
+    endComponents.second = 0;
+    event.start = [event.start dateByAddingTimeInterval:-startComponents.minute * 60];
+    event.end = [event.end dateByAddingTimeInterval:-startComponents.minute * 60];
     // We need to rebuild the week's calendar data because the day component
     // may have changed (i.e. if they moved an event to another day)
     NSMutableArray *events = [NSMutableArray arrayWithCapacity:30];
@@ -155,8 +162,9 @@
             }
         }
     }
-	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
-	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
+    [weekView reloadData];
+    startComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
+	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[startComponents hour], (long)[startComponents minute], [event.userInfo objectForKey:@"test"]];
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
