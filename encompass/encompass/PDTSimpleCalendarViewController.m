@@ -799,11 +799,25 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 	event.textColor = [UIColor whiteColor];
 	event.allDay = NO;
     event.title = title;
-    [components setHour:4*item.entries.count+1];
+    // If events already exist
+    if (item.entries.count > 0)
+    {
+        // Position this event two hours after the last one ends
+        NSDate *lastEventEndDate = ((MAEvent *)[item.entries lastObject]).end;
+        NSDateComponents *lastEventEndDateComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS
+                                                                              fromDate:lastEventEndDate];
+        [components setHour:lastEventEndDateComponents.hour + 2];
+    }
+    else
+    {
+        // First call is at 7 am, by default!
+        [components setHour:7];
+    }
     [components setMinute:0];
     [components setSecond:0];
     event.start = [CURRENT_CALENDAR dateFromComponents:components];
-    [components setHour:4*item.entries.count+3];
+    // Let events be two hours long by default
+    [components setHour:components.hour + 2];
     event.end = [CURRENT_CALENDAR dateFromComponents:components];
     
 	return event;
