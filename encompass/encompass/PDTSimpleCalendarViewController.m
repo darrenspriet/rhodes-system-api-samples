@@ -355,6 +355,11 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 //    }
     // Don't allow more than 4 names in a calendar item
     CalendarItemAdvanced *item = [self.collectionData objectAtIndex:myInt];
+    if (!item.date)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Invalid" message:@"You cannot add a call to an empty cell!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
     if (item.entries.count > 3)
     {
         [[[UIAlertView alloc] initWithTitle:@"Invalid" message:@"Only 4 items per day!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
