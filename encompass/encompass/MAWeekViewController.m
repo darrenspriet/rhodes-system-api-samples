@@ -113,8 +113,44 @@
 
 - (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event
 {
+    // We need to rebuild the week's calendar data because the day component
+    // may have changed (i.e. if they moved an event to another day)
+    NSMutableArray *events = [NSMutableArray arrayWithCapacity:30];
+    // First, we begin by gathering all the events into one array
+    for (CalendarItemAdvanced *item in _weekCalendarData)
+    {
+        for (MAEvent *event in item.entries)
+        {
+            [events addObject:event];
+        }
+        [item.entries removeAllObjects];
+    }
+    // Next, we loop through the events and determine which calendar
+    //item they should belong to
+    NSDateComponents *dayComponent;
+    NSDate *eventDateOnly; // ignore time components
+    NSDate *itemDateOnly; // ignore time components
+    for (MAEvent *event in events)
+    {
+        for (CalendarItemAdvanced *item in _weekCalendarData)
+        {
+            dayComponent = [CURRENT_CALENDAR components:NSDayCalendarUnit
+                                             fromDate:item.date];
+            itemDateOnly = [CURRENT_CALENDAR dateFromComponents:dayComponent];
+            dayComponent = [CURRENT_CALENDAR components:NSDayCalendarUnit
+                                             fromDate:event.start];
+            eventDateOnly = [CURRENT_CALENDAR dateFromComponents:dayComponent];
+            // Now, it is safe to compare the two!  So, if this event has the
+            // same date as this item, then add it to its entries
+            if ([itemDateOnly compare:eventDateOnly] == NSOrderedSame)
+            {
+                [item.entries addObject:event];
+            }
+        }
+    }
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
 	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
+    
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
