@@ -19,7 +19,7 @@
 /**
  *  `PDTSimpleCalendarViewController` is a `UICollectionViewController` subclass that displays a scrollable calendar view inspired by iOS7 Apple Cal App.
  */
-@interface PDTSimpleCalendarViewController : UIViewController <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, I3DragBetweenDelegate, UITableViewDataSource, UITableViewDelegate, MAWeekViewControllerDelegate>
+@interface PDTSimpleCalendarViewController : UIViewController <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, I3DragBetweenDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     bool isTableViewVisible;
 }
@@ -116,7 +116,6 @@
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
 
-- (void)updateCollectionDataWithCalendarItems:(NSArray *)items;
 -(void)hideView;
 
 //Needed to get a reference so it can be removed

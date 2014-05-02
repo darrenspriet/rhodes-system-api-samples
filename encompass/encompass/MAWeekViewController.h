@@ -36,20 +36,10 @@
 
 @class MAEventKitDataSource;
 
-// To send updated calendar data back to the month view (delegation
-// is the recommended and, possibly, the only way to achieve this)
-@protocol MAWeekViewControllerDelegate <NSObject>
-
-- (void)updateCollectionDataWithCalendarItems:(NSArray *)items;
-
-@end
-
 @interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate>
 {
     MAEventKitDataSource *_eventKitDataSource;
 }
-
-@property (nonatomic, weak) id <MAWeekViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet MAWeekView *weekView;
 

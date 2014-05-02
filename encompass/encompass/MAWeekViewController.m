@@ -44,7 +44,6 @@
 @implementation MAWeekViewController
 
 @synthesize weekCalendarData = _weekCalendarData;
-@synthesize delegate = _delegate;
 
 /* Implementation for the MAWeekViewDataSource protocol */
 
@@ -116,7 +115,6 @@
 {
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
 	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
-	[self.delegate updateCollectionDataWithCalendarItems:nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
@@ -128,14 +126,6 @@
     _weekView.dataSource = self;
     // Set the correct week to display (based on received data)
     _weekView.week = ((CalendarItemAdvanced *)[_weekCalendarData firstObject]).date;
-    for (CalendarItemAdvanced *item in _weekCalendarData)
-    {
-        if (item.entries.count > 0)
-        {
-            MAEvent *event = (MAEvent *)[item.entries objectAtIndex:0];
-            event.title = @"Dilip";
-        }
-    }
 }
 
 
