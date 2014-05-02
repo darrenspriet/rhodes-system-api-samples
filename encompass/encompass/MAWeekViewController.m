@@ -125,6 +125,12 @@
         }
         [item.entries removeAllObjects];
     }
+    // Sort the events by their start dates (this will ensure that
+    // monthly view preserves event sequencing for a given day, assuming
+    // of course that the "for in" loop iterates in the correct order!)
+    NSSortDescriptor* sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"start"
+                                                                 ascending:YES];
+    [events sortUsingDescriptors:[NSArray arrayWithObject:sortByDate]];
     // Next, we loop through the events and determine which calendar
     //item they should belong to
     NSDateComponents *dayComponent;
