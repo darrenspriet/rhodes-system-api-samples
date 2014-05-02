@@ -45,7 +45,8 @@
 
 @synthesize weekCalendarData = _weekCalendarData;
 
-/* Implementation for the MAWeekViewDataSource protocol */
+
+#pragma mark - MAWeekViewDataSource methods
 
 #ifdef USE_EVENTKIT_DATA_SOURCE
 
@@ -99,15 +100,15 @@
     return _eventKitDataSource;
 }
 
-/* Implementation for the MAWeekViewDelegate protocol */
+#pragma mark - MAWeekViewDelegate methods
 
 - (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event
 {
-	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
-	NSString *eventInfo = [NSString stringWithFormat:@"Event tapped: %02li:%02li. Userinfo: %@", (long)[components hour], (long)[components minute], [event.userInfo objectForKey:@"test"]];
-	
+    _eventToDelete = event;
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
-													 message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                    message:@"Delete this event?"
+                                                   delegate:self cancelButtonTitle:@"OK"
+                                          otherButtonTitles:@"Cancel", nil];
 	[alert show];
 }
 
@@ -174,6 +175,34 @@
 - (IBAction)back:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // If they pressed OK
+    if (buttonIndex == 0)
+    {
+        // Locate the weekday item that contains this event
+        CalendarItemAdvanced *itemWithEvent;
+        for (CalendarItemAdvanced *item in _weekCalendarData)
+        {
+            for (MAEvent *event in item.entries)
+            {
+                // Found the item!
+                if (event == _eventToDelete)
+                {
+                    itemWithEvent = item;
+                }
+            }
+        }
+        // Remove the event
+        [itemWithEvent.entries removeObject:_eventToDelete];
+        // Refresh the view
+        [_weekView reloadData];
+    }
 }
 
 

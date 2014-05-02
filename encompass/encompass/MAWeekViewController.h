@@ -36,9 +36,10 @@
 
 @class MAEventKitDataSource;
 
-@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate>
+@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate,UIAlertViewDelegate>
 {
     MAEventKitDataSource *_eventKitDataSource;
+    MAEvent *_eventToDelete; // since I don't know how to pass this into the alterview callback
 }
 
 @property (weak, nonatomic) IBOutlet MAWeekView *weekView;
