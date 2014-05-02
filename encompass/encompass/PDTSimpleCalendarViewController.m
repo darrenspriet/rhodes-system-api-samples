@@ -304,17 +304,20 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
                        @"Tim Hortons",
                        @"Panera Bread"
                        ];
-    
-    self.collectionData = [NSMutableArray arrayWithCapacity:420];
-    
-    for (int i = 0; i < 420; i++)
-    {
-        NSMutableArray *entries = [NSMutableArray arrayWithCapacity:4];
-
-        CalendarItemAdvanced *item;
-        item = [[CalendarItemAdvanced alloc] initWithDate:nil entries:entries andSectionIs:nil];
-        [self.collectionData addObject:item];
+    if(!self.collectionData){
+        self.collectionData = [NSMutableArray arrayWithCapacity:420];
+        
+        for (int i = 0; i < 420; i++)
+        {
+            NSMutableArray *entries = [NSMutableArray arrayWithCapacity:4];
+            
+            CalendarItemAdvanced *item;
+            item = [[CalendarItemAdvanced alloc] initWithDate:nil entries:entries andSectionIs:nil];
+            [self.collectionData addObject:item];
+        }
     }
+    
+
     
     /* Configure the helper */
     
