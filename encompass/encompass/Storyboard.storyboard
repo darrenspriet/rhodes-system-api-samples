@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="wHB-lx-U8x">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="qoO-vR-Y4H">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -134,7 +134,7 @@
                                         </state>
                                         <connections>
                                             <action selector="MenuItemSelected:" destination="gpL-LS-UDj" eventType="touchUpInside" id="y6A-dd-5In"/>
-                                            <segue destination="wHB-lx-U8x" kind="modal" modalTransitionStyle="flipHorizontal" id="Q8j-Qf-Zsp"/>
+                                            <segue destination="qoO-vR-Y4H" kind="modal" id="wsr-Gd-w9l"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calender" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="104" translatesAutoresizingMaskIntoConstraints="NO" id="tFv-o6-zPQ">
@@ -251,7 +251,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gij-ad-L1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-594" y="-10"/>
+            <point key="canvasLocation" x="-600" y="-10"/>
         </scene>
         <!--Ccalender View Controller-->
         <scene sceneID="vfI-wb-Omt">
@@ -433,6 +433,75 @@
             </objects>
             <point key="canvasLocation" x="-614" y="1118"/>
         </scene>
+        <!--Calendar Container Controller-->
+        <scene sceneID="vdB-vj-FPa">
+            <objects>
+                <viewController id="qoO-vR-Y4H" customClass="ECCalendarContainerController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cYZ-uY-4P8"/>
+                        <viewControllerLayoutGuide type="bottom" id="iy7-OV-ToM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nfs-Sf-GS3">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background1.png" translatesAutoresizingMaskIntoConstraints="NO" id="4qX-cc-sbY">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ap-NC-i0I">
+                                <rect key="frame" x="115" y="108" width="909" height="660"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="wHB-lx-U8x" kind="embed" identifier="monthlyCalendarSegue" id="Vs6-yC-kYu"/>
+                                </connections>
+                            </containerView>
+                            <containerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qVj-Vf-tuh">
+                                <rect key="frame" x="115" y="108" width="909" height="660"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="AdJ-eF-Dys" kind="embed" identifier="WeeklyCalendarSegue" id="MD2-a5-nlu"/>
+                                </connections>
+                            </containerView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dOT-6n-nWN">
+                                <rect key="frame" x="717" y="64" width="127" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <segments>
+                                    <segment title="Monthly"/>
+                                    <segment title="Weekly"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentControlPressed:" destination="qoO-vR-Y4H" eventType="valueChanged" id="nIw-5X-EkF"/>
+                                    <action selector="segmentControlPressed:" destination="qoO-vR-Y4H" eventType="touchUpInside" id="pZe-iU-UuM"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37D-Yo-mR5">
+                                <rect key="frame" x="130" y="79" width="96" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Hide / Show">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="hideShowTableView:" destination="qoO-vR-Y4H" eventType="touchUpInside" id="ev7-vy-kqy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <connections>
+                        <outlet property="monthlyContainer" destination="3ap-NC-i0I" id="zz9-ul-SBe"/>
+                        <outlet property="showButtonOutlet" destination="37D-Yo-mR5" id="W1y-TN-Rqw"/>
+                        <outlet property="weeklyViewContainer" destination="qVj-Vf-tuh" id="ioL-4X-8U4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ml7-5M-4iV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="550" y="-1085"/>
+        </scene>
         <!--Simple Calendar View Controller-->
         <scene sceneID="tyP-FR-k5M">
             <objects>
@@ -442,15 +511,11 @@
                         <viewControllerLayoutGuide type="bottom" id="PNd-Yr-JgF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CC3-2O-uFK">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="909" height="660"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="fxP-nk-5zt">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zxa-JZ-60I">
-                                <rect key="frame" x="405" y="237" width="619" height="531"/>
+                                <rect key="frame" x="290" y="100" width="619" height="560"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="R2o-JL-qUQ">
                                     <size key="itemSize" width="88" height="88"/>
@@ -476,77 +541,32 @@
                                 </connections>
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sevendays.gif" translatesAutoresizingMaskIntoConstraints="NO" id="MkJ-pc-xzn">
-                                <rect key="frame" x="405" y="202" width="619" height="34"/>
+                                <rect key="frame" x="290" y="67" width="619" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="March 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB0-xt-xFl">
-                                <rect key="frame" x="546" y="132" width="337" height="33"/>
+                                <rect key="frame" x="467" y="20" width="337" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PEU-Lo-omQ">
-                                <rect key="frame" x="115" y="212" width="290" height="556"/>
+                                <rect key="frame" x="0.0" y="100" width="290" height="560"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKY-Kc-boL">
-                                <rect key="frame" x="115" y="81" width="116" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Show/Hide Table">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="hideView:" destination="wHB-lx-U8x" eventType="touchUpInside" id="dff-eA-KaM"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tablecell.png" translatesAutoresizingMaskIntoConstraints="NO" id="0nZ-LC-H6v">
-                                <rect key="frame" x="115" y="109" width="290" height="101"/>
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Locations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HuA-qq-H9r">
-                                <rect key="frame" x="115" y="168" width="100" height="21"/>
+                                <rect key="frame" x="87" y="40" width="100" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sidepanel.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="B1v-iU-vpM">
-                                <rect key="frame" x="0.0" y="109" width="115" height="659"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOv-pr-ybp">
-                                <rect key="frame" x="793" y="81" width="105" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Week/Day view">
-                                    <color key="titleColor" red="0.69308400300625217" green="1" blue="0.023765434766937377" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ojA-pQ-6su" kind="modal" identifier="MonthToWeek" id="N3i-Hz-PHn"/>
-                                </connections>
-                            </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pLu-MH-dUk">
-                                <rect key="frame" x="742" y="52" width="127" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <segments>
-                                    <segment title="Monthly"/>
-                                    <segment title="Weekly"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segmentControlPressed:" destination="wHB-lx-U8x" eventType="valueChanged" id="Dg4-4T-CXr"/>
-                                </connections>
-                            </segmentedControl>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2l1-L4-zFF">
-                                <rect key="frame" x="115" y="109" width="909" height="659"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="AdJ-eF-Dys" kind="embed" identifier="weeklyContainer" id="LMw-87-HfU"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -559,12 +579,11 @@
                         <outlet property="monthLabel" destination="VB0-xt-xFl" id="YKT-mS-KIK"/>
                         <outlet property="sourceTable" destination="PEU-Lo-omQ" id="Oh6-Sc-wmj"/>
                         <outlet property="weekImage" destination="MkJ-pc-xzn" id="UhA-bq-3EU"/>
-                        <outlet property="weeklyViewContainer" destination="2l1-L4-zFF" id="JQw-3e-5hh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txx-AC-REI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1294" y="-10"/>
+            <point key="canvasLocation" x="1710" y="-2041"/>
         </scene>
         <!--Week View Controller-->
         <scene sceneID="pVo-to-Kj8">
@@ -609,7 +628,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umn-vJ-TYn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2622" y="-10"/>
+            <point key="canvasLocation" x="2872" y="256"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="JnL-ox-wRb">
@@ -743,15 +762,15 @@
                         <viewControllerLayoutGuide type="bottom" id="L9N-f7-hwo"/>
                     </layoutGuides>
                     <view key="view" contentMode="center" id="sqY-So-hRh">
-                        <rect key="frame" x="0.0" y="0.0" width="909" height="659"/>
+                        <rect key="frame" x="0.0" y="0.0" width="909" height="660"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZZu-Cw-T5w" customClass="MAWeekView">
-                                <rect key="frame" x="0.0" y="0.0" width="909" height="659"/>
+                                <rect key="frame" x="0.0" y="0.0" width="909" height="660"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4I-T6-HFB">
-                                        <rect key="frame" x="376" y="236" width="42" height="21"/>
+                                        <rect key="frame" x="372" y="325" width="42" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -771,7 +790,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5X0-Ft-eDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2432" y="-813"/>
+            <point key="canvasLocation" x="1940" y="-1009"/>
         </scene>
     </scenes>
     <resources>

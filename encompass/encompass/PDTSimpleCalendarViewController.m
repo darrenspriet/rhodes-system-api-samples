@@ -332,57 +332,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     self.helper.hideSrcDraggingCell = NO;
 }
 
-// Don't switch to the week view if no date is selected
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    if (!_selectedDate)
-    {
-        //I moved this stuff to the bottom in the Segmented control
-        return NO;
-    }
-    else
-    {
-        return YES;
-    }
-}
 
-// This method is skipped if the previous one returns NO
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Figure out the dates for the week of the currently selected date
-    NSCalendar *gregorian = self.calendar;
-    NSDateComponents *currentComps =[gregorian components:(NSYearCalendarUnit |
-                                                                NSWeekdayCalendarUnit |
-                                                                NSMonthCalendarUnit |
-                                                                NSWeekOfYearCalendarUnit |
-                                                                NSWeekdayCalendarUnit |
-                                                                NSHourCalendarUnit |
-                                                                NSMinuteCalendarUnit)
-                                                      fromDate:_selectedDate];
-    // To store the calendar items for this particular week
-    NSMutableArray *weekCalendarData = [NSMutableArray arrayWithCapacity:7];
-    // Gather the calendar items for this week only (kind of inefficient!)
-    for (int i = 1; i < 8; i++)
-    {
-        for (CalendarItemAdvanced *item in _collectionData)
-        {
-            // Skip the calendar items for disabled dates (i.e. blank spots)
-            if (item.date)
-            {
-                [currentComps setWeekday:i]; // 1: Sunday, 2: Monday, etc.
-                NSDate *dayOfTheWeek = [gregorian dateFromComponents:currentComps];
-                if ([item.date compare:dayOfTheWeek] == NSOrderedSame)
-                {
-                    [weekCalendarData addObject:item];
-                    break;
-                }
-            }
-        }
-    }
-    self.weeklyController = (MAWeekViewController *)segue.destinationViewController;
-    self.weeklyController.weekCalendarData = weekCalendarData;
-    self.weeklyController.delegate = self;
-}
 
 
 #pragma mark - MAWeekViewController delegate methods
@@ -425,11 +375,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     NSNumber * numberForLater = [NSNumber numberWithInt:[startingPoint integerValue]+toIndex];
     NSInteger myInt = [numberForLater integerValue];
     
-    // Disable drag and drop on invalid calendar cells
-    
-//    if (toIndex < 5 || toIndex > 36)
-//    {
-//        return;
+
 //    }
     // Don't allow more than 4 names in a calendar item
     CalendarItemAdvanced *item = [self.collectionData objectAtIndex:myInt];
@@ -466,13 +412,8 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
- //       return YES;
-    if (self.weeklyViewShown) {
-        return NO;
-    }else{
+
         return (container == self.collectionView) ? NO : YES;
-    }
-   // }
 }
 
 #pragma mark - Table view delegate and datasource implementations
@@ -837,7 +778,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 #pragma mark - Slide the table view left or right to hide/unhide it
 
--(IBAction)hideView:(id)sender
+-(void)hideView
 {
     
     [UIView beginAnimations:nil context:nil];
@@ -892,42 +833,4 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 	return event;
 }
 
-
-
-- (IBAction)segmentControlPressed:(UISegmentedControl *)sender {
-    
-    //If we go back to the monthview and change the weekly view to hidden
-    if (sender.selectedSegmentIndex==0) {
-        [self.weeklyController.view removeFromSuperview];
-        self.helper.isDstRearrangeable = NO;
-        self.helper.isSrcRearrangeable = YES;
-        self.helper.doesSrcRecieveDst = NO;
-        self.helper.doesDstRecieveSrc = YES;
-        self.helper.hideDstDraggingCell = NO;
-        self.helper.hideSrcDraggingCell = NO;
-        self.weeklyViewShown = NO;
-        self.weeklyViewContainer.hidden = YES;
-    }
-    else{
-        //If the selected date is nil then we just alert and keep the segment
-        if (!_selectedDate)
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            [sender setSelectedSegmentIndex:0];
-        }
-        //Else if the weekly has not been shown call the
-        else{
-            self.helper.isDstRearrangeable = NO;
-            self.helper.isSrcRearrangeable = NO;
-            self.helper.doesSrcRecieveDst = NO;
-            self.helper.doesDstRecieveSrc = NO;
-            self.helper.hideDstDraggingCell = NO;
-            self.helper.hideSrcDraggingCell = NO;
-            [self performSegueWithIdentifier:@"weeklyContainer" sender:self];
-            self.weeklyViewShown = YES;
-            [self.weeklyViewContainer setHidden :NO];
-        }
-    }
-}
 @end

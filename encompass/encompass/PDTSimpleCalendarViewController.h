@@ -99,8 +99,6 @@
  */
 - (void)scrollToDate:(NSDate *)date animated:(BOOL)animated;
 
--(IBAction)hideView:(id)sender;
-
 - (MAEvent *)eventFromString:(NSString *)title forCalendarItem:(CalendarItemAdvanced *)item;
 
 
@@ -118,10 +116,10 @@
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
 
-- (IBAction)segmentControlPressed:(UISegmentedControl *)sender;
-@property (weak, nonatomic) IBOutlet UIView *weeklyViewContainer;
+- (void)updateCollectionDataWithCalendarItems:(NSArray *)items;
+-(void)hideView;
+
 //Needed to get a reference so it can be removed
-@property (nonatomic) MAWeekViewController *weeklyController;
 @property (assign,nonatomic) BOOL weeklyViewShown;
 
 @end

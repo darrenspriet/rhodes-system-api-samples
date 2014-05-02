@@ -35,6 +35,7 @@
 		B356F88C190D802200653566 /* CalendarItemAdvanced.m in Sources */ = {isa = PBXBuildFile; fileRef = B356F88B190D802200653566 /* CalendarItemAdvanced.m */; };
 		E01B899E190742C900B0B563 /* WeeklyCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E01B899D190742C900B0B563 /* WeeklyCalendarItem.m */; };
 		E02658BE1906DBB4002DEFAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E02658BD1906DBB4002DEFAE /* QuartzCore.framework */; };
+		E0330A8419130F2D00C557A0 /* ECCalendarContainerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0330A8319130F2D00C557A0 /* ECCalendarContainerController.m */; };
 		E0555A3C18E7783100BA13E5 /* sevendays.gif in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3918E7783100BA13E5 /* sevendays.gif */; };
 		E0555A3D18E7783100BA13E5 /* sidepanel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3A18E7783100BA13E5 /* sidepanel.jpg */; };
 		E0555A3E18E7783100BA13E5 /* tablecell.png in Resources */ = {isa = PBXBuildFile; fileRef = E0555A3B18E7783100BA13E5 /* tablecell.png */; };
@@ -115,6 +116,8 @@
 		E01B899C190742C900B0B563 /* WeeklyCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyCalendarItem.h; sourceTree = "<group>"; };
 		E01B899D190742C900B0B563 /* WeeklyCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyCalendarItem.m; sourceTree = "<group>"; };
 		E02658BD1906DBB4002DEFAE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E0330A8219130F2D00C557A0 /* ECCalendarContainerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECCalendarContainerController.h; sourceTree = "<group>"; };
+		E0330A8319130F2D00C557A0 /* ECCalendarContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECCalendarContainerController.m; sourceTree = "<group>"; };
 		E0555A3918E7783100BA13E5 /* sevendays.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sevendays.gif; sourceTree = "<group>"; };
 		E0555A3A18E7783100BA13E5 /* sidepanel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sidepanel.jpg; sourceTree = "<group>"; };
 		E0555A3B18E7783100BA13E5 /* tablecell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tablecell.png; sourceTree = "<group>"; };
@@ -243,14 +246,25 @@
 			name = PDTSimpleCalendar;
 			sourceTree = "<group>";
 		};
-		B303C91C190D4D750033D43A /* New Monthly Calendar */ = {
+		B303C91C190D4D750033D43A /* Monthly Calendar */ = {
 			isa = PBXGroup;
 			children = (
 				B356F88A190D802200653566 /* CalendarItemAdvanced.h */,
 				B356F88B190D802200653566 /* CalendarItemAdvanced.m */,
 				B303C90E190D4D270033D43A /* PDTSimpleCalendar */,
 			);
-			name = "New Monthly Calendar";
+			name = "Monthly Calendar";
+			sourceTree = "<group>";
+		};
+		E0330A8119130EE600C557A0 /* Calendars In Use */ = {
+			isa = PBXGroup;
+			children = (
+				64E37C8B191036F6007DCC0F /* MACalendar */,
+				B303C91C190D4D750033D43A /* Monthly Calendar */,
+				E0330A8219130F2D00C557A0 /* ECCalendarContainerController.h */,
+				E0330A8319130F2D00C557A0 /* ECCalendarContainerController.m */,
+			);
+			name = "Calendars In Use";
 			sourceTree = "<group>";
 		};
 		E0C01B8718E656610035E193 /* Monthly Calendar */ = {
@@ -327,8 +341,7 @@
 		E0C14F4918BEB1970016990C /* encompass */ = {
 			isa = PBXGroup;
 			children = (
-				64E37C8B191036F6007DCC0F /* MACalendar */,
-				B303C91C190D4D750033D43A /* New Monthly Calendar */,
+				E0330A8119130EE600C557A0 /* Calendars In Use */,
 				E0C01B8918E6568A0035E193 /* Images */,
 				B303C90C190D4C560033D43A /* Weekly Calendar */,
 				E0C01B8818E656680035E193 /* Map */,
@@ -522,6 +535,7 @@
 				64E37C971910375E007DCC0F /* MADayView.m in Sources */,
 				64E37C9E1910377E007DCC0F /* MAWeekViewController.m in Sources */,
 				33191EDF18CD65E400AF304A /* ECcalenderViewController.m in Sources */,
+				E0330A8419130F2D00C557A0 /* ECCalendarContainerController.m in Sources */,
 				B303C91B190D4D3A0033D43A /* PDTSimpleCalendarViewHeader.m in Sources */,
 				B356F88C190D802200653566 /* CalendarItemAdvanced.m in Sources */,
 				E0C01B7F18E6562B0035E193 /* I3DragBetweenHelper.m in Sources */,
