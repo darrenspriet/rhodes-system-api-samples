@@ -340,6 +340,9 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 -(void) droppedOnDstAtIndexPath:(NSIndexPath*) to fromSrcIndexPath:(NSIndexPath*)from
 {
+    UITableViewCell *cell = [self.sourceTable cellForRowAtIndexPath:
+                             from];
+    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]]];
     /* Grab the appropriate data */
     NSInteger fromIndex = (from.item);
     NSInteger toIndex = (to.item);
@@ -380,21 +383,25 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     return YES;
 }
 
--(void) droppedOnDstAtIndexPath:(NSIndexPath*) to fromDstIndexPath:(NSIndexPath*) from{
-    
-    [self.collectionView cellForItemAtIndexPath:from].alpha = 1;
-    
-    NSInteger fromIndex = (from.item);
-    NSInteger toIndex = (to.item);
-    
-    [self.collectionData exchangeObjectAtIndex:toIndex withObjectAtIndex:fromIndex];
-    
+-(void)droppedOnSrcAtIndexPath:(NSIndexPath *)to fromSrcIndexPath:(NSIndexPath *)from{
+    UITableViewCell *cell = [self.sourceTable cellForRowAtIndexPath:
+                             to];
+    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tablecell.png"]]];
 }
+
 
 -(BOOL) isCellAtIndexPathDraggable:(NSIndexPath*) index inContainer:(UIView*) container
 {
-
-        return (container == self.collectionView) ? NO : YES;
+    if (container==self.collectionView) {
+        return NO;
+    }
+    else{
+        UITableViewCell *cell = [self.sourceTable cellForRowAtIndexPath:
+                                 index];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        [cell setBackgroundView:nil];
+        return YES;
+    }
 }
 
 #pragma mark - Table view delegate and datasource implementations
@@ -531,8 +538,9 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         [entries addObject:event.title];
     }
     [cell.informationLabel setText:[entries componentsJoinedByString:@"\n"]];
-    [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [cell.layer setBorderWidth:.3f];
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.3)];
+    topLineView.backgroundColor = [UIColor lightGrayColor];
+    [cell.contentView addSubview:topLineView];
 
     return cell;
 }

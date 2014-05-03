@@ -44,22 +44,17 @@
 {
     if (self.monthlyViewController)
     {
-        NSLog(@"MONTHLY VIEW CONTROLLER TRUE");
-
         if (self.monthlyViewController.selectedDate) {
-            NSLog(@"SELECTED DATE TRUE");
             return YES;
         }
         else{
             NSLog(@"SELECTED DATE FALSE");
-            self.weeklyViewContainer.hidden = YES;
+            [self.weeklyViewContainer setHidden: YES];
             return NO;
         }
     }
     else
     {
-        
-        NSLog(@"MONTHLY VIEW CONTROLLER FALSE");
         return YES;
     }
 }
@@ -108,8 +103,7 @@
         }
         self.weeklyController = (MAWeekViewController *)segue.destinationViewController;
         self.weeklyController.weekCalendarData = weekCalendarData;
-        self.weeklyViewContainer.hidden = NO;
-        [self.monthlyViewController.view removeFromSuperview];
+
 
     }
 }
@@ -119,7 +113,6 @@
     
     //If we go back to the monthview and change the weekly view to hidden
     if (sender.selectedSegmentIndex==0) {
-        NSLog(@"Montly View pressed");
         self.showButtonOutlet.hidden = NO;
         [self performSegueWithIdentifier:@"monthlyCalendarSegue" sender:self];
         self.weeklyViewContainer.hidden =YES;
@@ -127,12 +120,12 @@
     }
     else{
         if (self.monthlyViewController.selectedDate) {
-            NSLog(@"Weekly View pressed");
             self.showButtonOutlet.hidden = YES;
             self.selectedDate = self.monthlyViewController.selectedDate;
             self.collectionData = self.monthlyViewController.collectionData;
-            
             [self performSegueWithIdentifier:@"WeeklyCalendarSegue" sender:self];
+            self.weeklyViewContainer.hidden = NO;
+            [self.monthlyViewController.view removeFromSuperview];
         }
         else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

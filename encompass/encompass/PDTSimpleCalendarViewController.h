@@ -75,7 +75,6 @@
  */
 @property (nonatomic, weak) id<PDTSimpleCalendarViewDelegate> delegate;
 
-
 /**
  *  Change the selected date of the calendar, and scroll to it
  *
@@ -118,8 +117,6 @@
 
 -(void)hideView;
 
-//Needed to get a reference so it can be removed
-@property (assign,nonatomic) BOOL weeklyViewShown;
 
 @end
 

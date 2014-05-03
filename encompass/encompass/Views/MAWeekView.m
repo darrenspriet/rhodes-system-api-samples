@@ -181,7 +181,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	self.eventDraggingEnabled = YES;
 	self.week = [NSDate date];
     
-	[self addSubview:self.topBackground];
+	//[self addSubview:self.topBackground];
 	//[self addSubview:self.leftArrow];
 	//[self addSubview:self.rightArrow];
 	[self addSubview:self.dateLabel];
@@ -296,7 +296,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 		_dateLabel = [[UILabel alloc] init];
 		_dateLabel.textAlignment = UITextAlignmentCenter;
 		_dateLabel.backgroundColor = [UIColor clearColor];
-		_dateLabel.font = [UIFont boldSystemFontOfSize:18];
+		_dateLabel.font = [UIFont systemFontOfSize:25.0];
 		_dateLabel.textColor = [UIColor colorWithRed:59/255. green:73/255. blue:88/255. alpha:1];
 	}
 	return _dateLabel;
@@ -330,6 +330,8 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 		_hourView.backgroundColor = [UIColor whiteColor];
 		_hourView.textColor       = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.f];
 		_hourView.textFont        = self.boldFont;
+        _hourView.textFont = [UIFont boldSystemFontOfSize:12];
+
 	}
 	return _hourView;
 }
@@ -338,11 +340,14 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	if (!_weekdayBarView) {
 		_weekdayBarView = [[MAWeekdayBarView alloc] init];
 		_weekdayBarView.weekView        = self;
-		_weekdayBarView.backgroundColor = [UIColor clearColor];
+		_weekdayBarView.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
 		_weekdayBarView.textColor       = [UIColor blackColor];
-		_weekdayBarView.sundayColor     = [UIColor colorWithRed:0.6 green:0 blue:0 alpha:1.f];
+		//_weekdayBarView.sundayColor     = [UIColor colorWithRed:0.6 green:0 blue:0 alpha:1.f];
 		_weekdayBarView.todayColor      = [UIColor colorWithRed:0.1 green:0.5 blue:0.9 alpha:1.f];
+        _weekdayBarView.todayColor      = [UIColor redColor];
 		_weekdayBarView.textFont        = self.regularFont;
+        _weekdayBarView.textFont = [UIFont systemFontOfSize:12.0];
+
 	}
 	return _weekdayBarView;
 }
@@ -441,10 +446,10 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	size_t d = 0;
 	for (NSDate *weekday in self.weekdayBarView.weekdays) {
 		NSArray *events = [self.dataSource weekView:self eventsForDate:weekday];
-		
 		for (id e in events) {
 			MAEvent *event = e;
 			event.displayDate = weekday;
+           
 		}
 		
 		for (id e in [events sortedArrayUsingFunction:MAEvent_sortByStartTime context:NULL]) {
@@ -512,12 +517,18 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 - (NSString *)titleText {
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:_week];
+    NSDateComponents *componentForDate = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:_week];
+    NSLog(@"what is week %@", _week);
+    
+	NSInteger day = [componentForDate day];
+	NSArray *monthSymbols = [formatter monthSymbols];
 	
-	NSArray *monthSymbols = [formatter shortMonthSymbols];
-	
-	return [NSString stringWithFormat:@"%@, week %i",
-			[monthSymbols objectAtIndex:[components month] - 1],
-			[components week]];
+//	return [NSString stringWithFormat:@"%@, week %i",
+//			[monthSymbols objectAtIndex:[components month] - 1],
+//			[components week]];
+    
+    return [NSString stringWithFormat:@"%@ %d",
+			[monthSymbols objectAtIndex:[components month] - 1], day];
 }
 
 @end
@@ -579,10 +590,10 @@ static NSString const * const HOURS_24[] = {
 	MAEventView *eventView = [[MAEventView alloc] init];
 	eventView.weekView = weekView;
 	eventView.event = event;
-	eventView.backgroundColor = event.backgroundColor;
+	eventView.backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
 	eventView.title = event.title;
-	eventView.textFont = weekView.regularFont;
-	eventView.textColor = event.textColor;
+	eventView.textFont = [UIFont boldSystemFontOfSize:17];
+	eventView.textColor = [UIColor whiteColor];
 	eventView.xOffset = offset;
 	
 	[self addSubview:eventView];
@@ -756,10 +767,10 @@ static NSString const * const HOURS_24[] = {
 	
 	eventView.weekView = self.weekView;
 	eventView.event = event;
-	eventView.backgroundColor = event.backgroundColor;
+	eventView.backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
 	eventView.title = event.title;
-	eventView.textFont = self.textFont;
-	eventView.textColor = event.textColor;
+	eventView.textFont = [UIFont boldSystemFontOfSize:17];
+	eventView.textColor = [UIColor whiteColor];
 	eventView.xOffset = offset;
 	eventView.yOffset = _eventsInOffset[offset]++;
 	
