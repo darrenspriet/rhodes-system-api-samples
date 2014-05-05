@@ -40,6 +40,8 @@
 {
     MAEventKitDataSource *_eventKitDataSource;
     MAEvent *_eventToDelete; // since I don't know how to pass this into the alterview callback
+    MAEvent *_eventTOEdit;//editing event
+    UIAlertView *_alertView;
 }
 
 @property (weak, nonatomic) IBOutlet MAWeekView *weekView;

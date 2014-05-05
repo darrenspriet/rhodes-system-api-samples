@@ -46,6 +46,8 @@
 @synthesize weekCalendarData = _weekCalendarData;
 
 
+
+
 #pragma mark - MAWeekViewDataSource methods
 
 #ifdef USE_EVENTKIT_DATA_SOURCE
@@ -105,12 +107,35 @@
 - (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event
 {
     _eventToDelete = event;
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
-                                                    message:@"Delete this event?"
-                                                   delegate:self cancelButtonTitle:@"OK"
-                                          otherButtonTitles:@"Cancel", nil];
-	[alert show];
+    _eventTOEdit = event;
+	UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:event.title
+                                                    message:@"Manage event!"
+                                                   delegate:self cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Edit", @"Delete", nil];
+    _alertView = alert1;
+    [_alertView show];
+    
+
 }
+
+//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+//{
+//    NSLog(@"Alert View dismissed with button at index %ld",(long)buttonIndex);
+//    
+//    switch (alertView.alertViewStyle)
+//    {
+//        case UIAlertViewStylePlainTextInput:
+//        {
+//            UITextField *textField = [alertView textFieldAtIndex:0];
+//            //textField.text = event.title;
+//            NSLog(@"Plain text input: %@",textField.text);
+//        }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//}
 
 - (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event
 {
@@ -190,26 +215,74 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // If they pressed OK
-    if (buttonIndex == 0)
+    if(alertView == _alertView)
     {
-        // Locate the weekday item that contains this event
-        CalendarItemAdvanced *itemWithEvent;
-        for (CalendarItemAdvanced *item in _weekCalendarData)
+        //Main alert with different options
+        if (buttonIndex == 2)
         {
-            for (MAEvent *event in item.entries)
+            
+            // Locate the weekday item that contains this event
+            CalendarItemAdvanced *itemWithEvent;
+            for (CalendarItemAdvanced *item in _weekCalendarData)
             {
-                // Found the item!
-                if (event == _eventToDelete)
+                for (MAEvent *event in item.entries)
                 {
-                    itemWithEvent = item;
+                    // Found the item!
+                    if (event == _eventToDelete)
+                    {
+                        itemWithEvent = item;
+                    }
+                }
+            }
+            // Remove the event
+            [itemWithEvent.entries removeObject:_eventToDelete];
+            // Refresh the view
+            [_weekView reloadData];
+            
+        }
+        else if(buttonIndex==1)
+        {
+            // Locate the weekday item that contains this event
+            CalendarItemAdvanced *itemWithEvent;
+            for (CalendarItemAdvanced *item in _weekCalendarData)
+            {
+                for (MAEvent *event in item.entries)
+                {
+                    // Found the item!
+                    if (event == _eventTOEdit)
+                    {
+                        itemWithEvent = item;
+                        
+                        NSString *startDate, *endDate, *longString;
+                        
+                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                        [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                        startDate = [dateFormatter stringFromDate:event.start];
+                        
+                        NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+                        [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                        endDate = [dateFormatter1 stringFromDate:event.end];
+                        
+                        longString = [startDate stringByAppendingString:endDate];
+                        
+                        
+                        UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:event.title
+                                                                         message:longString
+                                                                        delegate:self cancelButtonTitle:@"Cancel"
+                                                               otherButtonTitles:nil];
+                        [alert2 show];
+
+                    }
                 }
             }
         }
-        // Remove the event
-        [itemWithEvent.entries removeObject:_eventToDelete];
-        // Refresh the view
-        [_weekView reloadData];
+    }
+    else
+    {//alertComment
+        if (buttonIndex==0) {
+
+            
+        }
     }
 }
 
