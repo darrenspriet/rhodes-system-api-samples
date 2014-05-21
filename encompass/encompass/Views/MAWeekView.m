@@ -586,14 +586,16 @@ static NSString const * const HOURS_24[] = {
 
 @implementation MAGridView (MAWeekViewAdditions)
 
+
 - (void)addEventToOffset:(unsigned int)offset event:(MAEvent *)event weekView:(MAWeekView *)weekView {
 	MAEventView *eventView = [[MAEventView alloc] init];
 	eventView.weekView = weekView;
 	eventView.event = event;
-	eventView.backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
+	eventView.backgroundColor = [UIColor colorWithRed:0.0 green:255.0 blue:255.0 alpha:1.0];
 	eventView.title = event.title;
 	eventView.textFont = [UIFont boldSystemFontOfSize:17];
-	eventView.textColor = [UIColor whiteColor];
+	eventView.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:255.0 alpha:1.0];
+
 	eventView.xOffset = offset;
 	
 	[self addSubview:eventView];
