@@ -106,8 +106,7 @@
 
 - (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event
 {
-    _eventToDelete = event;
-    _eventTOEdit = event;
+    _eventToEdit = event;
 	UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:@"Manage event!"
                                                    delegate:self cancelButtonTitle:@"Cancel"
@@ -117,25 +116,6 @@
     
 
 }
-
-//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-//{
-//    NSLog(@"Alert View dismissed with button at index %ld",(long)buttonIndex);
-//    
-//    switch (alertView.alertViewStyle)
-//    {
-//        case UIAlertViewStylePlainTextInput:
-//        {
-//            UITextField *textField = [alertView textFieldAtIndex:0];
-//            //textField.text = event.title;
-//            NSLog(@"Plain text input: %@",textField.text);
-//        }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}
 
 - (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event
 {
@@ -228,14 +208,14 @@
                 for (MAEvent *event in item.entries)
                 {
                     // Found the item!
-                    if (event == _eventToDelete)
+                    if (event == _eventToEdit)
                     {
                         itemWithEvent = item;
                     }
                 }
             }
             // Remove the event
-            [itemWithEvent.entries removeObject:_eventToDelete];
+            [itemWithEvent.entries removeObject:_eventToEdit];
             // Refresh the view
             [_weekView reloadData];
             
@@ -249,7 +229,7 @@
                 for (MAEvent *event in item.entries)
                 {
                     // Found the item!
-                    if (event == _eventTOEdit)
+                    if (event == _eventToEdit)
                     {
                         itemWithEvent = item;
                         
@@ -269,7 +249,7 @@
                         UIAlertView *alert2 = [[UIAlertView alloc] initWithTitle:event.title
                                                                          message:longString
                                                                         delegate:self cancelButtonTitle:@"Cancel"
-                                                               otherButtonTitles:nil];
+                                                               otherButtonTitles:@"Edit Start", @"Edit End", nil];
                         [alert2 show];
 
                     }
@@ -279,11 +259,57 @@
     }
     else
     {//alertComment
-        if (buttonIndex==0) {
+        if (buttonIndex == 0)
+        {
 
-            
+            NSLog(@"Cancel");
+        }
+        else if (buttonIndex == 1)
+        {
+            IQActionSheetPickerView *picker = [[IQActionSheetPickerView alloc] initWithTitle:@"Edit Start Time" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+            [picker setActionSheetPickerStyle:IQActionSheetPickerStyleDatePicker];
+            picker.tag = 1;
+            picker.eventDate = _eventToEdit.start;
+            [picker showInView:self.view];
+        }
+        else if (buttonIndex == 2)
+        {
+            IQActionSheetPickerView *picker = [[IQActionSheetPickerView alloc] initWithTitle:@"Edit End Time" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+            [picker setActionSheetPickerStyle:IQActionSheetPickerStyleDatePicker];
+            picker.tag = 2;
+            picker.eventDate = _eventToEdit.end;
+            [picker showInView:self.view];
         }
     }
+}
+
+-(void)actionSheetPickerView:(IQActionSheetPickerView *)pickerView didSelectTitles:(NSArray *)titles
+{
+    NSComparisonResult result;
+    if (pickerView.tag == 1)
+    {
+        // Compare the new start date with the current end date
+        result = [pickerView.date compare:_eventToEdit.end];
+        if (result == NSOrderedSame || result == NSOrderedDescending)
+        {
+            NSLog(@"Invalid start time!");
+            return;
+        }
+        _eventToEdit.start = pickerView.date;
+    }
+    else if (pickerView.tag == 2)
+    {
+        // Compare the new start date with the current end date
+        result = [pickerView.date compare:_eventToEdit.start];
+        if (result == NSOrderedSame || result == NSOrderedAscending)
+        {
+            NSLog(@"Invalid end time!");
+            return;
+        }
+        _eventToEdit.end = pickerView.date;
+    }
+    NSLog(@"Date picker = %@", pickerView.date);
+    [_weekView reloadData];
 }
 
 

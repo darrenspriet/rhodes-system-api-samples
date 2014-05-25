@@ -28,6 +28,7 @@
 #import <UIKit/UIKit.h>
 #import "MAWeekView.h" // MAWeekViewDataSource,MAWeekViewDelegate
 #import "CalendarItemAdvanced.h"
+#import "IQActionSheetPickerView.h"
 
 
 #define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
@@ -36,13 +37,14 @@
 
 @class MAEventKitDataSource;
 
-@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate,UIAlertViewDelegate>
+@interface MAWeekViewController : UIViewController<MAWeekViewDataSource,MAWeekViewDelegate,UIAlertViewDelegate,IQActionSheetPickerViewDelegate,UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate>
 {
     MAEventKitDataSource *_eventKitDataSource;
-    MAEvent *_eventToDelete; // since I don't know how to pass this into the alterview callback
-    MAEvent *_eventTOEdit;//editing event
+    MAEvent *_eventToEdit; // since I don't know how to pass this into the alterview callback
     UIAlertView *_alertView;
 }
+
+- (IBAction)dateSelected:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet MAWeekView *weekView;
 

@@ -15,6 +15,7 @@
 		33C6127A18D108E60027A4A0 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127618D108E60027A4A0 /* backButton@2x.png */; };
 		33C6127B18D108E60027A4A0 /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127718D108E60027A4A0 /* forwardButton.png */; };
 		33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 33C6127818D108E60027A4A0 /* forwardButton@2x.png */; };
+		64163237193283D7007CE0A5 /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64163236193283D7007CE0A5 /* IQActionSheetPickerView.m */; };
 		64E37C971910375E007DCC0F /* MADayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E37C8E1910375E007DCC0F /* MADayView.m */; };
 		64E37C981910375E007DCC0F /* MAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E37C901910375E007DCC0F /* MAEvent.m */; };
 		64E37C991910375E007DCC0F /* MAGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E37C921910375E007DCC0F /* MAGridView.m */; };
@@ -81,6 +82,8 @@
 		33C6127618D108E60027A4A0 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backButton@2x.png"; path = "../backButton@2x.png"; sourceTree = "<group>"; };
 		33C6127718D108E60027A4A0 /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forwardButton.png; path = ../forwardButton.png; sourceTree = "<group>"; };
 		33C6127818D108E60027A4A0 /* forwardButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forwardButton@2x.png"; path = "../forwardButton@2x.png"; sourceTree = "<group>"; };
+		64163235193283D7007CE0A5 /* IQActionSheetPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetPickerView.h; sourceTree = "<group>"; };
+		64163236193283D7007CE0A5 /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		64E37C8D1910375E007DCC0F /* MADayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADayView.h; sourceTree = "<group>"; };
 		64E37C8E1910375E007DCC0F /* MADayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADayView.m; sourceTree = "<group>"; };
 		64E37C8F1910375E007DCC0F /* MAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAEvent.h; sourceTree = "<group>"; };
@@ -179,6 +182,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		64163234193283D7007CE0A5 /* IQActionSheetPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				64163235193283D7007CE0A5 /* IQActionSheetPickerView.h */,
+				64163236193283D7007CE0A5 /* IQActionSheetPickerView.m */,
+			);
+			path = IQActionSheetPickerView;
+			sourceTree = "<group>";
+		};
 		64E37C8B191036F6007DCC0F /* MACalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +362,7 @@
 		E0C14F4918BEB1970016990C /* encompass */ = {
 			isa = PBXGroup;
 			children = (
+				64163234193283D7007CE0A5 /* IQActionSheetPickerView */,
 				E0330A8119130EE600C557A0 /* Calendars In Use */,
 				E0C01B8818E656680035E193 /* Map */,
 				B303C90D190D4C770033D43A /* Helpers */,
@@ -530,6 +543,7 @@
 				E0555A4118E7784700BA13E5 /* DMCollectionViewCell.m in Sources */,
 				E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */,
 				64E37C9A1910375E007DCC0F /* MAWeekView.m in Sources */,
+				64163237193283D7007CE0A5 /* IQActionSheetPickerView.m in Sources */,
 				E0555A4718E7786B00BA13E5 /* ViewController.m in Sources */,
 				64E37C981910375E007DCC0F /* MAEvent.m in Sources */,
 				E01B899E190742C900B0B563 /* WeeklyCalendarItem.m in Sources */,
