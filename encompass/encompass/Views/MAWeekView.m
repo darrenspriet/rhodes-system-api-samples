@@ -667,7 +667,7 @@ static NSString const * const HOURS_24[] = {
 	
 	for (NSDate *date in _weekdays) {
 		NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:date];
-		NSString *displayText = [NSString stringWithFormat:@"%i   %@ ",  [components day], [weekdaySymbols objectAtIndex:d]];
+		NSString *displayText = [NSString stringWithFormat:@"%i %@ ",  [components day], [weekdaySymbols objectAtIndex:d]];
 		
 		CGSize sizeNecessary = [displayText sizeWithFont:self.textFont];
         
