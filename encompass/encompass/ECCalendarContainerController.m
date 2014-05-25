@@ -42,21 +42,26 @@
 // Don't switch to the week view if no date is selected
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+    //If its the monthly we need to check
     if (self.monthlyViewController)
     {
-        if (self.monthlyViewController.selectedDate) {
+        //If there is a date we can go to the weekly
+        if (self.monthlyViewController.selectedDate)
+        {
             return YES;
         }
-        else if([identifier isEqualToString:@"SegueToMapView"]){
-            
+        //If its the Segue to go to the map we also return YES
+        else if([identifier isEqualToString:@"SegueToMapView"])
+        {
             return YES;
         }
+        //If there is no Selected Date then the weekly is still not shown
         else{
-            NSLog(@"SELECTED DATE FALSE");
-            [self.weeklyViewContainer setHidden: YES];
+            NSLog(@"No Date Has Been Selected");
             return NO;
         }
     }
+    //Otherwise going back from the weekly is fine now, but I am sure we will have to customize this
     else
     {
         return YES;
@@ -66,15 +71,18 @@
 // This method is skipped if the previous one returns NO
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"monthlyCalendarSegue"]) {
+    //If the Segue is the Monthly one then we show the monthly controller with the data reloaded
+    if ([segue.identifier isEqualToString:@"monthlyCalendarSegue"])
+    {
         NSLog(@"montly");
         self.monthlyViewController= segue.destinationViewController;
         self.monthlyViewController.selectedDate = self.selectedDate;
         self.monthlyViewController.collectionData = self.collectionData;
         [self.monthlyViewController.collectionView reloadData];
     }
-    if ([segue.identifier isEqualToString:@"WeeklyCalendarSegue"]) {
-        NSLog(@"weekly");
+    //If the Segue is the Weekly one then we show the weekly controller with the data reloaded
+    else if ([segue.identifier isEqualToString:@"WeeklyCalendarSegue"])
+    {
         // Figure out the dates for the week of the currently selected date
         NSCalendar *gregorian = self.monthlyViewController.calendar;
         NSDateComponents *currentComps =[gregorian components:(NSYearCalendarUnit |
@@ -107,38 +115,74 @@
         }
         self.weeklyController = (MAWeekViewController *)segue.destinationViewController;
         self.weeklyController.weekCalendarData = weekCalendarData;
-
-
     }
 }
 
 
-- (IBAction)segmentControlPressed:(UISegmentedControl *)sender {
+- (IBAction)segmentControlPressed:(UISegmentedControl *)sender
+{
     
     //If we go back to the monthview and change the weekly view to hidden
-    if (sender.selectedSegmentIndex==0) {
+    if (sender.selectedSegmentIndex==0)
+    {
+        //We need to set the show/hide table to not hidden
         self.showButtonOutlet.hidden = NO;
+        //Then preform the segue to show the Calendar
         [self performSegueWithIdentifier:@"monthlyCalendarSegue" sender:self];
+        //Hide the Weekly ViewController
         self.weeklyViewContainer.hidden =YES;
+        //And we need to remove it from the superview
         [self.weeklyController.view removeFromSuperview];
     }
     else{
-        if (self.monthlyViewController.selectedDate) {
+        //If there is a selected date we do the same for weekly
+        if (self.monthlyViewController.selectedDate)
+        {
+            //Hide the show/hide table
             self.showButtonOutlet.hidden = YES;
+            //Sets the selected date to the monthly selected date
             self.selectedDate = self.monthlyViewController.selectedDate;
+            //Sets the data
             self.collectionData = self.monthlyViewController.collectionData;
+            //Performs the segue
             [self performSegueWithIdentifier:@"WeeklyCalendarSegue" sender:self];
+            //Sets the weekly not to hidden
             self.weeklyViewContainer.hidden = NO;
+            //Removes the monthly view controller from the superview
             [self.monthlyViewController.view removeFromSuperview];
         }
+        
         else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid" message:@"No date has been selected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+            //Set the selected date to the Current Date?  Might be better
+            
+            //Hide the show/hide table
+            self.showButtonOutlet.hidden = YES;
+            //I thought this would be better than an alert, just show them the current date
+            self.monthlyViewController.selectedDate = self.monthlyViewController.todaysDate;
+            //Sets the selected date to the monthly selected date
+            self.selectedDate =  self.monthlyViewController.selectedDate;
+            //Sets the data
+            self.collectionData = self.monthlyViewController.collectionData;
+            //Performs the segue
+            [self performSegueWithIdentifier:@"WeeklyCalendarSegue" sender:self];
+            //Sets the weekly not to hidden
+            self.weeklyViewContainer.hidden = NO;
+            //Removes the monthly view controller from the superview
+            [self.monthlyViewController.view removeFromSuperview];
+//            UIAlertView *alert = [[UIAlertView alloc]
+//                                  initWithTitle:@"Invalid"
+//                                  message:@"No date has been selected"
+//                                  delegate:self
+//                                  cancelButtonTitle:@"OK"
+//                                  otherButtonTitles:nil];
+//            [alert show];
             sender.selectedSegmentIndex=0;
         }
     }
 
 }
+
+//This method calls hide view but we need to clean it up
 - (IBAction)hideShowTableView:(UIButton *)sender {
     [self.monthlyViewController hideView];
 }

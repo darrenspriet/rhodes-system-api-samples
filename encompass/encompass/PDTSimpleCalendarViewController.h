@@ -111,6 +111,7 @@
 
 
 
+@property (nonatomic, strong) NSDate * todaysDate;
 @property (nonatomic, strong) I3DragBetweenHelper* helper;
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
