@@ -47,6 +47,10 @@
         if (self.monthlyViewController.selectedDate) {
             return YES;
         }
+        else if([identifier isEqualToString:@"SegueToMapView"]){
+            
+            return YES;
+        }
         else{
             NSLog(@"SELECTED DATE FALSE");
             [self.weeklyViewContainer setHidden: YES];

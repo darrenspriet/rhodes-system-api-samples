@@ -50,7 +50,6 @@
 		E0C14F4E18BEB1970016990C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F4C18BEB1970016990C /* InfoPlist.strings */; };
 		E0C14F5018BEB1970016990C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F4F18BEB1970016990C /* main.m */; };
 		E0C14F5418BEB1970016990C /* ECAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F5318BEB1970016990C /* ECAppDelegate.m */; };
-		E0C14F5718BEB1970016990C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F5518BEB1970016990C /* Main.storyboard */; };
 		E0C14F5A18BEB1970016990C /* ECViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C14F5918BEB1970016990C /* ECViewController.m */; };
 		E0C14F5C18BEB1970016990C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0C14F5B18BEB1970016990C /* Images.xcassets */; };
 		E0C14F6318BEB1970016990C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0C14F6218BEB1970016990C /* XCTest.framework */; };
@@ -140,7 +139,6 @@
 		E0C14F5118BEB1970016990C /* encompass-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "encompass-Prefix.pch"; sourceTree = "<group>"; };
 		E0C14F5218BEB1970016990C /* ECAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECAppDelegate.h; sourceTree = "<group>"; };
 		E0C14F5318BEB1970016990C /* ECAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECAppDelegate.m; sourceTree = "<group>"; };
-		E0C14F5618BEB1970016990C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E0C14F5818BEB1970016990C /* ECViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECViewController.h; sourceTree = "<group>"; };
 		E0C14F5918BEB1970016990C /* ECViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECViewController.m; sourceTree = "<group>"; };
 		E0C14F5B18BEB1970016990C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -224,6 +222,8 @@
 		B303C90D190D4C770033D43A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E0C14F5218BEB1970016990C /* ECAppDelegate.h */,
+				E0C14F5318BEB1970016990C /* ECAppDelegate.m */,
 				E0C01B7D18E6562B0035E193 /* I3DragBetweenHelper.h */,
 				E0C01B7E18E6562B0035E193 /* I3DragBetweenHelper.m */,
 			);
@@ -265,6 +265,15 @@
 				E0330A8319130F2D00C557A0 /* ECCalendarContainerController.m */,
 			);
 			name = "Calendars In Use";
+			sourceTree = "<group>";
+		};
+		E03DE36F19321010003B7A31 /* Old Code */ = {
+			isa = PBXGroup;
+			children = (
+				B303C90C190D4C560033D43A /* Weekly Calendar */,
+				E0C01B8718E656610035E193 /* Monthly Calendar */,
+			);
+			name = "Old Code";
 			sourceTree = "<group>";
 		};
 		E0C01B8718E656610035E193 /* Monthly Calendar */ = {
@@ -342,15 +351,11 @@
 			isa = PBXGroup;
 			children = (
 				E0330A8119130EE600C557A0 /* Calendars In Use */,
-				E0C01B8918E6568A0035E193 /* Images */,
-				B303C90C190D4C560033D43A /* Weekly Calendar */,
 				E0C01B8818E656680035E193 /* Map */,
-				E0C01B8718E656610035E193 /* Monthly Calendar */,
 				B303C90D190D4C770033D43A /* Helpers */,
+				E0C01B8918E6568A0035E193 /* Images */,
+				E03DE36F19321010003B7A31 /* Old Code */,
 				E0C14F7A18BEB2830016990C /* encompass.entitlements */,
-				E0C14F5218BEB1970016990C /* ECAppDelegate.h */,
-				E0C14F5318BEB1970016990C /* ECAppDelegate.m */,
-				E0C14F5518BEB1970016990C /* Main.storyboard */,
 				E0C14F5B18BEB1970016990C /* Images.xcassets */,
 				E0C14F7818BEB1EA0016990C /* Storyboard.storyboard */,
 				E0C14F4A18BEB1970016990C /* Supporting Files */,
@@ -497,7 +502,6 @@
 				E0555A3C18E7783100BA13E5 /* sevendays.gif in Resources */,
 				33C6127C18D108E60027A4A0 /* forwardButton@2x.png in Resources */,
 				64E37CA6191037B4007DCC0F /* ma_rightArrow.png in Resources */,
-				E0C14F5718BEB1970016990C /* Main.storyboard in Resources */,
 				33C6127918D108E60027A4A0 /* backButton.png in Resources */,
 				E0555A3D18E7783100BA13E5 /* sidepanel.jpg in Resources */,
 				E067BBAA1904A31700198D32 /* background1.png in Resources */,
@@ -570,14 +574,6 @@
 				E0C14F4D18BEB1970016990C /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E0C14F5518BEB1970016990C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E0C14F5618BEB1970016990C /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		E0C14F6B18BEB1970016990C /* InfoPlist.strings */ = {
