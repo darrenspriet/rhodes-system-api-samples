@@ -255,7 +255,6 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.bounds),
 											 CGRectGetHeight(self.allDayEventView.bounds) + CGRectGetHeight(self.hourView.bounds) + VIEW_EMPTY_SPACE);
 
-
 	
 	self.gridView.frame = CGRectMake(CGRectGetMaxX(self.hourView.bounds),
 									 CGRectGetMaxY(self.allDayEventView.bounds),
@@ -741,6 +740,7 @@ static NSString const * const HOURS_24[] = {
 	return _week;
 }
 
+#pragma mark Made the cells bigger
 - (void)layoutSubviews {
 	const CGFloat cellHeight = self.weekView.gridView.cellHeight;
 	
@@ -750,13 +750,17 @@ static NSString const * const HOURS_24[] = {
 							ALL_DAY_VIEW_EMPTY_SPACE + (ALL_DAY_VIEW_EMPTY_SPACE + cellHeight) * _maxEvents);
 	
 	self.weekView.hourView.frame =  CGRectMake(self.weekView.hourView.frame.origin.x, self.frame.size.height,
-											   self.weekView.hourView.frame.size.width, self.weekView.hourView.frame.size.height+300);
+											   self.weekView.hourView.frame.size.width, self.weekView.hourView.frame.size.height+250);
 	
 	self.weekView.gridView.frame =  CGRectMake(self.weekView.gridView.frame.origin.x, self.frame.size.height,
-											   self.weekView.gridView.frame.size.width, self.weekView.gridView.frame.size.height +300);
+											   self.weekView.gridView.frame.size.width, self.weekView.gridView.frame.size.height +250);
 	
 	self.weekView.scrollView.contentSize = CGSizeMake(self.weekView.scrollView.contentSize.width,
-													  CGRectGetHeight(self.bounds) + CGRectGetHeight(self.weekView.hourView.bounds)+100);
+													  CGRectGetHeight(self.bounds) + CGRectGetHeight(self.weekView.hourView.bounds)+75);
+    
+    //Then I added a scroll off set when it comes into view so the dates are from 7pm to 8pm
+    [self.weekView.scrollView setContentOffset:CGPointMake(0, 310)];
+
 	
 	const CGFloat eventWidth = self.weekView.gridView.cellWidth * 0.95;
 	
