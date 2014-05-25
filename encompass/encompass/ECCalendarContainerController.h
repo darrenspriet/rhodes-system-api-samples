@@ -25,6 +25,7 @@
 //The Data and the Selected Date
 @property (nonatomic, strong) NSDate *selectedDate;
 @property (nonatomic, strong) NSMutableArray* collectionData;
+@property (nonatomic, strong) NSDate *todaysDate;
 
 //The two Buttons on the Screen so we can see the different views
 - (IBAction)hideShowTableView:(UIButton *)sender;

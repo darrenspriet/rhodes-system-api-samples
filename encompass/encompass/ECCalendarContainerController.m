@@ -85,14 +85,31 @@
     {
         // Figure out the dates for the week of the currently selected date
         NSCalendar *gregorian = self.monthlyViewController.calendar;
-        NSDateComponents *currentComps =[gregorian components:(NSYearCalendarUnit |
-                                                               NSWeekdayCalendarUnit |
-                                                               NSMonthCalendarUnit |
-                                                               NSWeekOfYearCalendarUnit |
-                                                               NSWeekdayCalendarUnit |
-                                                               NSHourCalendarUnit |
-                                                               NSMinuteCalendarUnit)
-                                                     fromDate:self.monthlyViewController.selectedDate];
+        
+        NSDateComponents *currentComps;
+        //If todays date is used then we will use that
+        if (self.todaysDate) {
+            currentComps =[gregorian components:(NSYearCalendarUnit |
+                                                                   NSWeekdayCalendarUnit |
+                                                                   NSMonthCalendarUnit |
+                                                                   NSWeekOfYearCalendarUnit |
+                                                                   NSWeekdayCalendarUnit |
+                                                                   NSHourCalendarUnit |
+                                                                   NSMinuteCalendarUnit)
+                                                         fromDate:self.monthlyViewController.todaysDate];
+        }
+        else{
+            currentComps =[gregorian components:(NSYearCalendarUnit |
+                                                                   NSWeekdayCalendarUnit |
+                                                                   NSMonthCalendarUnit |
+                                                                   NSWeekOfYearCalendarUnit |
+                                                                   NSWeekdayCalendarUnit |
+                                                                   NSHourCalendarUnit |
+                                                                   NSMinuteCalendarUnit)
+                                                         fromDate:self.monthlyViewController.selectedDate];
+        }
+        
+      
         // To store the calendar items for this particular week
         NSMutableArray *weekCalendarData = [NSMutableArray arrayWithCapacity:7];
         // Gather the calendar items for this week only (kind of inefficient!)
@@ -143,6 +160,7 @@
             //Sets the selected date to the monthly selected date
             self.selectedDate = self.monthlyViewController.selectedDate;
             //Sets the data
+            self.todaysDate = nil;
             self.collectionData = self.monthlyViewController.collectionData;
             //Performs the segue
             [self performSegueWithIdentifier:@"WeeklyCalendarSegue" sender:self];
@@ -158,10 +176,8 @@
             //Hide the show/hide table
             self.showButtonOutlet.hidden = YES;
             //I thought this would be better than an alert, just show them the current date
-            self.monthlyViewController.selectedDate = self.monthlyViewController.todaysDate;
+            self.todaysDate = self.monthlyViewController.todaysDate;
             //Sets the selected date to the monthly selected date
-            self.selectedDate =  self.monthlyViewController.selectedDate;
-            //Sets the data
             self.collectionData = self.monthlyViewController.collectionData;
             //Performs the segue
             [self performSegueWithIdentifier:@"WeeklyCalendarSegue" sender:self];
@@ -176,7 +192,6 @@
 //                                  cancelButtonTitle:@"OK"
 //                                  otherButtonTitles:nil];
 //            [alert show];
-            sender.selectedSegmentIndex=0;
         }
     }
 
