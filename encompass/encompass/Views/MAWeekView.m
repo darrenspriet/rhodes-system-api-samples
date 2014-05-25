@@ -216,7 +216,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 									ARROW_WIDTH, ARROW_HEIGHT);
 	
 	self.dateLabel.frame = CGRectMake(CGRectGetMaxX(self.leftArrow.bounds),
-									  CGRectGetMinY(self.topBackground.bounds),
+									  CGRectGetMinY(self.topBackground.bounds)-15,
 									  CGRectGetWidth(self.topBackground.bounds) - CGRectGetWidth(self.leftArrow.bounds) - CGRectGetWidth(self.rightArrow.bounds),
 									  ARROW_HEIGHT);
 	
@@ -242,9 +242,9 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	[self.hourView setNeedsDisplay];
 	
 	self.weekdayBarView.frame = CGRectMake(CGRectGetMaxX(self.hourView.bounds),
-                                           CGRectGetMaxY(self.topBackground.bounds) - sizeNecessaryBold.height,
+                                           CGRectGetMaxY(self.topBackground.bounds) - sizeNecessaryBold.height -10,
                                            CGRectGetWidth(self.topBackground.bounds) - CGRectGetWidth(self.hourView.bounds),
-                                           sizeNecessaryBold.height);
+                                           sizeNecessaryBold.height+10);
 	[self.weekdayBarView setNeedsDisplay];
 	
 	self.scrollView.frame = CGRectMake(CGRectGetMinX(self.bounds),
@@ -342,7 +342,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	if (!_weekdayBarView) {
 		_weekdayBarView = [[MAWeekdayBarView alloc] init];
 		_weekdayBarView.weekView        = self;
-		_weekdayBarView.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
+		_weekdayBarView.backgroundColor = [UIColor clearColor];
 		_weekdayBarView.textColor       = [UIColor blackColor];
 		//_weekdayBarView.sundayColor     = [UIColor colorWithRed:0.6 green:0 blue:0 alpha:1.f];
 		_weekdayBarView.todayColor      = [UIColor colorWithRed:0.1 green:0.5 blue:0.9 alpha:1.f];
@@ -674,15 +674,17 @@ static NSString const * const HOURS_24[] = {
 		CGRect rect = CGRectMake(cellWidth * i + ((cellWidth - sizeNecessary.width) / 2.f),
 								 CGRectGetMinY(self.bounds),
 								 sizeNecessary.width,
-								 sizeNecessary.height);
+								 sizeNecessary.height+10);
 		
 		if ([todayComponents day] == [components day] &&
 			[todayComponents month] == [components month] &&
 			[todayComponents year] == [components year]) {
 			[self.todayColor set];
-		} else if ([components weekday] == 1) {
-			[self.sundayColor set];
-		} else {
+        }
+//		} else if ([components weekday] == 1) {
+//			[self.sundayColor set];
+//		}
+        else {
 			[self.textColor set];
 		}
 		
