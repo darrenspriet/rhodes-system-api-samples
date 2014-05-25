@@ -591,11 +591,10 @@ static NSString const * const HOURS_24[] = {
 	MAEventView *eventView = [[MAEventView alloc] init];
 	eventView.weekView = weekView;
 	eventView.event = event;
-	eventView.backgroundColor = [UIColor colorWithRed:0.0 green:255.0 blue:255.0 alpha:1.0];
+	eventView.backgroundColor = [UIColor colorWithHue:.53 saturation:.8 brightness:1.0 alpha:1];
 	eventView.title = event.title;
 	eventView.textFont = [UIFont boldSystemFontOfSize:17];
-	eventView.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:255.0 alpha:1.0];
-
+	eventView.textColor = [UIColor colorWithHue:.65 saturation:.75 brightness:.5 alpha:1];
 	eventView.xOffset = offset;
 	
 	[self addSubview:eventView];
