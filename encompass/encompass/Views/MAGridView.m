@@ -57,7 +57,7 @@
 - (void)setupCustomInitialisation {
 	self.rows             = 8;
 	self.columns          = 8;
-	self.lineWidth        = 1;
+	self.lineWidth        = .3;
 	self.horizontalLines  = YES;
 	self.verticalLines    = YES;
 	self.outerBorder      = YES;

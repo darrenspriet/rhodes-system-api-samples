@@ -242,9 +242,9 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	[self.hourView setNeedsDisplay];
 	
 	self.weekdayBarView.frame = CGRectMake(CGRectGetMaxX(self.hourView.bounds),
-										CGRectGetMaxY(self.topBackground.bounds) - sizeNecessaryBold.height, 
-										CGRectGetWidth(self.topBackground.bounds) - CGRectGetWidth(self.hourView.bounds),
-										sizeNecessaryBold.height);
+                                           CGRectGetMaxY(self.topBackground.bounds) - sizeNecessaryBold.height,
+                                           CGRectGetWidth(self.topBackground.bounds) - CGRectGetWidth(self.hourView.bounds),
+                                           sizeNecessaryBold.height);
 	[self.weekdayBarView setNeedsDisplay];
 	
 	self.scrollView.frame = CGRectMake(CGRectGetMinX(self.bounds),
@@ -330,11 +330,13 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 		_hourView.backgroundColor = [UIColor whiteColor];
 		_hourView.textColor       = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.f];
 		_hourView.textFont        = self.boldFont;
-        _hourView.textFont = [UIFont boldSystemFontOfSize:12];
+        _hourView.textFont = [UIFont boldSystemFontOfSize:13];
 
 	}
 	return _hourView;
 }
+
+#pragma-mark  Customize Navigation Bar
 
 - (MAWeekdayBarView *)weekdayBarView {
 	if (!_weekdayBarView) {
@@ -344,14 +346,15 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 		_weekdayBarView.textColor       = [UIColor blackColor];
 		//_weekdayBarView.sundayColor     = [UIColor colorWithRed:0.6 green:0 blue:0 alpha:1.f];
 		_weekdayBarView.todayColor      = [UIColor colorWithRed:0.1 green:0.5 blue:0.9 alpha:1.f];
-        _weekdayBarView.todayColor      = [UIColor redColor];
-		_weekdayBarView.textFont        = self.regularFont;
-        _weekdayBarView.textFont = [UIFont systemFontOfSize:12.0];
+       // _weekdayBarView.todayColor      = [UIColor redColor];
+		_weekdayBarView.textFont        = self.boldFont;
+        _weekdayBarView.textFont = [UIFont systemFontOfSize:15];
 
 	}
 	return _weekdayBarView;
 }
 
+#pragma-mark  Customize the Hours in the day...grid view
 - (MAGridView *)gridView {
 	if (!_gridView){		
 		_gridView = [[MAGridView alloc] init];
@@ -362,7 +365,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 		_gridView.verticalLines   = YES;
 		_gridView.horizontalLines = YES;
 		_gridView.lineColor       = [UIColor lightGrayColor];
-		_gridView.lineWidth       = 1;
+		_gridView.lineWidth       = .3;
 	}
 	return _gridView;
 }
@@ -489,7 +492,7 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 	[components setMinute:0];
 	[components setSecond:0];
 	CFRelease(currentCalendar);
-	return [CURRENT_CALENDAR dateFromComponents:components];
+    return [CURRENT_CALENDAR dateFromComponents:components];
 }
 
 - (NSDate *)nextWeekFromDate:(NSDate *)date {
@@ -526,7 +529,6 @@ static const unsigned int TOP_BACKGROUND_HEIGHT               = 35;
 //	return [NSString stringWithFormat:@"%@, week %i",
 //			[monthSymbols objectAtIndex:[components month] - 1],
 //			[components week]];
-    
     return [NSString stringWithFormat:@"%@ %d",
 			[monthSymbols objectAtIndex:[components month] - 1], day];
 }
@@ -637,6 +639,7 @@ static NSString const * const HOURS_24[] = {
 	_weekdays = [[NSMutableArray alloc] init];
 	
 	for (register unsigned int i=0; i < DAYS_IN_WEEK; i++) {
+      
 		[_weekdays addObject:date];
 		components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:date];
 		[components setDay:1];
@@ -649,6 +652,7 @@ static NSString const * const HOURS_24[] = {
 	return _week;
 }
 
+#pragma mark For Changing the Weekday bar
 - (void)drawRect:(CGRect)rect {
 	register unsigned int i = 0;
 	
@@ -656,16 +660,17 @@ static NSString const * const HOURS_24[] = {
 	
 	NSDateComponents *todayComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:[NSDate date]];
 	
-	NSArray *weekdaySymbols = [self.dateFormatter veryShortWeekdaySymbols];
+	NSArray *weekdaySymbols = [self.dateFormatter weekdaySymbols];
 	CFCalendarRef currentCalendar = CFCalendarCopyCurrent();
 	int d = CFCalendarGetFirstWeekday(currentCalendar) - 1;
 	CFRelease(currentCalendar);
 	
 	for (NSDate *date in _weekdays) {
 		NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:date];
-		NSString *displayText = [NSString stringWithFormat:@"%@ %i", [weekdaySymbols objectAtIndex:d], [components day]];
+		NSString *displayText = [NSString stringWithFormat:@"%i   %@ ",  [components day], [weekdaySymbols objectAtIndex:d]];
 		
 		CGSize sizeNecessary = [displayText sizeWithFont:self.textFont];
+        
 		CGRect rect = CGRectMake(cellWidth * i + ((cellWidth - sizeNecessary.width) / 2.f),
 								 CGRectGetMinY(self.bounds),
 								 sizeNecessary.width,
