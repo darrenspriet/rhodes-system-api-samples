@@ -540,6 +540,10 @@ static NSString const * const HOURS_AM_PM[] = {
 	@" 12 AM", @" 1 AM", @" 2 AM", @" 3 AM", @" 4 AM", @" 5 AM", @" 6 AM", @" 7 AM", @" 8 AM", @" 9 AM", @" 10 AM", @" 11 AM",
 	@" Noon", @" 1 PM", @" 2 PM", @" 3 PM", @" 4 PM", @" 5 PM", @" 6 PM", @" 7 PM", @" 8 PM", @" 9 PM", @" 10 PM", @" 11 PM", @" 12 PM"
 };
+//static NSString const * const HOURS_AM_PM[] = {
+//	 @"7 AM" ,@" 8 AM", @" 9 AM", @" 10 AM", @" 11 AM",
+//	@" Noon", @" 1 PM", @" 2 PM", @" 3 PM", @" 4 PM", @" 5 PM", @" 6 PM"
+//};
 
 static NSString const * const HOURS_24[] = {
 	@" 0:00", @" 1:00", @" 2:00", @" 3:00", @" 4:00", @" 5:00", @" 6:00", @" 7:00", @" 8:00", @" 9:00", @" 10:00", @" 11:00",
@@ -594,7 +598,7 @@ static NSString const * const HOURS_24[] = {
 	MAEventView *eventView = [[MAEventView alloc] init];
 	eventView.weekView = weekView;
 	eventView.event = event;
-	eventView.backgroundColor = [UIColor colorWithHue:.53 saturation:.8 brightness:1.0 alpha:1];
+	eventView.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:.3];
 	eventView.title = event.title;
 	eventView.textFont = [UIFont boldSystemFontOfSize:17];
 	eventView.textColor = [UIColor colorWithHue:.65 saturation:.75 brightness:.5 alpha:1];
@@ -783,7 +787,7 @@ static NSString const * const HOURS_24[] = {
 	eventView.event = event;
 	eventView.backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
 	eventView.title = event.title;
-	eventView.textFont = [UIFont boldSystemFontOfSize:17];
+	eventView.textFont = [UIFont systemFontOfSize:15];
 	eventView.textColor = [UIColor whiteColor];
 	eventView.xOffset = offset;
 	eventView.yOffset = _eventsInOffset[offset]++;
@@ -799,8 +803,10 @@ static NSString const * const HOURS_24[] = {
 @end
 
 static const CGFloat kAlpha        = 0.8;
-static const CGFloat kCornerRadius = 10.0;
+static const CGFloat kCornerRadius = 8.0;
 static const CGFloat kCorner       = 5.0;
+
+#pragma mark -Customize the MAEventView
 
 @implementation MAEventView
 
@@ -840,10 +846,12 @@ static const CGFloat kCorner       = 5.0;
 }
 
 - (void)layoutSubviews {
-	_textRect = CGRectMake(CGRectGetMinX(self.bounds) + kCorner,
-						   CGRectGetMinY(self.bounds) + kCorner,
+    
+	_textRect = CGRectMake(CGRectGetMinX(self.bounds) + kCorner ,
+						   CGRectGetMinY(self.bounds) + kCorner+5,
 						   CGRectGetWidth(self.bounds) - 2*kCorner,
 						   CGRectGetHeight(self.bounds) - 2*kCorner);
+    
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -852,13 +860,16 @@ static const CGFloat kCorner       = 5.0;
 	[self.title drawInRect:_textRect
 				withFont:self.textFont
 				lineBreakMode:UILineBreakModeTailTruncation
-				alignment:UITextAlignmentLeft];
+				alignment:UITextAlignmentCenter];
 }
 
 - (void)tapDetectingView:(TapDetectingView *)view gotSingleTapAtPoint:(CGPoint)tapPoint {
-	if ([self.weekView.delegate respondsToSelector:@selector(weekView:eventTapped:)]) {
-        [self.weekView.delegate weekView:self.weekView eventTapped:self.event];
+    view.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+	if ([self.weekView.delegate respondsToSelector:@selector(weekView:eventTapped:andView:)]) {
+        [self.weekView.delegate weekView:self.weekView eventTapped:self.event andView:view];
 	}
+    
+
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

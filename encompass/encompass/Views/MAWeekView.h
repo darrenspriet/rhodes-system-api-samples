@@ -77,7 +77,7 @@
 @protocol MAWeekViewDelegate <NSObject>
 
 @optional
-- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event;
+- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event andView:(UIView *)view;
 - (void)weekView:(MAWeekView *)weekView weekDidChange:(NSDate *)week;
 - (void)weekView:(MAWeekView *)weekView eventDragged:(MAEvent *)event;
 - (BOOL)weekView:(MAWeekView *)weekView eventDraggingEnabled:(MAEvent *)event;

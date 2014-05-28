@@ -51,7 +51,7 @@
 
 // Raw week data obtained from month calendar (needs to be parsed!)
 @property (nonatomic, strong) NSMutableArray *weekCalendarData;
-
+@property (nonatomic, strong) UIView * theView;
 - (IBAction)back:(id)sender;
 
 @end

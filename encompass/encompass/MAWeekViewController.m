@@ -104,8 +104,9 @@
 
 #pragma mark - MAWeekViewDelegate methods
 
-- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event
+- (void)weekView:(MAWeekView *)weekView eventTapped:(MAEvent *)event andView:(UIView *)view
 {
+    self.theView = view;
     _eventToEdit = event;
 	UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:event.title
                                                     message:@"Manage event!"
@@ -113,6 +114,7 @@
                                           otherButtonTitles:@"Edit", @"Delete", nil];
     _alertView = alert1;
     [_alertView show];
+    
     
 
 }
@@ -167,13 +169,14 @@
             }
         }
     }
+    
     [weekView reloadData];
     startComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:event.start];
 	NSString *eventInfo = [NSString stringWithFormat:@"Event dragged to %02li:%02li. Userinfo: %@", (long)[startComponents hour], (long)[startComponents minute], [event.userInfo objectForKey:@"test"]];
     
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
-                                                    message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[alert show];
+//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:event.title
+//                                                    message:eventInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//	[alert show];
 }
 
 - (void)viewDidLoad
@@ -195,6 +198,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+
     if(alertView == _alertView)
     {
         //Main alert with different options
@@ -281,6 +285,8 @@
             [picker showInView:self.view];
         }
     }
+    self.view.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+
 }
 
 -(void)actionSheetPickerView:(IQActionSheetPickerView *)pickerView didSelectTitles:(NSArray *)titles

@@ -825,7 +825,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     else
     {
         // First call is at 7 am, by default!
-        [components setHour:7];
+        [components setHour:8];
     }
     [components setMinute:0];
     [components setSecond:0];
