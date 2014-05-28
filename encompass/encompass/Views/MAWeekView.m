@@ -598,7 +598,7 @@ static NSString const * const HOURS_24[] = {
 	MAEventView *eventView = [[MAEventView alloc] init];
 	eventView.weekView = weekView;
 	eventView.event = event;
-	eventView.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:.3];
+	eventView.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:.5];
 	eventView.title = event.title;
 	eventView.textFont = [UIFont boldSystemFontOfSize:17];
 	eventView.textColor = [UIColor colorWithHue:.65 saturation:.75 brightness:.5 alpha:1];
@@ -864,8 +864,10 @@ static const CGFloat kCorner       = 5.0;
 }
 
 - (void)tapDetectingView:(TapDetectingView *)view gotSingleTapAtPoint:(CGPoint)tapPoint {
-    view.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+    self.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+
 	if ([self.weekView.delegate respondsToSelector:@selector(weekView:eventTapped:andView:)]) {
+
         [self.weekView.delegate weekView:self.weekView eventTapped:self.event andView:view];
 	}
     
@@ -874,6 +876,8 @@ static const CGFloat kCorner       = 5.0;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    self.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+
 	_touchStart = [[touches anyObject] locationInView:self];
 	_wasDragged = NO;
 	[super touchesBegan:touches withEvent:event];
@@ -933,6 +937,8 @@ static const CGFloat kCorner       = 5.0;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    self.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:.5];
+
 	if (_wasDragged) {
 		const double posX = self.frame.origin.x / self.weekView.gridView.cellWidth;
 		const double posY = self.frame.origin.y / self.weekView.gridView.cellHeight;

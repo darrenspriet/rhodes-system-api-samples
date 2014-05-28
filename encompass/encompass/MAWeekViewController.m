@@ -285,7 +285,7 @@
             [picker showInView:self.view];
         }
     }
-    self.view.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:1.0];
+    self.theView.backgroundColor = [UIColor colorWithHue:.55 saturation:.8 brightness:1.0 alpha:.5];
 
 }
 
