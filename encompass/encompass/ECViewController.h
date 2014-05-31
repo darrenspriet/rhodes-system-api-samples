@@ -34,6 +34,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 
+@property (nonatomic, strong) NSMutableArray* collectionData;
+@property (nonatomic, strong) NSDate *selectedDate;
+
+
 - (IBAction)optimizedRoutePressed:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -42,6 +46,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *launchMaps;
 
 @property (weak, nonatomic) IBOutlet UIView *menuView;
+
+- (IBAction)calendarSelected:(UIButton *)sender;
 
 - (IBAction)customRoutePressed:(UIButton *)sender;
 

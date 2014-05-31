@@ -7,6 +7,8 @@
 //
 
 #import "ECViewController.h"
+#import "CalendarItemAdvanced.h"
+#import "MAEvent.h"
 
 @interface ECViewController ()
 
@@ -22,7 +24,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _addressesOptimal =[[NSMutableArray alloc]init];
     
+    for (CalendarItemAdvanced *item in self.collectionData)
+    {
+        if (item.date) {
+            
+                NSComparisonResult result;
+                //has three possible values: NSOrderedSame,NSOrderedDescending, NSOrderedAscending
+                
+                result = [self.selectedDate compare:item.date];
+                if (result==NSOrderedSame)
+                {
+                    NSLog(@"selected date");
+                    for (MAEvent *event in item.entries) {
+                        [_addressesOptimal addObject:event.title];
+                    }
+                }
+        }
+        
+    }
+    
+    CalendarItemAdvanced *item = (CalendarItemAdvanced*)[self.collectionData objectAtIndex:0];
+    for (MAEvent *event in item.entries) {
+        [_addressesOptimal addObject:event.title];
+    }
+
+    
+    NSLog(@"item is: %@", item);
     _mapView.delegate = self;
     
     NSDate *currentDate = [[NSDate alloc] init];
@@ -46,12 +75,12 @@
     
     
     // Store the dummy addresses in the optimal addresses array
-    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"My Home \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
-                         @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
-                         @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
-                         @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
-                         @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
-                         nil];
+//    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"My Home \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
+//                         @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
+//                         @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
+//                         @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
+//                         @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
+//                         nil];
     _locationCount = (int)_addressesOptimal.count;
     _addressesCustom = [[NSMutableArray alloc] init];
     // Copy the optimal addresses array into the custom addresses array
@@ -142,7 +171,10 @@
             else
             {
                 _locationIndex = 0;
-                [self calculateBestRoute:_mapItemsOptimal];
+                if (_locationCount>1) {
+                    [self calculateBestRoute:_mapItemsOptimal];
+
+                }
             }
         }
     }];
@@ -222,6 +254,10 @@
         // We need to calculate the route again
         [self calculateBestRoute:_mapItemsOptimal];
     }
+}
+
+- (IBAction)calendarSelected:(UIButton *)sender {
+        [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)customRoutePressed:(UIButton *)sender
@@ -551,8 +587,6 @@
 
 
 - (IBAction)back:(UIButton *)sender {
-    
-    
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

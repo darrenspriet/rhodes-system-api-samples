@@ -294,16 +294,13 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     self.sourceTable.delegate = self;
     self.sourceTable.dataSource = self;
     self.tableData = @[
-                       @"Staples",
-                       @"Future Shop",
-                       @"Sobeys",
-                       @"No Frills",
-                       @"Superstore",
-                       @"Kraft",
-                       @"Maple Leaf",
-                       @"Tim Hortons",
-                       @"Panera Bread"
+                       @"Kraft Foods \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
+                       @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
+                       @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
+                       @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
+                       @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7"
                        ];
+    
     if(!self.collectionData){
         self.collectionData = [NSMutableArray arrayWithCapacity:420];
         

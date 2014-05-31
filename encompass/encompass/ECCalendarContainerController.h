@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PDTSimpleCalendarViewController.h"
 #import "MAWeekViewController.h"
+#import "ECViewController.h"
+
 
 
 @interface ECCalendarContainerController : UIViewController

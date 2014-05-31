@@ -133,6 +133,25 @@
         self.weeklyController = (MAWeekViewController *)segue.destinationViewController;
         self.weeklyController.weekCalendarData = weekCalendarData;
     }
+    else if([[segue identifier] isEqualToString:@"SegueToMapView"])
+    {
+        //Sets the selected date to the monthly selected date
+        self.collectionData = self.monthlyViewController.collectionData;
+        
+        
+        ECViewController * controller = [segue destinationViewController];
+
+        if (self.monthlyViewController.selectedDate)
+        {
+            [controller setSelectedDate: self.monthlyViewController.selectedDate];
+        }
+        else{
+            
+            [controller setSelectedDate: self.monthlyViewController.todaysDate];
+        }
+        
+        [controller setCollectionData:self.monthlyViewController.collectionData];
+    }
 }
 
 
