@@ -73,7 +73,9 @@
     }
 }
 
--(void)adjustMapAndLocationsForNewDate{
+-(void)adjustMapAndLocationsForNewDate
+{
+    self.lblDistance.text = @"0 Km";
     _locationCount = (int)_addressesOptimal.count;
     _addressesCustom = [[NSMutableArray alloc] init];
     // Copy the optimal addresses array into the custom addresses array
@@ -95,8 +97,8 @@
     [self optimizedRoutePressed:nil];
     
     //If the addresses are not bigger than 0 then we don't search for any locations
-    if ([_addressesOptimal count]>0) {
-        
+    if ([_addressesOptimal count]>0)
+    {
         // Get the MKMapItems for each address, store them in the array, and
         // generate annotations for each item on the map.
         [self searchLocationsWithQueries:_addressesOptimal];
@@ -468,6 +470,11 @@
         }
         else
         {
+            // Increment the total distance label
+            int distance = [self.lblDistance.text intValue];
+            distance += (int)([(MKRoute *)[response.routes firstObject] distance]/1000);
+            self.lblDistance.text = [NSString stringWithFormat:@"%d Km", distance];
+            NSLog(@"Distance of this route = %d", (int)[(MKRoute *)[response.routes firstObject] distance]/1000);
             [self drawPolylineOnMap:response];
             _locationIndex++;
             if (_locationIndex < _locationCount-1)

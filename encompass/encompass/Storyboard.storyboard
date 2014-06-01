@@ -207,7 +207,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="27 Km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhd-iU-H5b">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0 Km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhd-iU-H5b">
                                 <rect key="frame" x="268" y="185" width="78" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -253,6 +253,7 @@
                     <connections>
                         <outlet property="launchMaps" destination="IVe-SL-HyN" id="jn7-RJ-Lb7"/>
                         <outlet property="lblDate" destination="M92-Fo-OpW" id="Nho-3N-qll"/>
+                        <outlet property="lblDistance" destination="Xhd-iU-H5b" id="Da0-qm-DgB"/>
                         <outlet property="lblTime" destination="uYn-lL-NkW" id="cdp-UH-t6G"/>
                         <outlet property="mapView" destination="TaX-sB-OK3" id="k9J-SF-HcP"/>
                         <outlet property="menuView" destination="dk6-T0-v9J" id="AOi-L7-OfZ"/>

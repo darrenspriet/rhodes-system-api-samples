@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lblDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
+@property (weak, nonatomic) IBOutlet UILabel *lblDistance;
 
 @property (nonatomic, strong) NSMutableArray* collectionData;
 @property (nonatomic, strong) NSDate *selectedDate;
