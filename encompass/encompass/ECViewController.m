@@ -24,7 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _addressesOptimal =[[NSMutableArray alloc]init];
     
     [self setUpEventsForMapWithDay:self.selectedDate];
 
@@ -54,7 +53,7 @@
 
 -(void)setUpEventsForMapWithDay:(NSDate*)day{
     NSLog(@"day is: %@", day);
-    [_addressesOptimal removeAllObjects];
+    _addressesOptimal =[[NSMutableArray alloc]init];
     for (CalendarItemAdvanced *item in self.collectionData)
     {
         if (item.date) {
@@ -94,9 +93,14 @@
     _locationIndex = 0;
     // We need to call this to set the map region
     [self optimizedRoutePressed:nil];
-    // Get the MKMapItems for each address, store them in the array, and
-    // generate annotations for each item on the map.
-    [self searchLocationsWithQueries:_addressesOptimal];
+    
+    //If the addresses are not bigger than 0 then we don't search for any locations
+    if ([_addressesOptimal count]>0) {
+        
+        // Get the MKMapItems for each address, store them in the array, and
+        // generate annotations for each item on the map.
+        [self searchLocationsWithQueries:_addressesOptimal];
+    }
 }
 
 -(void)targetMethod:(id)sender
@@ -252,8 +256,11 @@
         {
             [self generateAnnotationForMapItem:item];
         }
-        // We need to calculate the route again
-        [self calculateBestRoute:_mapItemsOptimal];
+        if ([_mapItemsOptimal count]>0) {
+            // We need to calculate the route again
+            [self calculateBestRoute:_mapItemsOptimal];
+        }
+
     }
 }
 
