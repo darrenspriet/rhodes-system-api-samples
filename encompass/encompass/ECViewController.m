@@ -31,7 +31,7 @@
     
     _mapView.delegate = self;
     
-    NSDate *currentDate = [[NSDate alloc] init];
+    NSDate *currentDate = self.selectedDate;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM-d"];
@@ -46,18 +46,35 @@
                                    selector:@selector(targetMethod:)
                                    userInfo:nil
                                     repeats:YES];
-    //NSString *localTimeString = [timeFormeter stringFromDate:currentDate];
-    //[self.lblTime setText:[NSString stringWithFormat:@"%@",localTimeString]];
     
-    
-    
-    // Store the dummy addresses in the optimal addresses array
-//    _addressesOptimal = [[NSMutableArray alloc] initWithObjects:@"My Home \n3171 victory crescent \nMississauga, ON \nL4T 1L7",
-//                         @"Future Shop \n2975 Argentia Road \nMississauga, ON \nL6H 2W2",
-//                         @"Staples \n2460 Winston Churchill Boulevard \nOakville, ON \nL7M 3T2",
-//                         @"Trinbago Barbershop \n2547 Hurontario Street \nMississauga, ON \nL5A 2G4",
-//                         @"Rattray Marsh \n600-798 Nautalex Crt \nMississauga, ON \nL5H 1A7",
-//                         nil];
+    [self adjustMapAndLocationsForNewDate];
+
+
+}
+
+-(void)setUpEventsForMapWithDay:(NSDate*)day{
+    NSLog(@"day is: %@", day);
+    [_addressesOptimal removeAllObjects];
+    for (CalendarItemAdvanced *item in self.collectionData)
+    {
+        if (item.date) {
+            
+            NSComparisonResult result;
+            //has three possible values: NSOrderedSame,NSOrderedDescending, NSOrderedAscending
+            
+            result = [day compare:item.date];
+            if (result==NSOrderedSame)
+            {
+                NSLog(@"selected date");
+                for (MAEvent *event in item.entries) {
+                    [_addressesOptimal addObject:event.title];
+                }
+            }
+        }
+    }
+}
+
+-(void)adjustMapAndLocationsForNewDate{
     _locationCount = (int)_addressesOptimal.count;
     _addressesCustom = [[NSMutableArray alloc] init];
     // Copy the optimal addresses array into the custom addresses array
@@ -157,28 +174,6 @@
     }];
 }
 
--(void)setUpEventsForMapWithDay:(NSDate*)day{
-    
-    for (CalendarItemAdvanced *item in self.collectionData)
-    {
-        if (item.date) {
-            
-            NSComparisonResult result;
-            //has three possible values: NSOrderedSame,NSOrderedDescending, NSOrderedAscending
-            
-            result = [day compare:item.date];
-            if (result==NSOrderedSame)
-            {
-                NSLog(@"selected date");
-                for (MAEvent *event in item.entries) {
-                    [_addressesOptimal addObject:event.title];
-                }
-            }
-        }
-        
-    }
-
-}
 
 -(void)setDateLabel:(NSDate *)date{
     
@@ -195,17 +190,23 @@
 
 - (IBAction)OnDateForward:(UIButton *)sender {
     _dateCounter++;
-    NSDate *currentDate = [[NSDate alloc] init];
+    NSDate *currentDate = self.selectedDate;
     int daysToAdd = _dateCounter;
     NSDate *date = [currentDate dateByAddingTimeInterval:60*60*24*daysToAdd];
+    [self setUpEventsForMapWithDay:date];
+    [self adjustMapAndLocationsForNewDate];
+    [self.tableView reloadData];
     [self  setDateLabel:date];
 }
 
 - (IBAction)OnDateBackward:(UIButton *)sender {
     _dateCounter--;
-    NSDate *currentDate = [[NSDate alloc] init];
+    NSDate *currentDate = self.selectedDate;
     int daysToAdd = _dateCounter;
     NSDate *date = [currentDate dateByAddingTimeInterval:60*60*24*daysToAdd];
+    [self setUpEventsForMapWithDay:date];
+    [self adjustMapAndLocationsForNewDate];
+    [self.tableView reloadData];
     [self  setDateLabel:date];
 }
 
