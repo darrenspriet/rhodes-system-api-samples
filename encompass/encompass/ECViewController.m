@@ -475,6 +475,7 @@
             distance += (int)([(MKRoute *)[response.routes firstObject] distance]/1000);
             self.lblDistance.text = [NSString stringWithFormat:@"%d Km", distance];
             NSLog(@"Distance of this route = %d", (int)[(MKRoute *)[response.routes firstObject] distance]/1000);
+            NSLog(@"Time of this route = %d", (int)[(MKRoute *)[response.routes firstObject] expectedTravelTime]/60);
             [self drawPolylineOnMap:response];
             _locationIndex++;
             if (_locationIndex < _locationCount-1)

@@ -314,6 +314,20 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         }
     }
     
+    // Create the drive time table (hard coded!)
+    // The keys for this table are basically two addresses concatenated
+    self.drive_time_table = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInt:1380], [[self.tableData objectAtIndex:0] stringByAppendingString:[self.tableData objectAtIndex:1]],
+                             [NSNumber numberWithInt:1560], [[self.tableData objectAtIndex:0] stringByAppendingString:[self.tableData objectAtIndex:2]],
+                             [NSNumber numberWithInt:1320], [[self.tableData objectAtIndex:0] stringByAppendingString:[self.tableData objectAtIndex:3]],
+                             [NSNumber numberWithInt:1860], [[self.tableData objectAtIndex:0] stringByAppendingString:[self.tableData objectAtIndex:4]],
+                             [NSNumber numberWithInt:840], [[self.tableData objectAtIndex:1] stringByAppendingString:[self.tableData objectAtIndex:2]],
+                             [NSNumber numberWithInt:1020], [[self.tableData objectAtIndex:1] stringByAppendingString:[self.tableData objectAtIndex:3]],
+                             [NSNumber numberWithInt:1500], [[self.tableData objectAtIndex:1] stringByAppendingString:[self.tableData objectAtIndex:4]],
+                             [NSNumber numberWithInt:720], [[self.tableData objectAtIndex:2] stringByAppendingString:[self.tableData objectAtIndex:3]],
+                             [NSNumber numberWithInt:720], [[self.tableData objectAtIndex:2] stringByAppendingString:[self.tableData objectAtIndex:4]],
+                             [NSNumber numberWithInt:900], [[self.tableData objectAtIndex:3] stringByAppendingString:[self.tableData objectAtIndex:4]],
+                             nil];
 
     
     /* Configure the helper */
@@ -801,7 +815,7 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
 
 - (MAEvent *)eventFromString:(NSString *)title forCalendarItem:(CalendarItemAdvanced *)item
 {
-    NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:item.date];
+    NSDateComponents *components;
     
 	MAEvent *event = [[MAEvent alloc] init];
 	event.backgroundColor = [UIColor brownColor];
@@ -811,19 +825,29 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     // If events already exist
     if (item.entries.count > 0)
     {
-        // Position this event two hours after the last one ends
-        NSDate *lastEventEndDate = ((MAEvent *)[item.entries lastObject]).end;
-        NSDateComponents *lastEventEndDateComponents = [CURRENT_CALENDAR components:DATE_COMPONENTS
-                                                                              fromDate:lastEventEndDate];
-        [components setHour:lastEventEndDateComponents.hour + 2];
+        // Position this event by using the drive time between the last event and this one
+        MAEvent *lastEvent = (MAEvent *)[item.entries lastObject];
+        NSDate *lastEventEndDate = lastEvent.end;
+        NSString *key = [lastEvent.title stringByAppendingString:title];
+        NSTimeInterval interval = [[self.drive_time_table objectForKey:key] doubleValue];
+        // If key was invalid, reverse addresses to create a valid key
+        if (interval == 0.0)
+        {
+            key = [title stringByAppendingString:lastEvent.title];
+            interval = [[self.drive_time_table objectForKey:key] doubleValue];
+        }
+        NSDate *newEventStartDate= [lastEventEndDate dateByAddingTimeInterval:interval];
+        NSLog(@"Drive time = %f", interval);
+        components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:newEventStartDate];
     }
     else
     {
         // First call is at 7 am, by default!
+        components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:item.date];
         [components setHour:8];
+        [components setMinute:0];
+        [components setSecond:0];
     }
-    [components setMinute:0];
-    [components setSecond:0];
     event.start = [CURRENT_CALENDAR dateFromComponents:components];
     // Let events be two hours long by default
     [components setHour:components.hour + 2];

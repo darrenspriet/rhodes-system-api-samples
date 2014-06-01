@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     [self setCollectionData:[[NSMutableArray alloc]init] ];
+    
     // Do any additional setup after loading the view.
 }
 

@@ -115,6 +115,7 @@
 @property (nonatomic, strong) I3DragBetweenHelper* helper;
 @property (nonatomic, strong) NSArray* tableData;
 @property (nonatomic, strong) NSMutableArray* collectionData;
+@property (nonatomic, strong) NSDictionary *drive_time_table;
 
 -(void)hideView;
 
