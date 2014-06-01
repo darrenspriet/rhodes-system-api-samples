@@ -531,9 +531,11 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     // We need to get the titles from each event in this calendar item
     NSMutableArray *entries = [NSMutableArray arrayWithCapacity:4];
+    NSString *shortTitle;
     for (MAEvent *event in item.entries)
     {
-        [entries addObject:event.title];
+        shortTitle = (NSString *)[[event.title componentsSeparatedByString:@"\n"] objectAtIndex:0];
+        [entries addObject:shortTitle];
     }
     [cell.informationLabel setText:[entries componentsJoinedByString:@"\n"]];
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0.3)];
