@@ -308,6 +308,9 @@
     CGRect containerFrame = container.frame;
     CGRect cellFrame = cell.frame;
     
+    //Customized Frame Size
+    CGRect tempFrame = CGRectMake(point.x-50, point.y- 25.0, 100.0, 50.0) ;
+    
     cellPoint.x += containerFrame.origin.x;
     cellPoint.y += containerFrame.origin.x;
     
@@ -326,7 +329,17 @@
     else if([container isKindOfClass:[UITableView class]]){
         
         UITableViewCell* cell = [(UITableView*)container cellForRowAtIndexPath:index];
-        cellCopy = [self copyOfView:cell];
+
+        //Customized The title and the Cell
+        UITableViewCell *tempCell = [[UITableViewCell alloc]init];
+        tempCell.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:11];
+        [tempCell.textLabel sizeToFit];
+        NSString *shortTitle = (NSString *)[[cell.textLabel.text componentsSeparatedByString:@"\n"] objectAtIndex:0];
+        [tempCell.textLabel setText:shortTitle];
+        [tempCell setBackgroundColor:[UIColor clearColor]];
+        
+        
+        cellCopy = [self copyOfView:tempCell];
         
     }
     
@@ -350,7 +363,7 @@
     
     /* Translate the cell's coords to global coords */
     
-    self.draggingView.frame = [self.superview convertRect:cellFrame fromView:container];
+    self.draggingView.frame = [self.superview convertRect:tempFrame fromView:container];
     
     [self.draggingView setHidden:NO];
     

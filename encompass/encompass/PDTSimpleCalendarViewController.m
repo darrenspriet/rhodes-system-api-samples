@@ -393,10 +393,6 @@ static NSString *PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collec
         return NO;
     }
     else{
-        UITableViewCell *cell = [self.sourceTable cellForRowAtIndexPath:
-                                 index];
-        [cell setBackgroundColor:[UIColor clearColor]];
-        [cell setBackgroundView:nil];
         return YES;
     }
 }
