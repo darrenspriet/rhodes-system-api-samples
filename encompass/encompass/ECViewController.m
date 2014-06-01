@@ -26,32 +26,9 @@
     [super viewDidLoad];
     _addressesOptimal =[[NSMutableArray alloc]init];
     
-    for (CalendarItemAdvanced *item in self.collectionData)
-    {
-        if (item.date) {
-            
-                NSComparisonResult result;
-                //has three possible values: NSOrderedSame,NSOrderedDescending, NSOrderedAscending
-                
-                result = [self.selectedDate compare:item.date];
-                if (result==NSOrderedSame)
-                {
-                    NSLog(@"selected date");
-                    for (MAEvent *event in item.entries) {
-                        [_addressesOptimal addObject:event.title];
-                    }
-                }
-        }
-        
-    }
-    
-    CalendarItemAdvanced *item = (CalendarItemAdvanced*)[self.collectionData objectAtIndex:0];
-    for (MAEvent *event in item.entries) {
-        [_addressesOptimal addObject:event.title];
-    }
+    [self setUpEventsForMapWithDay:self.selectedDate];
 
     
-    NSLog(@"item is: %@", item);
     _mapView.delegate = self;
     
     NSDate *currentDate = [[NSDate alloc] init];
@@ -178,6 +155,29 @@
             }
         }
     }];
+}
+
+-(void)setUpEventsForMapWithDay:(NSDate*)day{
+    
+    for (CalendarItemAdvanced *item in self.collectionData)
+    {
+        if (item.date) {
+            
+            NSComparisonResult result;
+            //has three possible values: NSOrderedSame,NSOrderedDescending, NSOrderedAscending
+            
+            result = [day compare:item.date];
+            if (result==NSOrderedSame)
+            {
+                NSLog(@"selected date");
+                for (MAEvent *event in item.entries) {
+                    [_addressesOptimal addObject:event.title];
+                }
+            }
+        }
+        
+    }
+
 }
 
 -(void)setDateLabel:(NSDate *)date{
